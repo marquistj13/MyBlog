@@ -1,0 +1,56 @@
+# Site settings
+name: Marquis
+email: marquistj13@gmail.com
+author: "Marquis"
+url: ""
+resume_site: ""
+github: https://github.com/marquistj13/
+baseurl: "/ReadingNotes"
+description: Actually, less is more!
+meta_description: Marquis个人博客
+motto: It's our wits that make us men.
+banner: 学而不思则罔，思而不学则殆。
+
+#permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:title/
+# paginate: 10
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+include: [_pages]
+
+github_username: marquistj13
+highlighter: rouge
+
+github_username: luoyan35714
+highlighter:  'rouge' 
+
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: true
+  gfm_quirks: paragraph_end
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+collections:  
+  ReadingNotes:
+    output: true
+    permalink: /:path
+defaults:
+  - scope:
+      path: ""
+      type: ReadingNotes
+    values:
+      layout: page
+FB:
+  comments :
+    provider : duoshuo
+    duoshuo:
+        short_name : "marquis的多说账号"
+    disqus :
+        short_name : "marquis的disqus账号"
+    # facebook :
+    #   appid : 123
+    #   num_posts: 5
+    #   width: 580
+    #   colorscheme: light

@@ -1,0 +1,55 @@
+---
+layout: default
+title: 分类
+header: Posts By collection
+permalink: collections.html
+---
+
+<div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <div id="navigation">
+        	<h1>目录</h1>
+      		<ul class="nav sidenav">
+
+				{% for collection in site.collections %} 
+			    	<li><a href="#{{ collection.label }}-ref">
+			    		{{ collection.label | join: "/" }} <span style="color: #999999;" >({{ collection.docs.size }})</span>
+			    	</a></li>
+		    	{% endfor %}
+			  	
+				<!-- {% if site.collections.first[0] == null %}
+					{% for collection in site.collections %} 
+				    	<li><a href="#{{ collection }}-ref">
+				    		{{ collection | join: "/" }} <span style="color: #999999;" >({{ site.collections[collection].size }})</span>
+				    	</a></li>
+			    	{% endfor %}
+			  	{% else %}
+			    	{% for collection in site.collections %} 
+				    	<li><a href="#{{ collection[0] }}-ref">
+				    		{{ collection[0] | join: "/" }} <span style="color: #999999;" >({{ collection[1].size }})</span>
+				    	</a></li>
+			    	{% endfor %}
+			  	{% endif %} -->
+          	</ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+          <div class="home">			
+			{% for collection in site.collections %} 
+			  <h2 id="{{ collection.label }}-ref">{{ collection.label | join: "/" }}</h2>
+			  <ul> 
+			    {% assign pages_list = collection.docs %}  
+			    {% include LessOrMore/pages_list %}
+			  </ul>
+			{% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
