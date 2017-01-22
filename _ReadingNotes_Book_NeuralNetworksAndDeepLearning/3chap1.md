@@ -8,6 +8,7 @@ title:  第一章
 
 网址： http://neuralnetworksanddeeplearning.com/chap1.html
 ## 本文要点总结及启示
+
 * 作者带领我们重头搭建一个NN。
 从neuron的选取，到output layer的选取， 以及cost function的选取都很考究。
 **遵循的大原则**就是：权值或bias的微小变化必须得能够引起输出的微小变化，这是能够学习的条件，当然与之对应的能够学习好的条件就是，得能够引起cost function的微小变化
