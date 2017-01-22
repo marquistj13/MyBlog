@@ -37,9 +37,9 @@ FB:
   comments :
     provider : duoshuo
     duoshuo:
-        short_name : "marquis的多说账号"
-    disqus :
-        short_name : "marquis的disqus账号"
+        short_name : "marquistj13"
+    # disqus :
+    #     short_name : 
     # facebook :
     #   appid : 123
     #   num_posts: 5
