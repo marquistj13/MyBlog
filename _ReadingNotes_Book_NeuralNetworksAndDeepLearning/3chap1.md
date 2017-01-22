@@ -7,6 +7,7 @@ title:  第一章
 {:toc}
 
 网址： http://neuralnetworksanddeeplearning.com/chap1.html
+
 ## 本文要点总结及启示
 
 * 作者带领我们重头搭建一个NN。
