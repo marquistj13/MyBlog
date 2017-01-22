@@ -148,7 +148,7 @@ defaults:
       		<ul class="nav sidenav">
             {\% assign num_pages = site.ReadingNotes_Book_NeuralNetworksAndDeepLearning.size \%}         
             <li>
-              {{ "Book_NeuralNetworksAndDeepLearning" \| truncate: 25}}
+              {\{ "Book_NeuralNetworksAndDeepLearning" \| truncate: 25}\}
               <span style="color: #999999;" >({{ num_pages | minus:1 }})</span>            
             </li>
           </ul>
