@@ -14,6 +14,7 @@ tag: Jekyll
 本博客对应的github repository：https://github.com/marquistj13/MyBlog
 
 ## 搭建缘由
+
 * 一个顺手工具的逝去
 自从韩桑向我推荐为知笔记之后，我逐渐依赖上了它。对Markdown的完美支持以及截图功能的整合使得它堪称完美（以我有限的经验来说算是吧）。于是我就用为知笔记来记一些可以归档的东西，日记还是用Emacs的org-mode。（ps，为知笔记可以导出纯文本，但它的源文件是二进制的，这个可能是为了解决md文件中插入图片的问题吧）
 不过从1月份开始它强行给非会员“断网”了，我一直依赖的云同步就这么没了。对于这件事我们也不太好评价，我觉得人不应该被某一个工具给奴役吧，它要离你而去，你又不用钱去挽留，好聚好散吧。
@@ -43,6 +44,7 @@ tag: Jekyll
 之后在读文档的时候我又发现需要读一个Jekyll用到的template语言[Liquid](https://shopify.github.io/liquid/)，这个也是很快就能读懂了。
 
 ## 定制需要的特性
+
 ### Jekyll哪些部分可以用来定制
 我看了一天的[Jekyll官方文档](https://jekyllrb.com/docs/home/),我在看别人的教程以及官方文档的时候发现Jekyll要是只有blog功能的话肯定不够灵活嘛，毕竟我不一定每一篇文档都得放到_post中，而且还得以日期开头。果然在官方文档中看到了[Collection](http://jekyllrb.com/docs/collections/)这个东西。我还看了[Explain like I’m five: Jekyll collections](http://ben.balter.com/2015/02/20/jekyll-collections/)这个很好地讲collection的文章，还有这个[Getting Started with Jekyll Collections](https://www.sitepoint.com/getting-started-jekyll-collections/)
 在[Explain like I’m five: Jekyll collections](http://ben.balter.com/2015/02/20/jekyll-collections/)中，作者提到post类型是用来写博客的，必须按照日期来命名，一旦写了就不怎么变了；而pages类型是用来写一些彼此之间没有什么关联的文档，如about页面以及tags等用来list的页面。由于pages没有日期的概念，因此需要经常更新。
@@ -83,6 +85,7 @@ kramdown:
 注意，详细的参考配置见[Jekyll Configuration](https://jekyllrb.com/docs/configuration/),如配置toc_levels，smart_quotes等。这个configuration可以参考很多设置的trick。
 
 ## 对于LessOrMore的更改
+
 ### 文件夹更改以及冗余的去除
 [LessOrMore](https://github.com/luoyan35714/LessOrMore)有一些需要调整的地方，我将那些page类型的网页，如catories，tags，feed等都移到了`_pages`文件夹，并将此目录加入配置文件`_config.yml`:`include: [_pages]`.
 我还将`_include\header.html`中乱七八糟的各种东西给删掉了，用来放置我的“文件夹”，哈哈。
@@ -183,6 +186,10 @@ defaults:
 
 ## 总结和启发
 从19号到家，这几天几乎都在玩Jekyll，我发现这些新东西学起来挺好玩儿的，破除了对于html建站的神秘感，也极大增强了以后记笔记的灵活性。
+
+* 关于markdown格式老是出问题
+经常出现这种情况，我在本地运行的博客没问题，发布到github就出问题了，方法就是加空行！
+标题之间不能连着，fenced block之前要有俩空行……，总之，应对md的问题就是空行大法好！
 
 * 新事物学习的重要性
 学习搭建博客，又get了一个新技能哈哈，打开了新世界的大门，受到工具的限制变少了。
