@@ -21,9 +21,6 @@ include: [_pages]
 github_username: marquistj13
 highlighter: rouge
 
-github_username: luoyan35714
-highlighter:  'rouge' 
-
 
 # Build settings
 markdown: kramdown
