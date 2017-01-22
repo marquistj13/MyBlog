@@ -5,6 +5,7 @@ author: "Marquis"
 url: ""
 resume_site: ""
 github: https://github.com/marquistj13/
+github_username: marquistj13
 baseurl: "/MyBlog"
 description: Actually, less is more!
 meta_description: Marquis个人博客
@@ -13,12 +14,14 @@ banner: 学而不思则罔，思而不学则殆。
 
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:title/
-# paginate: 10
+
+gems: [jekyll-paginate]
+paginate: 10
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
 include: [_pages]
 
-github_username: marquistj13
+
 highlighter: rouge
 
 

@@ -11,8 +11,11 @@ header: Posts By collection
         <div id="navigation">
         	<h1>目录</h1>
       		<ul class="nav sidenav">
-          {% assign num_pages = site.ReadingNotes_test.size %}				 
-		    	<li>Test<span style="color: #999999;" >({{ num_pages | minus:1 }})</span></li>
+            {% assign num_pages = site.ReadingNotes_test.size %}				 
+  		    	<li>              
+                {{"Test" | truncate: 25}}
+                <span style="color: #999999;" >({{ num_pages | minus:1 }})</span>            
+            </li>
           </ul>
         </div>
       </div>
@@ -23,7 +26,7 @@ header: Posts By collection
           <div class="home">
 			  <h2 >{{ Test | join: "/" }}</h2>
 			  <ul> 			   
-          {% assign pages_list = site.ReadingNotes_test%}  
+          {% assign pages_list = site.ReadingNotes_test %}  
 			    {% include LessOrMore/pages_list %}
 			  </ul>		
 			<!-- {% for collection in site.collections %} 
