@@ -1,0 +1,41 @@
+---
+layout: default
+title: IndexFile
+header: Posts By collection
+---
+
+<div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <div id="navigation">
+        	<h1>目录</h1>
+      		<ul class="nav sidenav">
+          {% assign num_pages = site.ReadingNotes_test.size %}				 
+		    	<li>Test<span style="color: #999999;" >({{ num_pages | minus:1 }})</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+          <div class="home">
+			  <h2 >{{ Test | join: "/" }}</h2>
+			  <ul> 			   
+          {% assign pages_list = site.ReadingNotes_test%}  
+			    {% include LessOrMore/pages_list %}
+			  </ul>		
+			<!-- {% for collection in site.collections %} 
+			  <h2 id="{{ collection.label }}-ref">{{ collection.label | join: "/" }}</h2>
+			  <ul> 
+			    {% assign pages_list = collection.docs %}  
+			    {% include LessOrMore/pages_list %}
+			  </ul>
+			{% endfor %} -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
