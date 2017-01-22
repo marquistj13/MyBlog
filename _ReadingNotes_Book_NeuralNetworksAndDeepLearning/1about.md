@@ -7,6 +7,7 @@ title:  about
 {:toc}
 
 网址：http://neuralnetworksanddeeplearning.com/about.html
+
 ## 总括
 * NN 是最优美的编程范式之一
 传统编程范式：将一个大的problem分解成很多个small, precisely defined tasks that the computer can easily perform.

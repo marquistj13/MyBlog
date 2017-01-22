@@ -7,6 +7,7 @@ title:  第六章
 {:toc}
 
 CHAPTER 6 Deep learning
+
 ## 引言
 上一章我们知道了DNN比SNN难训练多了。
 在本章，我们要develop techniques以训练DNN，并展望NN以及AI的未来。
