@@ -1,0 +1,37 @@
+---
+layout: default
+title: IndexFile
+header: Posts By collection
+---
+
+<div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <div id="navigation">
+        	<h1>目录</h1>
+      		<ul class="nav sidenav">
+             {% assign num_pages =  site.collection_ScholarThings_test_scholar.size %}         
+            <li>
+             {{  'test_scholar' | truncate: 25}}   
+              <span style="color: #999999;" >({{ num_pages | minus:1 }})</span>            
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+          <div class="home">
+			  <h2 > {{  'test_scholar'  | join: "/" }}</h2> 
+			  <ul> 
+			     {% assign pages_list =  site.collection_ScholarThings_test_scholar %}  
+			     {% include LessOrMore/pages_list %} 
+			  </ul>				
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

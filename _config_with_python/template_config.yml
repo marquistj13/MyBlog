@@ -1,0 +1,80 @@
+# Site settings
+name: Marquis
+email: marquistj13@gmail.com
+author: "Marquis"
+url: ""
+resume_site: ""
+github: https://github.com/marquistj13/
+github_username: marquistj13
+baseurl: "/MyBlog"
+description: Actually, less is more!
+meta_description: Marquis个人博客
+motto: It's our wits that make us men.
+banner: 学而不思则罔，思而不学则殆。
+
+#permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:title/
+
+gems: [jekyll-paginate]
+paginate: 10
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile',_config_with_python]
+include: [_pages]
+
+
+highlighter: rouge
+
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: true
+  gfm_quirks: paragraph_end
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+
+FB:
+  comments :
+    provider : duoshuo
+    duoshuo:
+        short_name : "marquistj13"
+    # disqus :
+    #     short_name : 
+    # facebook :
+    #   appid : 123
+    #   num_posts: 5
+    #   width: 580
+    #   colorscheme: light
+
+# My collections. DO NOT configure the collections here!  Because the collections 
+# are configured automatically by buildMenu.py and menu_config.yml
+# In menu_config.yml you should specify the menus. 
+# Then in the _config.yml file of the root directory, the collections are generated accordingly
+# Yes, the collections are used only for specifial purpose here.
+# The following collections are shown here for illustration, not for real purpose because they will be overwritten.
+collections:
+  collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning:
+    output: true
+    permalink: /ReadingNotes/Book_NeuralNetworksAndDeepLearning/:path
+  collection_ReadingNotes_test:
+    output: true
+    permalink: /ReadingNotes/test/:path
+  collection_ScholarThings_test_scholar:
+    output: true
+    permalink: /ScholarThings/test_scholar/:path
+defaults:
+- scope:
+    path: ''
+    type: collection_ScholarThings_test_scholar
+  values:
+    layout: page
+- scope:
+    path: ''
+    type: collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning
+  values:
+    layout: page
+- scope:
+    path: ''
+    type: collection_ReadingNotes_test
+  values:
+    layout: page

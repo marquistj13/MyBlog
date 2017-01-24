@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
       </button>    
     </div>
-    
+    {% raw %}
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">    
         <li>
@@ -20,31 +20,20 @@
           <a href="{{ '/tag' | prepend: site.baseurl }}">Tag</a>
         </li>
       </ul>    
-      
+      {% endraw %}
        <ul class="nav navbar-nav navbar-right">
+        {% for menu_iterm in menus -%}
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">阅读笔记<b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ menu_iterm['menu_name_cn'] }}<b class="caret"></b></a>
           <ul class="dropdown-menu">
-             
+             {% for menu_list_name in  menu_iterm['menu_list']  %}
                   <li>
-                       <a href="{{  '/ReadingNotes/Book_NeuralNetworksAndDeepLearning/' |  prepend: site.baseurl }}">Book_NeuralNetworksAndDeepLearning</a>
+                      {% raw %} <a href="{{ {% endraw %} '/{{ menu_iterm['menu_name_en'] }}/{{ menu_list_name }}/' | {% raw %} prepend: site.baseurl }}">{% endraw %}{{ menu_list_name }}</a>
                   </li>          
-              
-                  <li>
-                       <a href="{{  '/ReadingNotes/test/' |  prepend: site.baseurl }}">test</a>
-                  </li>          
-              
+              {% endfor %}
           </ul>
-        </li><li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">学术积累<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-             
-                  <li>
-                       <a href="{{  '/ScholarThings/test_scholar/' |  prepend: site.baseurl }}">test_scholar</a>
-                  </li>          
-              
-          </ul>
-        </li>       
+        </li>
+      {%- endfor %}       
       </ul>    
     </nav>
   </div>

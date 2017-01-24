@@ -11,9 +11,9 @@ header: Posts By collection
         <div id="navigation">
         	<h1>目录</h1>
       		<ul class="nav sidenav">
-            {% assign num_pages = site.ReadingNotes_Book_NeuralNetworksAndDeepLearning.size %}         
+             {% assign num_pages =  site.collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning.size %}         
             <li>
-              {{ "Book_NeuralNetworksAndDeepLearning" | truncate: 25}}
+             {{  'Book_NeuralNetworksAndDeepLearning' | truncate: 25}}   
               <span style="color: #999999;" >({{ num_pages | minus:1 }})</span>            
             </li>
           </ul>
@@ -24,18 +24,11 @@ header: Posts By collection
       <div class="panel docs-content">
         <div class="wrapper">
           <div class="home">
-			  <h2 >{{ NeuralNetworksAndDeepLearning | join: "/" }}</h2>
+			  <h2 > {{  'Book_NeuralNetworksAndDeepLearning'  | join: "/" }}</h2> 
 			  <ul> 
-			    {% assign pages_list = site.ReadingNotes_Book_NeuralNetworksAndDeepLearning %}  
-			    {% include LessOrMore/pages_list %}
-			  </ul>		
-			<!-- {% for collection in site.collections %} 
-			  <h2 id="{{ collection.label }}-ref">{{ collection.label | join: "/" }}</h2>
-			  <ul> 
-			    {% assign pages_list = collection.docs %}  
-			    {% include LessOrMore/pages_list %}
-			  </ul>
-			{% endfor %} -->
+			     {% assign pages_list =  site.collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning %}  
+			     {% include LessOrMore/pages_list %} 
+			  </ul>				
           </div>
         </div>
       </div>

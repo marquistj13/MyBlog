@@ -1,0 +1,37 @@
+---
+layout: default
+title: IndexFile
+header: Posts By collection
+---
+
+<div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <div id="navigation">
+        	<h1>目录</h1>
+      		<ul class="nav sidenav">
+            {% raw %} {% assign num_pages = {% endraw %} site.{{collection_name}}.size %}         
+            <li>
+            {% raw %} {{ {% endraw %} '{{collection_iterm_name}}' {% raw %}| truncate: 25}}   {% endraw %}
+            {% raw %}  <span style="color: #999999;" >({{ num_pages | minus:1 }})</span>   {% endraw %}         
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+          <div class="home">
+			  <h2 >{% raw %} {{ {% endraw %} '{{collection_iterm_name}}' {% raw %} | join: "/" }}</h2> {% endraw %}
+			  <ul> 
+			    {% raw %} {% assign pages_list = {% endraw %} site.{{collection_name}} %}  
+			    {% raw %} {% include LessOrMore/pages_list %} {% endraw %}
+			  </ul>				
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
