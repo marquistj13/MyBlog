@@ -1,4 +1,17 @@
-# 用于记笔记的博客模板
+---
+layout: post
+title:  如何使用本模板实现note-taking的purpose
+categories: 编辑器等文档工具
+tag: Jekyll
+---
+
+
+* content
+{:toc}
+
+
+
+本博客对应的github repository：https://github.com/marquistj13/MyBlog
 
 
 模板来源
@@ -50,4 +63,4 @@ menus:
 
 **小提示：**在每一个collection下面可以放入子文件夹，本模板亦可以根据子文件夹创建此collection下对于子文件夹中的文件的索引目录，这个功能是根据文章的url实现的，主要参考的是 [这篇文章](https://thinkshout.com/blog/2014/12/creating-dynamic-menus-in-jekyll/).但由于文件夹名字转换为url之后变成了ASCII码，因此从url中提取的子文件夹名字得用`Liquid`模板语言的一个filter：`url_decode`，这个filter只有新版本的Liquid的支持，如果遇到老版本的Liquid那就不行，所以，如果你对子文件夹含有中文，列出来的索引目录就是对应的ASCII码，我暂时就这么凑合着用吧，哈哈。
 
-**在每次对`template_config.yml`或者`menu_config.yml`进行修改以后必须运行一次`buildMenu.py`**。`buildMenu.py`依赖于`PyYAML`和`jinja2`两个Python library。
+**在每次对`template_config.yml`或者`menu_config.yml`进行修改以后必须运行一次`buildMenu.py`**。`buildMenu.py`依赖于两个Python library：`PyYAML`和`jinja2`。

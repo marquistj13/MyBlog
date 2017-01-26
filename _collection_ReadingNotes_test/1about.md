@@ -1,5 +1,7 @@
 ---
 title:  about
+categories: 阅读笔记about
+tag: NN_DL
 ---
 
 
