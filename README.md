@@ -8,7 +8,7 @@
 此模板特性
 ====================================
 简单来说是用来记笔记的。
-因为post类型的文章使用markdown的时候，不能插入 `_post` 目录的图片，这一点我感觉不太好，幸好Jekyll还有一种Collection类型的“文章库”，Collection中的md文件可以插入对应Collection目录的图片，再基于Jekyll的一个特性：设置`frontmatter`的文件就用`Liquid`模板渲染一下，没有设置`frontmatter`的文件就原样copy到`_site`目录，因此我打算将其改造成利用Collection进行note-taking的blog。
+因为post类型的文章使用markdown的时候，不能插入 `_posts` 目录的图片，这一点我感觉不太好，幸好Jekyll还有一种Collection类型的“文章库”，Collection中的md文件可以插入对应Collection目录的图片，再基于Jekyll的一个特性：设置`frontmatter`的文件就用`Liquid`模板渲染一下，没有设置`frontmatter`的文件就原样copy到`_site`目录，因此我打算将其改造成利用Collection进行note-taking的blog。
 
 
 使用
@@ -19,7 +19,7 @@
 下载
 ------------------------------------
 
-使用git从 [MyBlog}(https://github.com/marquistj13/MyBlog) 主页下载项目
+使用git从 [MyBlog](https://github.com/marquistj13/MyBlog) 主页下载项目
 
 ``` bash
 git clone https://github.com/marquistj13/MyBlog.git
@@ -51,3 +51,5 @@ menus:
 **小提示：**在每一个collection下面可以放入子文件夹，本模板亦可以根据子文件夹创建此collection下对于子文件夹中的文件的索引目录，这个功能是根据文章的url实现的，主要参考的是 [这篇文章](https://thinkshout.com/blog/2014/12/creating-dynamic-menus-in-jekyll/).但由于文件夹名字转换为url之后变成了ASCII码，因此从url中提取的子文件夹名字得用`Liquid`模板语言的一个filter：`url_decode`，这个filter只有新版本的Liquid的支持，如果遇到老版本的Liquid那就不行，所以，如果你对子文件夹含有中文，列出来的索引目录就是对应的ASCII码，我暂时就这么凑合着用吧，哈哈。
 
 **在每次对`template_config.yml`或者`menu_config.yml`进行修改以后必须运行一次`buildMenu.py`**。`buildMenu.py`依赖于`PyYAML`和`jinja2`两个Python library。
+
+**如果在本地安装了Jekyll，就不需要每次push到github去看效果：**可以使用`jekyll serve -w -b ""`方便地进行博客的实时预览，这在书写markdown的时候非常有用。

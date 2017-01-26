@@ -18,14 +18,14 @@ BP的核心就是cost function对于权值或bias的偏微分，即：$ \partial
 其实符号的选取是很重要的，能够简化表达式，简化之后就很容易进行进一步简化，并发现insight
 * $w^l_{jk}$:用上标 $ l $ 表示第几层，整体表示第 $ l $ 层的第 $ j $ 个neuron与第 $ l-1 $ 层的第 $ k $ 个neuron之间的权值
 *   $ b^l_j$:同上
-*   $ l $ 层的第 $ j $ 个neuron的激活activation或输出即$ a^{l}_j$为：
+*   $ l $ 层的第 $j$ 个neuron的激活activation或输出即 $a_j^{l}$ 为：
 $ \begin{eqnarray}
-  a^{l}_j = \sigma\left( \sum_k w^{l}_{jk} a^{l-1}_k + b^l_j \right),
+  a_j^{l} = \sigma \left( \sum_k w^{l}_{jk} a^{l-1}_k + b^l_j \right),
 \tag{23}\end{eqnarray}$
 简化成矢量形式：
 $ \begin{eqnarray}
   a^{l} = \sigma(w^l a^{l-1}+b^l).
-\tag{25}\end{eqnarray}$
+\tag{25} \end{eqnarray} $
 作者在此处夸了一下这种表示的好处，我感觉最重要的就是方便顶层思考了，即 global way of thinking，当然计算效率也算。
 *   $z^l \equiv w^l a^{l-1}+b^l$,即第$l$层的加权输入。
 * 两个vector之间的elementwise product，即 Hadamard product or Schur product $ \begin{eqnarray}
@@ -86,7 +86,7 @@ $ \begin{eqnarray}
   \frac{\partial C}{\partial w^l} = \delta^l  ( a^{l-1})^T
 \tag{BP4}\end{eqnarray} $
 * 以上式子的insight
-BP4的意义在于，如果上一层的激活  $a^{l-1}_k$ 比较小，那么 $\frac{\partial C}{\partial w^l_{jk}}$ 就会很小，我们就说这个权值学习的比较慢 learns slowly，即，在梯度下降的时候不怎么改变
+BP4的意义在于，如果上一层的激活  $a_k^{l-1}$ 比较小，那么 $\frac{\partial C}{\partial w^l_{jk}}$ 就会很小，我们就说这个权值学习的比较慢 learns slowly，即，在梯度下降的时候不怎么改变
 其他insight包括：
 对于 BP1， 由于sigmoid的特性是，在input靠近0或1的时候，$\sigma'(z^L_j) \approx 0$ ，因此，最后一层的weight不管在 output neuron is either low activation (≈0) or high activation (≈1)的时候，学习的都较慢，即**饱和了**
 同样，对于BP2，如果neuron接近饱和的话，那么$\delta^l_j$也会变得很小
