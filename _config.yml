@@ -10,26 +10,10 @@ collections:
   collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning:
     output: true
     permalink: /ReadingNotes/Book_NeuralNetworksAndDeepLearning/:path
-  collection_ReadingNotes_test:
-    output: true
-    permalink: /ReadingNotes/test/:path
-  collection_ScholarThings_test_scholar:
-    output: true
-    permalink: /ScholarThings/test_scholar/:path
 defaults:
 - scope:
     path: ''
-    type: collection_ScholarThings_test_scholar
-  values:
-    layout: page
-- scope:
-    path: ''
     type: collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning
-  values:
-    layout: page
-- scope:
-    path: ''
-    type: collection_ReadingNotes_test
   values:
     layout: page
 description: Actually, less is more!

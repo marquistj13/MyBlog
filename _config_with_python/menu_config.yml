@@ -3,8 +3,7 @@ menus:
   menu_name_en: ReadingNotes
   menu_list:
   - Book_NeuralNetworksAndDeepLearning
-  - test
 - menu_name_cn: 学术积累
   menu_name_en: ScholarThings
-  menu_list: [test_scholar]
+  menu_list: []
   
