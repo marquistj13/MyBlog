@@ -5,5 +5,6 @@ menus:
   - Book_NeuralNetworksAndDeepLearning
 - menu_name_cn: 学术积累
   menu_name_en: ScholarThings
-  menu_list: []
-  
+  menu_list: 
+  - PaperToRead
+ 

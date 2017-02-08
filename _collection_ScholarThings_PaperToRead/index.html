@@ -1,0 +1,126 @@
+---
+layout: default
+title: IndexFile
+header: Posts By collection
+---
+
+<div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <div id="navigation">
+        	<h1>目录</h1>
+      		<ul class="nav sidenav">           
+
+            {% assign collection_root_name =  'PaperToRead'  %} 
+            {% assign all_pages_list =  site.collection_ScholarThings_PaperToRead    %} 
+            
+
+             {% assign num_pages =  all_pages_list.size %}         
+            
+              <li>{{ collection_root_name  | truncate: 25}}   
+              <span style="color: #999999;" >({{ num_pages | minus:1 }})</span></li>
+            {%  capture base_url_tmp %}              
+            {%  for node in all_pages_list %}
+              {% assign node_url_parts = node.url | split: '/' %}
+              {%  assign filename = node_url_parts | last %}
+              {%  assign tmp = filename | prepend: '/' %}             
+              {%  assign node_base_url =  node.url | remove: tmp  %}
+              {%  assign node_base_url =  node_base_url | remove_first: '/'  %}                
+                {{node_base_url}}{% if forloop.last == false %}^{% endif %}                                                
+            {% endfor %} 
+            {% endcapture %}
+            {% assign base_url_list= base_url_tmp | split: "^" %}
+
+            {%  capture base_url_list %}
+            {% for base_url in base_url_list %}
+            {{base_url |  strip }}{% if forloop.last == false %}^{% endif %}
+            {% endfor %} 
+            {% endcapture %}
+            {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
+
+            {% assign tmp_to_remove= base_url_list | last %}
+            {% assign base_url_list= base_url_list | join:"^" | remove_first: tmp_to_remove %}
+            {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
+
+
+            {% for base_url in base_url_list %}
+              {% assign tmp = base_url | split: '/' %}
+              {% assign base_url_submenu_name = tmp[-1] | strip %}
+                {% if collection_root_name == base_url_submenu_name %}
+                  {% if base_url_list.size == 1 %}
+                    <li><a href="#本分类-ref"> 本分类 </a></li>
+                  {% else %}
+                    <li><a href="#未分类-ref"> 未分类 </a></li>
+                  {% endif %}
+
+                {% else %}
+                <li><a href="#{{ base_url_submenu_name | strip | url_decode}}-ref" >{{ base_url_submenu_name  | strip | url_decode}}</li> 
+              {% endif %}
+            {% endfor %}  
+       
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+          <div class="home">
+            {% for base_url in base_url_list %}            
+              {% assign base_url_strip = base_url | strip %}
+              {% assign tmp = base_url | split: '/' %}
+              {% assign base_url_submenu_name = tmp[-1] | strip %} 
+              {% assign base_url_depth= base_url| split: '/' | size %} 
+              {% if collection_root_name == base_url_submenu_name %}
+                  {% if base_url_list.size == 1 %}
+                    <h2><a id="本分类-ref"> 本分类 </a></h2>
+                  {% else %}
+                    <h2><a id="未分类-ref"> 未分类 </a></h2> 
+                  {% endif %}   
+              {% else %}
+                <h2><a id="{{ base_url_submenu_name | strip | url_decode}}-ref" >{{ base_url_submenu_name  | strip | url_decode}}</h2> 
+              {% endif %}
+             
+                {% for node in all_pages_list %}                  
+                  {% if node.url contains base_url_strip %}
+                    {%  assign node_url_parts = node.url | split: '/' %}
+                    {%  assign filename = node_url_parts | last %}                    
+                    {%  assign tmp = filename | prepend: '/' %}             
+                    {%  assign node_now_url =  node.url | remove: tmp  %}
+                    {%  assign node_now_url =  node_now_url | remove_first: '/'  %}
+                    {%  assign node_now_url_depth = node_now_url | split: '/' | size %}                                       
+                    {% if base_url_depth==node_now_url_depth and filename != 'index' %}
+                      
+                      {% if node.title != null %}
+                        {% if group == null or group == node.group %}
+                          {% if page.url == node.url %}
+                          <ol class="breadcrumb">
+                            <li class="active"><a href="{{ node.url | prepend: site.baseurl }}" class="active">{{ node.title }}</a></li>
+                            <li style="float:right;"><span>{{ node.date | date: "%F" }}</span></li>
+                          </ol>
+                          {% else %}
+                          <ol class="breadcrumb">
+                            <li><a href="{{ node.url | prepend: site.baseurl }}">{{ node.title }}</a></li>
+                            <li style="float:right;"><span>{{ node.date | date: "%F" }}</span></li>
+                          </ol>
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+
+                    {% endif %} 
+                  {% endif %}                 
+                {% endfor %} 
+            {% endfor %}
+
+
+ 
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
