@@ -10,6 +10,9 @@ collections:
   collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning:
     output: true
     permalink: /ReadingNotes/Book_NeuralNetworksAndDeepLearning/:path
+  collection_ScholarThings_Clustering:
+    output: true
+    permalink: /ScholarThings/Clustering/:path
   collection_ScholarThings_General_Paper:
     output: true
     permalink: /ScholarThings/General_Paper/:path
@@ -25,6 +28,11 @@ defaults:
 - scope:
     path: ''
     type: collection_ScholarThings_General_Paper
+  values:
+    layout: page
+- scope:
+    path: ''
+    type: collection_ScholarThings_Clustering
   values:
     layout: page
 - scope:
