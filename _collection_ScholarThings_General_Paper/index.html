@@ -43,6 +43,7 @@ header: Posts By collection
             {% endfor %} 
             {% endcapture %}
             {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
+            <li>base_url_list第2次处理：{{base_url_list}}</li>
 
             <!--删除index.html,以及collection根目录对应的base_url -->            
             {% assign tmp_menu_name= base_url_list[0] | split: '/' | first | strip %}
@@ -55,13 +56,15 @@ header: Posts By collection
             {% for base_url in base_url_list %}                        
               {% assign tmp = base_url | strip %}
               {% if tmp  ==  index_menu_to_remove%}
+                <li>啦啦,要加1啦</li>
                 {% assign flag_not_classified = flag_not_classified | plus: 1 %}
+                <li>啦啦：{{flag_not_classified}}</li>
               {% endif %} 
             {% endfor %} 
              <!-- flag 已经设置好了 -->
             {% assign base_url_list= base_url_list | join:"^" | remove: index_menu_to_remove %}
             {% assign base_url_list= base_url_list | split: "^" | sort_natural | uniq %}
-            
+            <li>base_url_list第3次处理：{{base_url_list}}</li>
 
             <!-- 去掉空元素即：collection根目录下的文件 -->
             {%  capture base_url_list %}
@@ -73,7 +76,11 @@ header: Posts By collection
             {% endfor %} 
             {% endcapture %}
             {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
-            
+            <li>base_url_list第4次处理：{{base_url_list}}</li>
+
+            <li>哈哈：{{base_url_list.size}}</li>
+            <li>啦啦：{{flag_not_classified}}</li>
+
             {% if base_url_list.size == 1 %}
               <li><a href="#本分类-ref"> 本分类 </a></li>
             {% elsif flag_not_classified > 1 %}
@@ -103,9 +110,11 @@ header: Posts By collection
 
                 <h2><a id="{{ base_url  | strip | url_decode}}-ref" >{{ base_url  | strip | url_decode}}</h2>
 
-                {% assign base_url_strip = base_url | strip %}                 
+                {% assign base_url_strip = base_url | strip %} 
+                <li>测试base_url_strip：{{base_url_strip}}</li>
                  {% for node in all_pages_list %}                  
-                    {% if node.url contains base_url_strip %} 
+                    {% if node.url contains base_url_strip %}                      
+                        <li> 进来了 </li>
                         {% if node.title != null %}
                           {% if group == null or group == node.group %}
                             {% if page.url == node.url %}
