@@ -42,7 +42,7 @@ header: Posts By collection
             {{base_url |  strip }}{% if forloop.last == false %}^{% endif %}
             {% endfor %} 
             {% endcapture %}
-            {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
+            {% assign base_url_list= base_url_list   | split: "^" | sort_natural %}
             <li>base_url_list第2次处理：{{base_url_list}}</li>
 
             <!--删除index.html,以及collection根目录对应的base_url -->            
@@ -81,10 +81,16 @@ header: Posts By collection
             <li>哈哈：{{base_url_list.size}}</li>
             <li>啦啦：{{flag_not_classified}}</li>
 
+
             {% if base_url_list.size == 1 %}
-              <li><a href="#本分类-ref"> 本分类 </a></li>
+              {% assign tmp = base_url_list | first | strip %}
+              {% if tmp == "" %}
+                <li><a href="#本分类-ref"> 本分类 </a></li>
+              {% elsif flag_not_classified > 1 %}
+                <li><a href="#未分类-ref"> 未分类 </a></li>
+              {% endif %} 
             {% elsif flag_not_classified > 1 %}
-              <li><a href="#未分类-ref"> 未分类 </a></li>
+                <li><a href="#未分类-ref"> 未分类 </a></li>
             {% endif %} 
 
             {% for base_url in base_url_list %} 
@@ -106,7 +112,7 @@ header: Posts By collection
           <div class="home">
             {% for base_url in base_url_list %} 
               {% assign tmp = base_url | strip %}
-              {% if tmp != "" %} <!-- 有子目录分类的 -->
+              <!-- 有子目录分类的 -->
 
                 <h2><a id="{{ base_url  | strip | url_decode}}-ref" >{{ base_url  | strip | url_decode}}</h2>
 
@@ -133,12 +139,17 @@ header: Posts By collection
                     {% endif %}                                   
                   {% endfor %} 
 
-              {% else %}<!-- 无子目录分类的 -->
+              <!-- 无子目录分类的 -->                
                 {% if base_url_list.size == 1 %}
+                  {% assign tmp = base_url_list | first | strip %}
+                  {% if tmp == "" %}
                     <h2><a id="本分类-ref"> 本分类 </a></h2>
+                  {% elsif flag_not_classified > 1 %}
+                    <h2><a id="未分类-ref"> 未分类 </a></h2>
+                  {% endif %} 
                 {% elsif flag_not_classified > 1 %}
                     <h2><a id="未分类-ref"> 未分类 </a></h2>
-                {% endif %}
+                {% endif %} 
 
                 {% for node in all_pages_list %} 
                     {%  assign node_url_parts = node.url | split: '/' %}
@@ -165,8 +176,7 @@ header: Posts By collection
                         {% endif %}
                     {% endif %}                                   
                   {% endfor %}  
-
-              {% endif %}  <!-- 结束子目录判断 --> 
+              
             {% endfor %}
 
 
