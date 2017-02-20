@@ -1,5 +1,5 @@
 --- 
-title: 17.2.20 Shape-Based Approach to Household Load Curve Clustering and Prediction
+title: Load Curve Clustering and Prediction
 ---
 
 
