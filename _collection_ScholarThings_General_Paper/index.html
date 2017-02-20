@@ -107,7 +107,7 @@ header: Posts By collection
             {% for base_url in base_url_list %} 
               {% assign tmp = base_url | strip %}
               <!-- 有子目录分类的 -->
-
+              {% if tmp !="" %}
                 <h2><a id="{{ base_url  | strip | url_decode}}-ref" >{{ base_url  | strip | url_decode}}</h2>
 
                 {% assign base_url_strip = base_url | strip %} 
@@ -130,7 +130,8 @@ header: Posts By collection
                           {% endif %}
                         {% endif %}
                     {% endif %}                                   
-                  {% endfor %} 
+                  {% endfor %}
+            {% endif %}  
 
               <!-- 无子目录分类的 -->                
                 {% if base_url_list.size == 1 %}
