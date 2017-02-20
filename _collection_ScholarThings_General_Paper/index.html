@@ -63,12 +63,12 @@ header: Posts By collection
             {% assign base_url_list= base_url_list | split: "^" | sort_natural | uniq %}
            
 
-            <!-- 去掉空元素即：collection根目录下的文件 -->
+            <!-- 去掉空元素即：collection根目录下的文件,顺便去掉目录前面的斜杠 -->
             {%  capture base_url_list %}
             {% for base_url in base_url_list %}
             {% assign tmp = base_url | strip %}
               {% if tmp != "" %} 
-                {{base_url |  strip }}{% if forloop.last == false %}^{% endif %}
+                {{base_url |  strip | remove: "/"}}{% if forloop.last == false %}^{% endif %}
               {% endif %}
             {% endfor %} 
             {% endcapture %}
