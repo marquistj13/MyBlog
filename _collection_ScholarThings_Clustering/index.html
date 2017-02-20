@@ -20,6 +20,8 @@ header: Posts By collection
             
               <li>{{ collection_root_name  | truncate: 25}}   
               <span style="color: #999999;" >({{ num_pages | minus:1 }})</span></li>
+
+            <!-- 以下先将文件名获取，然后将url中的文件名部分去掉，url最前面的斜杠也得去掉。这样就得到了base_url -->
             {%  capture base_url_tmp %}              
             {%  for node in all_pages_list %}
               {% assign node_url_parts = node.url | split: '/' %}
@@ -30,27 +32,36 @@ header: Posts By collection
                 {{node_base_url}}{% if forloop.last == false %}^{% endif %}                                                
             {% endfor %} 
             {% endcapture %}
+            <!--按理说这么搞就可以了，但是由于空格和换行太多，导致这么得到的base_url有空格，不便于逻辑判断（如比较） -->
             {% assign base_url_list= base_url_tmp | split: "^" %}
 
+            <li>base_url_list第一次处理：{{base_url_list}}</li>
+
+            <!--所以再处理一遍，顺便排个序吧 -->
             {%  capture base_url_list %}
             {% for base_url in base_url_list %}
             {{base_url |  strip }}{% if forloop.last == false %}^{% endif %}
             {% endfor %} 
             {% endcapture %}
             {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
+            <li>base_url_list第2次处理：{{base_url_list}}</li>
 
+            <!--我发现最后一个总是出现两次，因此删除一个重复的 -->
             {% assign tmp_to_remove= base_url_list | last %}
             {% assign base_url_list= base_url_list | join:"^" | remove_first: tmp_to_remove %}
             {% assign base_url_list= base_url_list   | split: "^" | sort_natural | uniq %}
-
+            <li>base_url_list第3次处理：{{base_url_list}}</li>
 
             {% for base_url in base_url_list %}
+            <li>base_url:{{base_url}}</li>
               {% assign tmp = base_url | split: '/' %}
               {% assign base_url_submenu_name = tmp[-1] | strip %}
+              <li>base_url_submenu_name:{{base_url_submenu_name}}</li>
                 {% if collection_root_name == base_url_submenu_name %}
-                  {% if base_url_list.size == 1 %}
+                <!--对于collection根目录下的文件，如果本collection下面没有子文件夹，说明本collection目录下的文档都是一个分类 -->
+                  {% if base_url_list.size == 1 %} 
                     <li><a href="#本分类-ref"> 本分类 </a></li>
-                  {% else %}
+                  {% else %} <!-- 否则这些文档就是没有分类的 -->
                     <li><a href="#未分类-ref"> 未分类 </a></li>
                   {% endif %}
 
