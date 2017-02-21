@@ -1,9 +1,9 @@
 menus:
-- menu_name_cn: 阅读笔记
+- menu_name_cn: 阅读
   menu_name_en: ReadingNotes
   menu_list:
-  - Book_NeuralNetworksAndDeepLearning
-- menu_name_cn: 学术积累
+  - DeepLearning
+- menu_name_cn: 学术目录
   menu_name_en: ScholarThings
   menu_list: 
   - PaperToRead

@@ -7,9 +7,9 @@ author: Marquis
 banner: 学而不思则罔，思而不学则殆。
 baseurl: /MyBlog
 collections:
-  collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning:
+  collection_ReadingNotes_DeepLearning:
     output: true
-    permalink: /ReadingNotes/Book_NeuralNetworksAndDeepLearning/:path
+    permalink: /ReadingNotes/DeepLearning/:path
   collection_ScholarThings_Clustering:
     output: true
     permalink: /ScholarThings/Clustering/:path
@@ -37,7 +37,7 @@ defaults:
     layout: page
 - scope:
     path: ''
-    type: collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning
+    type: collection_ReadingNotes_DeepLearning
   values:
     layout: page
 description: Actually, less is more!
