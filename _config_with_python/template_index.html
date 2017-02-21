@@ -130,8 +130,10 @@ header: Posts By collection
                           {% endif %}
                         {% endif %}
                     {% endif %}                                   
-                  {% endfor %}
-            {% endif %}  
+                {% endfor %}
+
+              {% endif %}
+            {% endfor %}
 
               <!-- 无子目录分类的 -->                
                 {% if base_url_list.size == 1 %}
@@ -169,11 +171,7 @@ header: Posts By collection
                           {% endif %}
                         {% endif %}
                     {% endif %}                                   
-                  {% endfor %}  
-              
-            {% endfor %}
-
-
+                {% endfor %} 
 {% endraw %} 
             
           </div>
