@@ -1,5 +1,5 @@
 --- 
-title: Load Curve Clustering and Prediction
+title: On the Discrepancy Between Kleinberg's Clustering Axioms and $k$-Means Clustering Algorithm Behavior
 ---
 
 
