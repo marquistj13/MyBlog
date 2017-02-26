@@ -68,7 +68,7 @@ header: Posts By collection
             {% for base_url in base_url_list %}
             {% assign tmp = base_url | strip %}
               {% if tmp != "" %} 
-                {{base_url |  strip | remove: "/"}}{% if forloop.last == false %}^{% endif %}
+                {{base_url |  strip | remove_first: "/"}}{% if forloop.last == false %}^{% endif %}
               {% endif %}
             {% endfor %} 
             {% endcapture %}
