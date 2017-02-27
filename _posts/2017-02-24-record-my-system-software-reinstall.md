@@ -10,6 +10,8 @@ tag: [日常琐事]
 {:toc}
 
 2.23早上实在受不了已经充满了各种病毒的系统，中午吃完饭就重装了一个cn_windows_10_multiple_editions_version_1607_updated_jul_2016_x64_dvd_9056935 ,用的老王的秘钥，装好之后发现是professional的，哈哈，折腾了一天，终于将好多基本软件配置完毕了。
+### 截图
+greenshot
 
 ##  Emacs
 由于我以前的emacs-bin-w64-24.5-1是免安装的，因此直接将其拷过来就行了，配置文件在roaming目录，也一并拷过来，以前安装的包还在，哈哈。
@@ -20,6 +22,13 @@ tag: [日常琐事]
 在miktex的文档中，人家用的是 TeXworks编辑器，哈哈。
 哦，原来miktex自带TeXworks编辑器
 latexmk得自己下，用它的包管理器就行了。
+
+我发现不能用latexmk，就自己装了，然后提示perl不存在，就装了一个strawberry perl。
+原来的emacs配置还是无法调用latexm，一怒之下卸载miktex，装了ctex_full,但还是不能用，额，不想折腾了，就老老实实用pdflatex和xelatex吧
+
+以后要直接写tex了，不用org了，毕竟太费时间了，emacs的auctex挺好用的。
+
+注：不要过于折腾了，不要只顾着器而忘了道。
 
 ## AutoHotkey
 用来将Caps键变成Ctrl键，而Caps只能由Win+Caps实现啦。
@@ -39,6 +48,9 @@ https://github.com/SublimeText-Markdown/MarkdownEditing
 按照说明装了之后很幸福啦。
 
 这个插件很多快捷键特别好，谁用谁知道……
+
+还装了一个markdown preview的包：omnimarkuppreviewer,按快捷键 <kbd>ctrl+alt+o</kbd> 就可以在浏览器预览了
+
 
 ## Python IDE
 canopy已经装好了，它的ide我一直没有用过，界面有点不好看哈哈。
