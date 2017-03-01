@@ -7,6 +7,11 @@ title: 17.3.1 PixelNet Representation of the pixels, by the pixels, and for the 
 * content
 {:toc}
 
+
+## update
+Xiaodi Hou 组也有人搞了一篇 [Understanding Convolution for Semantic Segmentation](https://arxiv.org/pdf/1702.08502.pdf), 也用到了本文的PASCAL VOC-2012 dataset。
+都是像素级的……，而且设计DNN的好多细节，我就不下载来看了。
+
 ## 啦啦
 CMU的一群人搞的。还有[项目主页](http://www.cs.cmu.edu/~aayushb/pixelNet/)
 
