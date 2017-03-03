@@ -56,7 +56,9 @@ supervised classification - is being carried out.
 至于原因，则很简单。
 
 先看网络结构：
+
 ![](DeepClusteringusingAuto\网络结构.png)
+
 即，每一个classs都有K个cluster，我们训练的目的就是，当分类任务完成以后，每一个class的这K个node都得specialize成一个cluster。
 举个例子，在本文的实验中，minist数据集上，我们将小于5的数字的label设为0，反之则为1，这是个information非常少的分类问题，当分类问题搞定以后，分类为0的那五个node就得分布specialize成识别0-4这五个数字的cluster。
 
