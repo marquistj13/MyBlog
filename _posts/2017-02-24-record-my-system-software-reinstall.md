@@ -157,3 +157,5 @@ jekyll serve --port 3000 -b ""
 ## Canopy
 还是原来的味道，人家自带了jinja2, 为了用我写的Jekyll的py配置脚本，又装了PyYAML，哈哈。够用了
 
+## 电子阅读器转换软件
+在 [Reading arXiv preprints on an e-reader?](https://www.reddit.com/r/MachineLearning/comments/5xtnl4/d_reading_arxiv_preprints_on_an_ereader/)提到了两个软件，一个是应用程序 [k2pdfopt](http://www.willus.com/k2pdfopt/),可以直接转换pdf，一个是Chrome扩展 [dontprint](http://dontprint.net/)
