@@ -1,5 +1,6 @@
 --- 
-title: 17.3.1 PixelNet Representation of the pixels, by the pixels, and for the pixels.
+title: PixelNet Representation of the pixels, by the pixels, and for the pixels.
+date:   2017-03-1
 ---
 
 

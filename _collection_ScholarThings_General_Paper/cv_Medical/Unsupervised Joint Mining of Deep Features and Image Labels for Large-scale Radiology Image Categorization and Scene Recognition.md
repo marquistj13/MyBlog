@@ -1,5 +1,6 @@
 --- 
-title: 17.3.6 Unsupervised Joint Mining of Deep Features and Image Labels for Large-scale Radiology Image Categorization and Scene Recognition
+title: Unsupervised Joint Mining of Deep Features and Image Labels for Large-scale Radiology Image Categorization and Scene Recognition
+date:   2017-03-06
 ---
 
 

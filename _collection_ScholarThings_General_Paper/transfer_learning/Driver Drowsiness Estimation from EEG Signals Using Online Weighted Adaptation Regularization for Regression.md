@@ -1,5 +1,6 @@
 --- 
-title: 17.3.1 Driver Drowsiness Estimation from EEG Signals Using Online Weighted Adaptation Regularization for Regression (OwARR)
+title:  Driver Drowsiness Estimation from EEG Signals Using Online Weighted Adaptation Regularization for Regression (OwARR)
+date:   2017-03-01
 ---
 
 

@@ -1,5 +1,6 @@
 --- 
-title: 17.2.16 A Graphical Social Topology Model for Multi-Object Tracking
+title:  A Graphical Social Topology Model for Multi-Object Tracking
+date:   2017-02-16
 ---
 
 

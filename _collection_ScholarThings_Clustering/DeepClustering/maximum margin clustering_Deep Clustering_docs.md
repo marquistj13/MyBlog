@@ -1,5 +1,6 @@
 --- 
-title: 17.3.2 涉及到maximum margin clustering的论文及其它Deep Clustering的资料
+title: 涉及到maximum margin clustering的论文及其它Deep Clustering的资料
+date:   2017-03-2
 ---
 
 

@@ -1,5 +1,6 @@
 --- 
-title: 17.3.2 Deep Clustering using Auto-Clustering Output Layer
+title: Deep Clustering using Auto-Clustering Output Layer
+date:   2017-03-2
 ---
 
 

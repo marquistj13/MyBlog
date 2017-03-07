@@ -1,5 +1,6 @@
 --- 
-title: 17.2.28 Scalable and Distributed Clustering via Lightweight Coresets
+title: Scalable and Distributed Clustering via Lightweight Coresets
+date:   2017-02-28
 ---
 
 

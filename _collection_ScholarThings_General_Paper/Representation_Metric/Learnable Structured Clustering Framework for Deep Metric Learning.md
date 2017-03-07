@@ -1,5 +1,6 @@
 --- 
-title: 17.2.27 Learnable Structured Clustering Framework for Deep Metric Learning
+title: Learnable Structured Clustering Framework for Deep Metric Learning
+date:   2017-02-27
 --- 
 
 * content

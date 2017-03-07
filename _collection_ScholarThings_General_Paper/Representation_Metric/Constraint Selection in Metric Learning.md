@@ -1,5 +1,5 @@
 --- 
-title: 17.3.7 Constraint Selection in Metric Learning
+title: Constraint Selection in Metric Learning
 date:   2017-03-07
 ---
 

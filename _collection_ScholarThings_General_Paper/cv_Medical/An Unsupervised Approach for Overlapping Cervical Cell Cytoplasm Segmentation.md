@@ -1,5 +1,6 @@
 --- 
-title: 17.2.21 An Unsupervised Approach for Overlapping Cervical Cell Cytoplasm Segmentation
+title: An Unsupervised Approach for Overlapping Cervical Cell Cytoplasm Segmentation
+date:   2017-02-21
 ---
 
 

@@ -1,5 +1,6 @@
 --- 
-title: 17.3.2 Deep Forest Towards An Alternative to Deep Neural Networks
+title:  Deep Forest Towards An Alternative to Deep Neural Networks
+date:   2017-03-02
 ---
 
 
