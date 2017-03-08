@@ -35,7 +35,7 @@ the overall idea is：
 关键思想是 _追踪当前聚类结果与所有局部最优的距离_。
 
 就是下图表面了stochastic k-means against batch k-means on the RCV1 dataset：
-![](ScalableandDistributed\relative_performance.png)
+![](ScalableandDistributed/relative_performance.png)
 这就激发了作者想要characterize the convergence rate of stochastic k-means。探究为啥有局部极值，以及mini-batch size的影响等。
 
 ## 实验部分
@@ -43,4 +43,4 @@ the overall idea is：
 _数据集_：RCV1 [12]。804414 newswire stories，每一额story 都是一个47236-dimensional sparse vector。
 
 收敛图，暂时看不懂，以后再看：
-![](ScalableandDistributed\convergence_graph.png)
+![](ScalableandDistributed/convergence_graph.png)
