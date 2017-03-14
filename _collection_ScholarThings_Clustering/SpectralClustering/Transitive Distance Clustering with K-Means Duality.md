@@ -66,5 +66,12 @@ transitive distance的概念古已有之
 
 ## 实验部分
 好多奇形怪状的形状，还有 Iris and Ionosphere datasets。
+在第六页的Figure 5中，本文的算法以及NJW algorithm都能hold住很复杂的形状，这些形状貌似能hold住Data clustering: 50 years beyond K-means的Fig.2？
+_先试一下NJW吧_
+
 
 对于Image segmentation，先搞superpixel（用G. Mori. Guiding Model Search Using Segmentation. ICCV, 2005.的方法），用 $\chi^2$ distance.
+
+## 总结
+尽管此文有理论支撑，但有了理论之后，其各种假设也就明显了起来。
+在transitive distance的定义中， _是不允许类间重叠的_，但在Figure 5中，貌似这个假设也没事啊？
