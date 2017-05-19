@@ -1,6 +1,5 @@
 --- 
-title:  A novel density-based fuzzy clustering algorithm for low
-dimensional feature space
+title:  A novel density-based fuzzy clustering algorithm for low dimensional feature space
 date:   2017-5-19
 ---
 
