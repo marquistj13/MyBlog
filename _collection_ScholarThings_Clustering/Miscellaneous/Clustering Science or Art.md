@@ -1,5 +1,5 @@
 --- 
-title: Clustering: Science or Art?
+title: Clustering Science or Art?
 date:   2017-5-18
 ---
 
