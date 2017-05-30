@@ -22,6 +22,9 @@
       </ul>    
       {% endraw %}
        <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a><span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次</span></a>
+        </li>
         {% for menu_iterm in menus -%}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ menu_iterm['menu_name_cn'] }}<b class="caret"></b></a>
