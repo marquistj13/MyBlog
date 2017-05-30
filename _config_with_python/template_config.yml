@@ -35,11 +35,9 @@ kramdown:
 
 FB:
   comments :
-    provider : duoshuo
-    duoshuo:
-        short_name : "marquistj13"
-    # disqus :
-    #     short_name : 
+    provider : disqus   
+    disqus :
+        short_name : marquistj13
     # facebook :
     #   appid : 123
     #   num_posts: 5
@@ -68,13 +66,16 @@ defaults:
     type: collection_ScholarThings_test_scholar
   values:
     layout: page
+    comments: true
 - scope:
     path: ''
     type: collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning
   values:
     layout: page
+    comments: true
 - scope:
     path: ''
     type: collection_ReadingNotes_test
   values:
     layout: page
+    comments: true

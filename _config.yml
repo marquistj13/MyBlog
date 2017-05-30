@@ -1,8 +1,8 @@
 FB:
   comments:
-    duoshuo:
+    disqus:
       short_name: marquistj13
-    provider: duoshuo
+    provider: disqus
 author: Marquis
 banner: 学而不思则罔，思而不学则殆。
 baseurl: /MyBlog
