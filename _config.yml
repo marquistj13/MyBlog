@@ -1,9 +1,8 @@
 FB:
   comments:
-    disqus:
-      short_name: marquistj13
     provider: disqus
 author: Marquis
+baidu_analysis: 94be4b0f9fc5d94cc0d0415ea6761ae9
 banner: 学而不思则罔，思而不学则殆。
 baseurl: /MyBlog
 collections:

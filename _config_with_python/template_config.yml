@@ -33,11 +33,13 @@ kramdown:
   gfm_quirks: paragraph_end
   smart_quotes: lsquo,rsquo,ldquo,rdquo
 
+baidu_analysis: 94be4b0f9fc5d94cc0d0415ea6761ae9
+
 FB:
   comments :
     provider : disqus   
-    disqus :
-        short_name : marquistj13
+    # disqus :
+    #     short_name : marquistj13 #我直接复制disqus提供的代码，不用这个了。
     # facebook :
     #   appid : 123
     #   num_posts: 5
@@ -66,16 +68,13 @@ defaults:
     type: collection_ScholarThings_test_scholar
   values:
     layout: page
-    comments: true
 - scope:
     path: ''
     type: collection_ReadingNotes_Book_NeuralNetworksAndDeepLearning
   values:
     layout: page
-    comments: true
 - scope:
     path: ''
     type: collection_ReadingNotes_test
   values:
     layout: page
-    comments: true
