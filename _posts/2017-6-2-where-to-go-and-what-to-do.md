@@ -2,7 +2,7 @@
 layout: post
 title:  何去何从
 categories: 个人笔记
-tag: [规划，学术]
+tag: [规划,学术]
 ---
 
 
@@ -18,7 +18,7 @@ tag: [规划，学术]
 当然最重要的原因还是没有label啊，有监督的DNN的参数能够由误差向量来guide the Learning proce，这时候参数多少基本都无所谓了，但没有label的话，那就是 _臣妾做不到啊_。
 
 我坚信聚类可以完成的task绝非如此简单，隐约感觉它可以像有监督那样有令人信服的Learning的概念，即能够 generalize。 怎么算令人信服呢？当然是更加complicated的application了，而非以往依赖于矢量量化oriented的应用。
-当然，现在的deep clustering也有做的不错的了，如一篇arxiv的文章Deep Clustering using Auto-Clustering Output Layer（我的笔记在[这儿]( https://marquistj13.github.io/MyBlog/ScholarThings/Clustering/DeepClustering/Deep%20Clustering%20using%20Auto-Clustering%20Output%20Layer ），貌似这篇文章刚被被icml拒掉了，我在https://2017.icml.cc/Conferences/2017/AcceptedPapersInitial 没有找到它啊。
+当然，现在的deep clustering也有做的不错的了，如一篇arxiv的文章Deep Clustering using Auto-Clustering Output Layer（我的笔记在[这儿](https://marquistj13.github.io/MyBlog/ScholarThings/Clustering/DeepClustering/Deep%20Clustering%20using%20Auto-Clustering%20Output%20Layer)，貌似这篇文章刚被被icml拒掉了，我在https://2017.icml.cc/Conferences/2017/AcceptedPapersInitial 没有找到它啊。
 
 聚类老玩儿法感觉快行不通了啊，哦，icml2017收录了一篇 Towards K-means-friendly Spaces: Simultaneous Deep Learning and Clustering，这个题目很明显了嘛，类似于用DNN做特征提取，representation Learning啊。要不要往这个方向走呢？目测这么走下去还是老路子嘛。
 
