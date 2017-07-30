@@ -32,7 +32,8 @@ File "scipy\linalg\setup.py", line 20, in configuration
 这时候我发现canopy有3.5版本的，遂安装了一下，人家没有把python加入path，所以没法直接在cmd中调用Python，然后想到以后可能跟各种Python版本打交道，我就因为这个把用了将近三年的canopy卸载了，今天下午一直重装了好几次canopy，哦哦。
 马后炮：canopy的virtual env功能并不友好，详见[Canopy Command Line Interface (CLI)](http://docs.enthought.com/canopy/configure/canopy-cli.html)。
 
-## 启用anaconda
+## 启用anaconda 安装TensorFlow和keras
+*TensorFlow*
 据说anaconda创建新的py环境特别简单方便，试一下吧。
 
 下载anaconda3时装的是py3.6，而TensorFlow要求Windows上需要安装py3.5，因此，按照 [conda官方:Managing Python](https://conda.io/docs/py2or3.html) 的指示
@@ -56,5 +57,7 @@ File "scipy\linalg\setup.py", line 20, in configuration
 
 然后继续`pip install --upgrade tensorflow-gpu`,就安装成功了。
 
-注：用conda创建新的环境的时候可以指定需要安装哪些版本的各种库。
+注：用conda创建新的环境的时候可以指定需要安装哪些版本的各种库。详见：[Managing packages](https://conda.io/docs/using/pkgs.html)
 
+*keras*
+安装Keras `pip install keras`,直接就可以用TensorFlow的后端了。
