@@ -66,3 +66,23 @@ menus:
 **在每次对`template_config.yml`或者`menu_config.yml`进行修改以后必须运行一次`buildMenu.py`**。`buildMenu.py`依赖于两个Python library：`PyYAML`和`jinja2`。
 
 **如果在本地安装了Jekyll，就不需要每次push到github去看效果：**可以使用`jekyll serve -w -b ""`方便地进行博客的实时预览，这在书写markdown的时候非常有用。
+
+推荐的本地运行脚本
+------------------------------------
+在Windows机器上，将以下文件保存为`*.bat`,运行即可：
+```
+@echo on 
+cd C:\Users\Marquis\Documents\GitLocalFile\MyBlog\_config_with_python
+C:\Users\Marquis\Anaconda3\envs\py27\python.exe buildMenu.py
+
+cd ..\
+jekyll serve --port 3000 -b ""
+```
+
+**关于Python的安装，我最近弃掉了canopy，改用anaconda3，而anaconda3默认带的是py3.6，因此得安装一个py2.7的环境，另外顺便安装以下两个Python library：`PyYAML`和`jinja2`**
+```
+conda -n py27 python=2.7 PyYAML jinja2
+```
+这样就会在`Anaconda3\envs`目录下生成py27目录。
+
+由于anaconda不推荐将Python加入环境变量，因此，我们直接用其绝对路径`C:\Users\Marquis\Anaconda3\envs\py27\python.exe`即可。
