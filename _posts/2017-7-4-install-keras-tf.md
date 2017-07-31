@@ -33,7 +33,7 @@ File "scipy\linalg\setup.py", line 20, in configuration
 马后炮：canopy的virtual env功能并不友好，详见[Canopy Command Line Interface (CLI)](http://docs.enthought.com/canopy/configure/canopy-cli.html)。
 
 ## 启用anaconda 安装TensorFlow和keras
-*TensorFlow*
+* TensorFlow
 据说anaconda创建新的py环境特别简单方便，试一下吧。
 
 下载anaconda3时装的是py3.6，而TensorFlow要求Windows上需要安装py3.5，因此，按照 [conda官方:Managing Python](https://conda.io/docs/py2or3.html) 的指示
@@ -59,5 +59,23 @@ File "scipy\linalg\setup.py", line 20, in configuration
 
 注：用conda创建新的环境的时候可以指定需要安装哪些版本的各种库。详见：[Managing packages](https://conda.io/docs/using/pkgs.html)
 
-*keras*
+* keras
 安装Keras `pip install keras`,直接就可以用TensorFlow的后端了。
+
+## 在jupyter notebook中使用tf
+由于我用conda创建py35环境的时候同时安装了anaconda，即用的是 `conda create -n py35 python=3.5 anaconda` 因此它已经在py35给我安装了ipython 和 jupyter，但不知是和原因，无法成功在jupyter中使用tf，根据 [这篇博客:Windows环境下安装TensorFlow并在Jupyter notebook上使用](http://blog.csdn.net/index20001/article/details/73555182) 
+的介绍(其实[这一篇博客](http://blog.csdn.net/shengyingpo/article/details/70237754)更简洁，看这个就行了)，进入py35环境后，运行下面三个命令：
+```
+conda install ipython
+conda install jupyter
+ipython kernelspec install-self --user
+```
+即可，但上面那篇博客的细节可以不理了，解释的不一定对。实际上第一个命令给我更新了ipython，第二个啥都没做，第三个的输出为：
+>[TerminalIPythonApp] WARNING | Subcommand `ipython kernelspec` is deprecated and will be removed in future versions.
+[TerminalIPythonApp] WARNING | You likely want to use `jupyter kernelspec` in the future
+[InstallNativeKernelSpec] WARNING | `jupyter kernelspec install-self` is DEPRECATED as of 4.0. You probably want `ipython kernel install` to install the IPython kernelspec.
+[InstallNativeKernelSpec] Removing existing kernelspec in C:\Users\Marquis\AppData\Roaming\jupyter\kernels\python3
+[InstallNativeKernelSpec] Installed kernelspec python3 in C:\Users\Marquis\AppData\Roaming\jupyter\kernels\python3
+
+我也看不出来原因哈，反正能用了。
+
