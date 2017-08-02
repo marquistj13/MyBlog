@@ -32,7 +32,7 @@ File "scipy\linalg\setup.py", line 20, in configuration
 这时候我发现canopy有3.5版本的，遂安装了一下，人家没有把python加入path，所以没法直接在cmd中调用Python，然后想到以后可能跟各种Python版本打交道，我就因为这个把用了将近三年的canopy卸载了，今天下午一直重装了好几次canopy，哦哦。
 马后炮：canopy的virtual env功能并不友好，详见[Canopy Command Line Interface (CLI)](http://docs.enthought.com/canopy/configure/canopy-cli.html)。
 
-## 启用anaconda 安装TensorFlow和keras
+## 启用anaconda 安装TensorFlow和keras （此为y3.5的情形，已过时，现在tf1.2.1已经支持py3.6了）
 * TensorFlow
 据说anaconda创建新的py环境特别简单方便，试一下吧。
 
@@ -52,7 +52,9 @@ File "scipy\linalg\setup.py", line 20, in configuration
 
 有可能会出现如下错误：
  >   FileNotFoundError: [WinError 2] 系统找不到指定的文件。 一堆路径然后 setuptools-27.2.0-py3.5.egg
-    此时只需要conda install setuptools就行了。
+    
+此时只需要`conda install setuptools`就行了。
+如果还不行就再运行一次`pip install setuptools`
     
 
 然后继续`pip install --upgrade tensorflow-gpu`,就安装成功了。
@@ -79,3 +81,9 @@ ipython kernelspec install-self --user
 
 我也看不出来原因哈，反正能用了。
 
+## update：直接在最新版的anaconda3.6安装tf就行了。
+在 https://github.com/tensorflow/tensorflow/blob/r1.2/RELEASE.md 1.2版本的更新中，我们看到从Release 1.2.0开始已经支持 *Python 3.6 support on Windows.*了，只是官方的[安装文档](https://www.tensorflow.org/install/install_windows)没有更新，导致我又用anaconda装了3.5版本的Python和tf。
+
+和py35的情况差不多
+先 `conda install setuptools`
+然后`pip install --upgrade tensorflow-gpu`(如果还不行就再运行一次`pip install setuptools`)
