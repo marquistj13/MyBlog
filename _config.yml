@@ -9,6 +9,9 @@ collections:
   collection_ReadingNotes_DeepLearning:
     output: true
     permalink: /ReadingNotes/DeepLearning/:path
+  collection_ReadingNotes_ProgrammingSkills:
+    output: true
+    permalink: /ReadingNotes/ProgrammingSkills/:path
   collection_ScholarThings_Clustering:
     output: true
     permalink: /ScholarThings/Clustering/:path
@@ -37,6 +40,11 @@ defaults:
 - scope:
     path: ''
     type: collection_ReadingNotes_DeepLearning
+  values:
+    layout: page
+- scope:
+    path: ''
+    type: collection_ReadingNotes_ProgrammingSkills
   values:
     layout: page
 description: Actually, less is more!

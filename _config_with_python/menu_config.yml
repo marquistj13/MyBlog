@@ -3,6 +3,7 @@ menus:
   menu_name_en: ReadingNotes
   menu_list:
   - DeepLearning
+  - ProgrammingSkills
 - menu_name_cn: 学术目录
   menu_name_en: ScholarThings
   menu_list: 
