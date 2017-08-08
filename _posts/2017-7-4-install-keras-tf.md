@@ -2,7 +2,7 @@
 layout: post
 title:  安装keras和tf
 categories: 深度学习
-tag: [Python]
+tag: [Python,Tensorflow]
 ---
 
 * content

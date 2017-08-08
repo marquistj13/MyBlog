@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  TensorFlow 基本函数
-categories: 博文阅读
-tag: [学术]
+categories: 深度学习
+tag: [Tensorflow]
 ---
 
 * content
@@ -82,3 +82,16 @@ shape(expand_dims(t2, 2)) ==> [2, 3, 1, 5]
 shape(expand_dims(t2, 3)) ==> [2, 3, 5, 1]
 ```
 
+### tf.reduce_sum
+Computes the sum of elements across dimensions of a tensor.
+和np的sum一样啊，只不过参数多了一点，多了个keep_dim的参数，不过一般用不着。
+
+```py
+# 'x' is [[1, 1, 1]
+#         [1, 1, 1]]
+tf.reduce_sum(x) ==> 6
+tf.reduce_sum(x, 0) ==> [2, 2, 2]
+tf.reduce_sum(x, 1) ==> [3, 3]
+tf.reduce_sum(x, 1, keep_dims=True) ==> [[3], [3]]
+tf.reduce_sum(x, [0, 1]) ==> 6
+```
