@@ -95,3 +95,33 @@ tf.reduce_sum(x, 1) ==> [3, 3]
 tf.reduce_sum(x, 1, keep_dims=True) ==> [[3], [3]]
 tf.reduce_sum(x, [0, 1]) ==> 6
 ```
+
+### tf.dynamic_partition
+文档说的很麻烦，直接看例子吧：
+```py
+ # Scalar partitions.
+    partitions = 1
+    num_partitions = 2
+    data = [10, 20]
+    outputs[0] = []  # Empty with shape [0, 2]
+    outputs[1] = [[10, 20]]
+
+    # Vector partitions.
+    partitions = [0, 0, 1, 1, 0]
+    num_partitions = 2
+    data = [10, 20, 30, 40, 50]
+    outputs[0] = [10, 20, 50]
+    outputs[1] = [30, 40]
+```
+对于第一个标量的例子，`partitions = 1`就是指所有data都属于第一类。
+第二个例子很好理解了。
+
+顺便记录一下用到该函数的一段更新centroid的代码：
+```py
+def update_centroids(samples, nearest_indices, n_clusters):
+    # Updates the centroid to be the mean of all samples associated with it.
+    nearest_indices = tf.to_int32(nearest_indices)
+    partitions = tf.dynamic_partition(samples, nearest_indices, n_clusters)
+    new_centroids = tf.concat([tf.expand_dims(tf.reduce_mean(partition, 0), 0) for partition in partitions], 0)
+    return new_centroids
+```

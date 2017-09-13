@@ -63,12 +63,8 @@ dim 1:      T
 dim 0:    T
 ```
 但要想能够这么算，我们必须得要求T和对应的维度的数字一样（如与P一样）
-```py
-|7| ==> |7 7 7|
- |8|     |8 8 8|
- |9|     |9 9 9|
-```
-再换一个例子：To match a TxV matrix onto the MxNxPxQ array,我们必须制定两个 __对齐维度__
+
+再换一个例子：To match a TxV matrix onto the MxNxPxQ array,我们必须指定两个 __对齐维度__
 ```py
           MxNxPxQ
 dim 2,3:      T V
