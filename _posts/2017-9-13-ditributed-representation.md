@@ -9,6 +9,34 @@ tag: [学术]
 {:toc}
 
 
+
+## 判别标准
+本节参考自：
+1. Deep Learning Book Ian Goodfellow Yoshua Bengio Aaron Courville
+2. Bengio, Yoshua. “Learning Deep Architectures for AI.” Foundations and Trends® in Machine Learning 2, no. 1 (November 15, 2009): 1–127. doi:10.1561/2200000006.
+3. Bengio, Y., A. Courville, and P. Vincent. “Representation Learning: A Review and New Perspectives.” IEEE Transactions on Pattern Analysis and Machine Intelligence 35, no. 8 (August 2013): 1798–1828. doi:10.1109/TPAMI.2013.50.
+4. Technical Report 1312
+
+
+
+如果参数数目与其能够distinguish的input region的数目成线性关系，那么就是非分布式的。
+如传统聚类算法，决策树，高斯混合，最近邻，都是如此。
+准确来说，就是需要 $O(N)$ 的参数来区分 $O(N)$ 的 input region
+
+很好理解，如对于kmeans来说，每一个cluster构成了对input region的划分，我要多划分几个区域，就得多聚几个类，这不就是线性的么
+对于KNN来说，进来一个input，它有k个近邻，但这个k个近邻也只能定义几个region，而且这k个近邻是没得选的，input固定了，近邻也就确定了，region也就确定了
+
+对于高斯混合来说，每一个input虽然可以由好几个值来确定，即各个mixture的成份系数组成一个vector，但是正如KNN一样，这几个高斯成份没得选，只能表示整个输入空间的一小部分区域，这就是书上说的 k个近邻以及高斯成份"cannot be readily be controlled separatedly from each other"
+
+
+更直截了当的说：
+>clustering algorithms do not build a distributed representation since the clusters are essentially mutually exclusive, whereas Independent Components Analysis (Bell & Sejnowski, 1995;
+Pearlmutter & Parra, 1996) and Principal Components Analysis or PCA (Hotelling, 1933) build a distributed representation.
+
+即，clusters本质上是互斥的。
+
+
+# 以下基础知识的内容来源
 主要参考自：[Deep Learning: What is meant by a distributed representation?](https://www.quora.com/Deep-Learning-What-is-meant-by-a-distributed-representation)
 
 ## 大体来讲
