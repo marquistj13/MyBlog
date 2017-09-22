@@ -38,13 +38,13 @@ tag: [心情]
 秘诀就是： __stay silent, better not say even a word__
 
 
-[三月份：不要浮躁啊]({{ site.baseurl }}{% 2017-3-26-do-not-be-impetuous %})
+[三月份：不要浮躁啊]({{ site.baseurl }}{% post_url 2017-3-26-do-not-be-impetuous %})
 >只要想清楚这些事只要你去花时间（或者money）面对，就能去解决，就不会浮躁了
 当然还有一个重要原因，看了很多快速引起快感的东西，如知乎论坛，尝试几天不去看的时候，没有了替代物。并且没有搞清楚自己到底要干啥，这时候就会胡思乱想
 欲速则不达。
 需要砸时间进去的，就得砸进去
 
-[五月份：啊，完全失败了]({{ site.baseurl }}{% 2017-5-13-totally-depressed %})
+[五月份：啊，完全失败了]({{ site.baseurl }}{% post_url 2017-5-13-totally-depressed %})
 >少刷知乎，少管闲事，把精力用到自己身上。
 该做的事一定要做，不要回避啊，年轻人。
 不要全将精力给浪费掉，要用起来啊。
