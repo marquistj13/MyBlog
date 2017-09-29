@@ -15,7 +15,7 @@ banner: 学而不思则罔，思而不学则殆。
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:title/
 
-plugins: [jekyll-paginate]
+plugins: [jekyll-paginate, jekyll-sitemap]
 paginate: 10
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile',_config_with_python]

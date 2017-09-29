@@ -73,5 +73,6 @@ paginate: 10
 permalink: /:year/:month/:title/
 plugins:
 - jekyll-paginate
+- jekyll-sitemap
 resume_site: ''
 url: https://marquistj13.github.io/

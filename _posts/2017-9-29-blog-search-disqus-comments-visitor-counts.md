@@ -46,3 +46,7 @@ disqus评论系统很容易加，我五月份加的，只记得按照disqus的�
 
 好了，就这么搞吧，在header加个搜索按钮，然后跳出一个搜索页面。
 
+另外，我发现这个搜索结果是根据google索引的结果来的，即新的博客文件可能搜索不到，因此需要建立sitemap，还好，github pages支持jekyll-sitemap这个控件，对于咱们的博客模板来说，在 `"_config_with_python\template_config.yml`中修改如下：
+`plugins: [jekyll-paginate, jekyll-sitemap]`,即加入jekyll-sitemap，如果需要在本地运行Jekyll预览的话，还需要在本地安装jekyll-sitemap，即
+`gem  install jekyll-sitemap`
+(注，以上sitemap的安装参考自[这个博客](http://ju.outofmemory.cn/entry/124653)以及[Sitemaps for GitHub Pages](https://help.github.com/articles/sitemaps-for-github-pages/))
