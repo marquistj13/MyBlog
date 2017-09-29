@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 我的书单
+title: 搜索
 permalink: /search/
 ---
 

@@ -55,8 +55,6 @@ exclude:
 - Gemfile
 - Rakefile
 - _config_with_python
-gems:
-- jekyll-paginate
 github: https://github.com/marquistj13/
 github_username: marquistj13
 highlighter: rouge
@@ -73,5 +71,7 @@ motto: It's our wits that make us men.
 name: Marquis
 paginate: 10
 permalink: /:year/:month/:title/
+plugins:
+- jekyll-paginate
 resume_site: ''
 url: https://marquistj13.github.io/
