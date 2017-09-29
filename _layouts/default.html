@@ -4,12 +4,29 @@
   {% include head.html %}
 
   <body class="index">
-
     {% include header.html %}
 <!--     {% include docs_header.html %} -->
     <!-- {% if page.title %}
       {% include banner.html %}
     {% endif %} -->
+
+    
+    <!-- 谷歌站内搜索 -->    
+    <li style="width:30%;margin: 0 auto;">
+          <script>
+            (function() {
+              var cx = '002598292490754315460:zj8g_xont2y';
+              var gcse = document.createElement('script');
+              gcse.type = 'text/javascript';
+              gcse.async = true;
+              gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(gcse, s);
+            })();
+          </script>
+          <gcse:search></gcse:search>
+    </li>   
+    
 
     {{ content }}
     
