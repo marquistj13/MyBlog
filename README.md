@@ -72,3 +72,7 @@ conda -n py27 python=2.7 PyYAML jinja2
 这样就会在`Anaconda3\envs`目录下生成py27目录。
 
 由于anaconda不推荐将Python加入环境变量，因此，我们直接用其绝对路径`C:\Users\Marquis\Anaconda3\envs\py27\python.exe`即可。
+
+update:加入谷歌站内搜索 disqus 评论 以及访问计数
+------------------------------------
+详见：https://marquistj13.github.io/MyBlog/2017/09/blog-search-disqus-comments-visitor-counts/
