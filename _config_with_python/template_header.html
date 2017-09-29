@@ -36,7 +36,12 @@
               {% endfor %}
           </ul>
         </li>
-      {%- endfor %}       
+      {%- endfor %}
+      {% raw %}
+       <li>
+         <a href="{{ '/search/' | prepend: site.baseurl }}">搜索</a>
+       </li> 
+      {% endraw %}     
       </ul>    
     </nav>
   </div>
