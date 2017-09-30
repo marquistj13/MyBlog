@@ -1,4 +1,5 @@
 # Site settings
+title: 侯桑的博客 #这个title用于jekyll-feed插件，不用这个插件的话就不需设置。
 name: Marquis
 email: marquistj13@gmail.com
 author: "Marquis"
@@ -15,7 +16,7 @@ banner: 学而不思则罔，思而不学则殆。
 #permalink: /:categories/:year/:month/:day/:title/
 permalink: /:year/:month/:title/
 
-plugins: [jekyll-paginate, jekyll-sitemap]
+plugins: [jekyll-paginate, jekyll-sitemap, jekyll-feed, jemoji]
 paginate: 10
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile',_config_with_python]

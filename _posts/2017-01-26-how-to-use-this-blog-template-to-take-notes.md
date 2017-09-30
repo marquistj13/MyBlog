@@ -76,7 +76,20 @@ cd C:\Users\Marquis\Documents\GitLocalFile\MyBlog\_config_with_python
 C:\Users\Marquis\Anaconda3\envs\py27\python.exe buildMenu.py
 
 cd ..\
-jekyll serve --port 3000 -b ""
+Jekyll serve --port 3000 -b ""
+```
+
+__update:__
+使用bundle之后，就得将`jekyll serve --port 3000 -b ""`改成`bundle exec jekyll serve --port 3000 -b ""`,详见[重装系统：软件安装过程记录]({{ site.baseurl }}{% post_url 2017-02-24-record-my-system-software-reinstall %}
+)
+因此改成：
+```
+@echo on 
+cd C:\Users\Marquis\Documents\GitLocalFile\MyBlog\_config_with_python
+C:\Users\Marquis\Anaconda3\envs\py27\python.exe buildMenu.py
+
+cd ..\
+bundle exec Jekyll serve --port 3000 -b ""
 ```
 
 **关于Python的安装，我最近弃掉了canopy，改用anaconda3，而anaconda3默认带的是py3.6，因此得安装一个py2.7的环境，另外顺便安装以下两个Python library：`PyYAML`和`jinja2`**
@@ -86,3 +99,8 @@ conda -n py27 python=2.7 PyYAML jinja2
 这样就会在`Anaconda3\envs`目录下生成py27目录。
 
 由于anaconda不推荐将Python加入环境变量，因此，我们直接用其绝对路径`C:\Users\Marquis\Anaconda3\envs\py27\python.exe`即可。
+
+update
+------------------------------------
+jekyll的安装详见[重装系统：软件安装过程记录]({{ site.baseurl }}{% post_url 2017-02-24-record-my-system-software-reinstall %}
+)

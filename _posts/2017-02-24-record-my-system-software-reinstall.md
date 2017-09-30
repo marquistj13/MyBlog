@@ -129,6 +129,7 @@ update: 这种设置跃点数的方式也有不完美之处，过一个多小时
 值得注意的事，后边的东西不需要用管理员权限去运行PowerShel了。
 
 算了，再啰嗦一下，安装`gem install bundler`的时候,会有SSL问题， 按照 http://guides.rubygems.org/ssl-certificate-update/ 来一遍就行了，然后打开PowerShel，安装：`gem install bundler ` 和 `gem install jekyll` 就行了。
+（注，Jekyll不需要单独安装，本段以下的安装可先跳过，详见以下update）
 
 亮出来我的bat脚本：
 ```
@@ -153,6 +154,24 @@ python buildMenu.py
 cd ..\
 jekyll serve --port 3000 -b ""
 ```
+
+__update__：
+_17.9.30更新：_ 安装好bundle之后，Jekyll相关的gem不需要一个个安装了，只需要在blog site的根目录建立一个名为Gemfile的纯文本即可，github官方出了个本地预览的介绍，即 [Setting up your GitHub Pages site locally with Jekyll
+](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/#keeping-your-site-up-to-date-with-the-github-pages-gem),按照这个页面的介绍，再加上我的插件需求，暂定Gemfile内容如下：
+```
+source 'https://rubygems.org'
+gem 'github-pages', group: :jekyll_plugins
+gem 'jekyll-feed'
+gem 'jekyll-paginate'
+gem 'jekyll-sitemap'
+gem 'jemoji'
+```
+然后，直接 `bundle install` 就行了，以后更新的话，直接 `bundle update`, 当然执行这些命令的时候一定要cd到本目录，要不然会提示找不到gem文件。
+另外，由于各种版本问题，上面的 `jekyll serve --port 3000 -b ""` 可能会运行不了了，根据 [这个页面](https://github.com/jekyll/jekyll/issues/3084) 的介绍，这时候就得改为 `bundle exec jekyll serve --port 3000 -b ""`
+
+另外，本地运行脚本的配置详见：[如何使用本模板实现note-taking的purpose]({{ site.baseurl }}{% post_url 2017-01-26-how-to-use-this-blog-template-to-take-notes %}
+)
+__注意：__如果使用了'jekyll-feed'插件，那么必须在_configure中指定一个title，要不然会报错。此插件的使用详见：[Jekyll Feed plugin](https://github.com/jekyll/jekyll-feed)
 
 ## Canopy
 还是原来的味道，人家自带了jinja2, 为了用我写的Jekyll的py配置脚本，又装了PyYAML，哈哈。够用了

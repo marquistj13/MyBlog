@@ -62,7 +62,7 @@ cd C:\Users\Marquis\Documents\GitLocalFile\MyBlog\_config_with_python
 C:\Users\Marquis\Anaconda3\envs\py27\python.exe buildMenu.py
 
 cd ..\
-jekyll serve --port 3000 -b ""
+bundle exec jekyll serve --port 3000 -b ""
 ```
 
 **关于Python的安装，我最近弃掉了canopy，改用anaconda3，而anaconda3默认带的是py3.6，因此得安装一个py2.7的环境，另外顺便安装以下两个Python library：`PyYAML`和`jinja2`**
@@ -76,3 +76,7 @@ conda -n py27 python=2.7 PyYAML jinja2
 update:加入谷歌站内搜索 disqus 评论 以及访问计数
 ------------------------------------
 详见：https://marquistj13.github.io/MyBlog/2017/09/blog-search-disqus-comments-visitor-counts/
+
+update:具体安装细节
+------------------------------------
+详见：https://marquistj13.github.io/MyBlog/2017/01/how-to-use-this-blog-template-to-take-notes/
