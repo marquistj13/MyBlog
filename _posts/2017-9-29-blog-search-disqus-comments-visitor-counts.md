@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  jekyll博客加入谷歌站内搜索 disqus 评论 以及访问计数
+title:  jekyll博客加入谷歌站内搜索 disqus 评论 以及访问计数 谷歌站长统计
 categories: 个人笔记
 tag: [心情]
 ---
@@ -50,3 +50,6 @@ disqus评论系统很容易加，我五月份加的，只记得按照disqus的�
 `plugins: [jekyll-paginate, jekyll-sitemap]`,即加入jekyll-sitemap，如果需要在本地运行Jekyll预览的话，还需要在本地安装jekyll-sitemap，即
 `gem  install jekyll-sitemap`
 (注，以上sitemap的安装参考自[这个博客](http://ju.outofmemory.cn/entry/124653)以及[Sitemaps for GitHub Pages](https://help.github.com/articles/sitemaps-for-github-pages/))
+
+## 谷歌站长工具
+需要在google 站长工具的Search Console中验证网站所有权，即下载一个HTML的验证文件，上传到网站根目录即可。
