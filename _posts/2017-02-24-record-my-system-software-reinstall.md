@@ -14,7 +14,7 @@ tag: [日常琐事]
 ##  zotero
 需要安装 Zotero Better bittex 插件，然后选择 文件-导出文献库，保存好之后这个bib文件就能实时更新了。
 另外关于同步文献的策略，我将索引文件放到zotero的服务器上，附件（pdf啦）放到坚果云。具体设置如图：
-![]({{ '/blog_images/2017-02-24-record-my-system-software-reinstall/zotero_storage.jpg' | prepend: site.baseurl}})
+![]({{ '/blog_images/2017-02-24-record-my-system-software-reinstall/zotero_storage.png' | prepend: site.baseurl}})
 
 ## 截图
 greenshot
