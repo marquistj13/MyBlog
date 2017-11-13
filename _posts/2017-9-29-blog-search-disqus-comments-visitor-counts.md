@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  jekyll博客加入谷歌站内搜索 disqus 评论 以及访问计数 谷歌站长统计
-categories: 个人笔记
-tag: [心情]
+categories: 编辑器等文档工具
+tag: [Jekyll]
 ---
 
 * content
