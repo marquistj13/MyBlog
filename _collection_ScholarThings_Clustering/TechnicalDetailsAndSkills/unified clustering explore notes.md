@@ -41,3 +41,32 @@ Saglam, Ali, and Nurdan Akhan Baykan. “Sequential Image Segmentation Based on 
 我的想法和这个还是有很大差别的吧。
 我们这里没有已知的同一个cluster的点，也没有label，
 一种思路：将prototype的概念泛化，变成prototype function，以融合prototype和distance function。每一个点不能以原尺度进行计算，也就是说，其绝对数值的意义不大了，关键是周围领域的关系，
+
+## 总结
+综上，为了达到一个目标：将不同视角和shape的同一种对象（如aeroplane）consider 为同一个cluster
+我们要同时利用两个信息：
+1. 邻域信息（用于distance或特征的计算）
+2. common structure的信息（要想法放到目标函数中）
+关于第二点，也可以说要搞出来一直学习机制以discover多个image的重复结构。
+
+## 实现
+像素值+邻域值 共同决定了 该像素的归属。
+### 目标函数
+在有label的时候，目标函数中几乎不需要input的直接参与，只需要网络输出和label就行了。
+无label的时候，input是否也可以回避？
+亦即将common structure的loss直接加进去，怎么加？
+
+以往prototype based clustering基本上会出现每一个 data point 与各个prototype的误差，或者各种奇形怪状的distance function。
+这个其实就是一种common structure类型的loss。如KMeans，每一个data point（对于图像来说就是整个图像了，而非像素点），但未免有一点点不太合理，这里每一个data point分别于各个prototype（每一个prototype可以看作一个common structure）产生一个loss，总的目标函数是让所有点的总的loss最小。
+
+如果能够自动确定common structure的数目就好了。
+占整个图像major region的像素点肯定对这个loss的贡献最大，故将其聚为一类是learn的必然结果，至于这个loss的形式如何，值得思考啊。
+上面的loss，可以是单一image内的loss，也可以是image间的loss
+按照这个思路，只需要在一个image上进行操作就行了，那么多个image的意义何在？很明显用于弥补单一image的初始分类时的邻域利用的缺陷，有可能我先在第一个image的segmentation比较粗糙，按照第一个image调教的参数的模型在第二个image上进行segmentation会很不好，那么第二个image也会对这个segmentation算法进行调教。
+这个模式在有label的NN领域是很常见的，但在clustering领域貌似没见过？
+传统clustering要么将很多aeroplane的images聚成一类，要么只在单一的image内聚类（或称分割），各个image之间互不通信。
+采用这种模式之后就得研究如何先用一组参数进行分割，然后考虑这个分割参数在下一个image上的performance。但是如何定义loss呢。这个loss会不会又落入俗套，导致依然很难训练？
+我就知道光有一种卷积操作是不够的，毕竟一种卷积操作只能搞定一种类型的特征，在cnn中，一般有好多个feature map（对于各种卷积操作），看来几何特征的提取还是CNN最拿手啊。
+算了，还是不硬往DNN那边凑了，还是回到聚类领域吧。
+
+每一个cluster有一个固定像素的prototype，如 $10 \product 10$ 的。 每个data point 参与运算的时候，应考虑其邻域，如 $10 \product 10$ 邻域（边界点没法处理了）。
