@@ -19,10 +19,12 @@ tag: [日常琐事]
 ## 截图
 greenshot
 
-##  Emacs
-由于我以前的emacs-bin-w64-24.5-1是免安装的，因此直接将其拷过来就行了，配置文件在roaming目录，也一并拷过来，以前安装的包还在，哈哈。
 
 ## LaTeX
+__update 17.11.19:__ 
+现在用texlive 2017了
+
+__原安装：__
 以前用的是CTEX_full,它的后台是miktex，我想自己装，哈哈，就单独下了个miktex最新版装了
 
 在miktex的文档中，人家用的是 TeXworks编辑器，哈哈。
@@ -36,7 +38,7 @@ latexmk得自己下，用它的包管理器就行了。
 
 注：不要过于折腾了，不要只顾着器而忘了道。
 
-__update:__ 现在用texlive了
+
 
 ## AutoHotkey
 用来将Caps键变成Ctrl键，而Caps只能由Win+Caps实现啦。
@@ -61,17 +63,23 @@ https://github.com/SublimeText-Markdown/MarkdownEditing
 
 
 ## Python IDE
-canopy已经装好了，它的ide我一直没有用过，界面有点不好看哈哈。
-
+除了PyCharm，也可以用sublime的插件。
 我用了 http://damnwidget.github.io/anaconda/ 的Anaconda 包，应该不错吧。
 （注，我装MarkdownEditing的时候已经装了package control）。
 
 ## pdf阅读器
+__update__:
+六维有 Adobe Acrobat XI 的破解版，不想用福昕了
+__原安装：__
 福昕阅读器定制菜单以后发现右上角有一长条广告，解决方法：http://jingyan.baidu.com/article/ab0b56308e7bb3c15afa7d0b.html
 以上链接可能有点老，我的新版本的阅读器是这样的，文件->偏好设置->常规，到这里就可以看按到广告条的设置了。
-__update__:六维有 Adobe Acrobat XI 的破解版，不想用福昕了
+
 
 ## GitHub 的UI
+__update 17.11.19:__ 
+刚装上github Windows
+要是在cmd上运行git的话，估计还得安装Git for Windows
+__原安装：__
 它只能在线安装，而在线下载的速度太感人了，虽然有人提供自己下好的版本，不过都不是最新版
 只好下了个GitKraken凑合一下吧，顺便尝试新事物。
 
@@ -120,6 +128,32 @@ update: 这种设置跃点数的方式也有不完美之处，过一个多小时
 最后，面对原生的v6，我还是知道如何选择滴。
 
 ## Jekyll
+__update__：
+_17.11.19更新：_ 
+现在[官方](https://jekyllrb.com/docs/windows/#installation)给出了一个更简单的本地安装方法，使用[RubyInstaller](https://rubyinstaller.org/),不需要像以前先安装Chocolatey那么麻烦了。
+
+安装好RubyInstaller之后，执行`gem install jekyll bundler`即可。
+至于各种gem的安装，还是采用Gemfile的方式比较方便。
+
+__update__：
+_17.9.30更新：_ 安装好bundle之后，Jekyll相关的gem不需要一个个安装了，只需要在blog site的根目录建立一个名为Gemfile的纯文本即可，github官方出了个本地预览的介绍，即 [Setting up your GitHub Pages site locally with Jekyll
+](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/#keeping-your-site-up-to-date-with-the-github-pages-gem),按照这个页面的介绍，再加上我的插件需求，暂定Gemfile内容如下：
+```
+source 'https://rubygems.org'
+gem 'github-pages', group: :jekyll_plugins
+gem 'jekyll-feed'
+gem 'jekyll-paginate'
+gem 'jekyll-sitemap'
+gem 'jemoji'
+```
+然后，直接 `bundle install` 就行了，以后更新的话，直接 `bundle update`, 当然执行这些命令的时候一定要cd到本目录，要不然会提示找不到gem文件。
+另外，由于各种版本问题，上面的 `jekyll serve --port 3000 -b ""` 可能会运行不了了，根据 [这个页面](https://github.com/jekyll/jekyll/issues/3084) 的介绍，这时候就得改为 `bundle exec jekyll serve --port 3000 -b ""`
+
+另外，本地运行脚本的配置详见：[如何使用本模板实现note-taking的purpose]({{ site.baseurl }}{% post_url 2017-01-26-how-to-use-this-blog-template-to-take-notes %}
+)
+__注意:__ 如果使用了'jekyll-feed'插件，那么必须在_configure中指定一个title，要不然会报错。此插件的使用详见：[Jekyll Feed plugin](https://github.com/jekyll/jekyll-feed)
+
+__原安装方法：__
 在Windows上安装比较麻烦，根据[官方](https://jekyllrb.com/docs/windows/#installation)的说明，重定向到[这个地方](https://davidburela.wordpress.com/2015/11/28/easily-install-jekyll-on-windows-with-3-command-prompt-entries-and-chocolatey/),先安装[Chocolatey](https://chocolatey.org/install),
 [这个地方](https://davidburela.wordpress.com/2015/11/28/easily-install-jekyll-on-windows-with-3-command-prompt-entries-and-chocolatey/)的安装方法是：
 `@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1 && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"`
@@ -164,24 +198,318 @@ cd ..\
 jekyll serve --port 3000 -b ""
 ```
 
-__update__：
-_17.9.30更新：_ 安装好bundle之后，Jekyll相关的gem不需要一个个安装了，只需要在blog site的根目录建立一个名为Gemfile的纯文本即可，github官方出了个本地预览的介绍，即 [Setting up your GitHub Pages site locally with Jekyll
-](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/#keeping-your-site-up-to-date-with-the-github-pages-gem),按照这个页面的介绍，再加上我的插件需求，暂定Gemfile内容如下：
-```
-source 'https://rubygems.org'
-gem 'github-pages', group: :jekyll_plugins
-gem 'jekyll-feed'
-gem 'jekyll-paginate'
-gem 'jekyll-sitemap'
-gem 'jemoji'
-```
-然后，直接 `bundle install` 就行了，以后更新的话，直接 `bundle update`, 当然执行这些命令的时候一定要cd到本目录，要不然会提示找不到gem文件。
-另外，由于各种版本问题，上面的 `jekyll serve --port 3000 -b ""` 可能会运行不了了，根据 [这个页面](https://github.com/jekyll/jekyll/issues/3084) 的介绍，这时候就得改为 `bundle exec jekyll serve --port 3000 -b ""`
 
-另外，本地运行脚本的配置详见：[如何使用本模板实现note-taking的purpose]({{ site.baseurl }}{% post_url 2017-01-26-how-to-use-this-blog-template-to-take-notes %}
-)
-__注意：__如果使用了'jekyll-feed'插件，那么必须在_configure中指定一个title，要不然会报错。此插件的使用详见：[Jekyll Feed plugin](https://github.com/jekyll/jekyll-feed)
 
 
 ## 电子阅读器转换软件
 在 [Reading arXiv preprints on an e-reader?](https://www.reddit.com/r/MachineLearning/comments/5xtnl4/d_reading_arxiv_preprints_on_an_ereader/)提到了两个软件，一个是应用程序 [k2pdfopt](http://www.willus.com/k2pdfopt/),可以直接转换pdf，一个是Chrome扩展 [dontprint](http://dontprint.net/)
+
+##  Emacs
+__update17.11.19:__
+我发现我以前的emacs安装都来自 [这个github](https://github.com/zklhp/emacs-w64/releases)， 里边有各种图片的dll，算是作者为windows优化好的，直接用就行了。
+解压后，直接运行。然后在 `C:\Users\houpe\AppData\Roaming` 加入一个名为 `.emacs` 的文件，该文件调用d盘的详细配置文件，即调用`D:\emacs\etc\.emacs`, 设置完以上两个文件以后。由于还需要安装 [cnfonts 原来叫： chinese-fonts-setup](https://github.com/tumashu/cnfonts#org8dffa7c), 因此要先执行 `M-x package-install RET cnfonts RET`,这样就会将其安装到 `C:\Users\houpe\AppData\Roaming\.emacs.d` 目录，注意我们重新安装emacs的时候只需要`C:\Users\houpe\AppData\Roaming\.emacs` 和`D:\emacs\etc\.emacs` 就行了。
+备份一下这俩文件：
+###  `C:\Users\houpe\AppData\Roaming\.emacs`
+{% raw  %}
+```
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(TeX-source-correlate-method (quote synctex))
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
+ '(TeX-view-program-list
+   (quote
+    (("Sumatra PDF" "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %o"))) t)
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (tango-dark)))
+ '(org-agenda-files
+   (quote
+    ("d:/emacs/paper/firstDraft.org" "d:/emacs/test.org")))
+ '(org-export-backends (quote (ascii beamer html latex md)))
+ '(org-file-apps
+   (quote
+    ((auto-mode . emacs)
+     ("\\.mm\\'" . default)
+     ("\\.x?html?\\'" . default)
+     ("\\.pdf\\'" . "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %s")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(load-file "D:/emacs/etc/.emacs")
+```
+{% endraw %}
+###  `D:\emacs\etc\.emacs`
+{% raw  %}
+```
+;;自动indent,即*号自动indent
+(setq org-startup-indented t)
+
+;;设置字体
+;; Setting English Font
+(set-face-attribute 'default nil :font "Consolas-14.0")
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+                    charset (font-spec :family "宋体"
+                                       :size 15)))
+  
+;;设置源，这是为了安装`chinese-fonts-setup'包
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+
+;;好了，可以启用设置字体的包了
+;;(require 'cnfonts)
+;; 让 cnfonts 随着 Emacs 自动生效。
+(cnfonts-enable)
+;; 让 spacemacs mode-line 中的 Unicode 图标正确显示。
+;; (cnfonts-set-spacemacs-fallback-fonts)
+
+;;(add-hook 'org-mode-hook 'wc-mode)
+;;(add-hook 'org-mode-hook 'turn-on-flyspell)
+;;将flyspell 的检查语言设为英文，要不然会报错，说找不到汉语词典
+;; use apsell as ispell backend  
+;;(setq-default ispell-program-name "aspell")  
+;; use American English as ispell default dictionary  
+;;(ispell-change-dictionary "american" t)  
+
+;;截屏
+;;http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html
+;;http://superuser.com/questions/312722/how-do-i-paste-a-raw-image-from-the-clipboard-into-emacs
+(defun org-screenshot ()
+  "Take a screenshot into a time stamped unique-named file in the same 
+directory as the org-buffer and insert
+a link to this file."
+  (interactive)
+  (setq tilde-buffer-filename
+        (replace-regexp-in-string "/" "\\" (buffer-file-name) t t))
+  (setq filename
+        (concat
+         (make-temp-name
+          (concat tilde-buffer-filename
+                  "_"
+                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".jpg"))
+  ;; Linux: ImageMagick: (call-process "import" nil nil nil filename)
+  ;; Windows: Irfanview
+  (call-process "C:\\Program\sFiles\s(x86)\\IrfanView\\i_view32.exe" nil nil nil (concat "/clippaste /convert=" filename))
+  (insert (concat "[[file:" filename "]]"))
+  (org-display-inline-images))
+;;设置快捷键
+(global-set-key [f5] 'org-screenshot)
+
+
+;;要显示图片需要下载图片dll至bin目录
+;;根据这个网页http://darksun.blog.51cto.com/3874064/1385541
+
+;;以下来自http://greybeard.iteye.com/blog/1345082
+;;显示行号  
+;;(require 'linum)  
+;;(global-linum-mode t)  
+;;显示列号    
+;;(column-number-mode t)  
+;;让Emacs 可以直接打开和显示图片
+(setq auto-image-file-mode t)
+
+
+
+
+;;Q：在org-mode中没有自动换行，实现方法参看Emacs org mode学习笔记A：修改配置文件SUBDIRS.EL或.emacs，加上一句即可
+(add-hook 'org-mode-hook (lambda () (setq truncate-lines nil)))
+
+;;加入TODO依赖
+(setq org-enforce-todo-dependencies t)
+;;对于TODO项，记录完成的时刻
+;;(setq org-log-done 'time)
+
+;;启动窗口最大化
+(run-with-idle-timer 0.05 nil 'w32-send-sys-command 61488)
+
+;;设置初始目录为emacs项目目录  
+
+;;设置latex的默认pdf阅读器
+;;来自http://tex.stackexchange.com/questions/52078/sumatrapdf-with-auctex-and-foxit-reader-as-the-default-viewer
+(setq TeX-view-program-list
+      '(("Sumatra PDF"
+         "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %o")));;这个地方是%o还是%s待定
+
+(setq TeX-view-program-selection
+      '(((output-dvi style-pstricks) "dvips and start")
+        (output-dvi "Yap")
+        (output-pdf "Sumatra PDF")
+        (output-html "start")))
+
+;;reftex设置 来自官方文档
+(require 'reftex)
+;;http://blog.modelworks.ch/?p=379 and http://www.clarkdonley.com/blog/2014-10-26-org-mode-and-writing-papers-some-tips.html
+(defun org-mode-reftex-setup ()
+  (load-library "reftex")
+  (and (buffer-file-name) (file-exists-p (buffer-file-name))
+       (progn
+     ;enable auto-revert-mode to update reftex when bibtex file changes on disk
+     (global-auto-revert-mode t)
+     (reftex-parse-all)
+     ;add a custom reftex cite format to insert links
+     ;(reftex-set-cite-format "[[papers:%l][%l]]: %t \n")
+     ))
+  (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
+)  
+
+(add-hook 'org-mode-hook 'org-mode-reftex-setup) 
+
+;;设置产生pdf的过程   这个是不行的
+;;(setq org-latex-to-pdf-process
+;; '("pdflatex %f" "biber %b" "pdflatex %f" "pdflatex %f"))
+;;设置产生pdf的过程        这个是可以的
+;;(setq org-latex-pdf-process
+;;  '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f" "latexmk -c"))
+;;这个也可以 有时是不行的，还是不要用了！
+;;(setq org-latex-pdf-process (list "latexmk -f -pdf %f" "latexmk -c"))
+(setq org-latex-pdf-process
+  '("latexmk -pdflatex='xelatex -interaction nonstopmode' -pdf -bibtex -f %f" "latexmk -c"))
+
+(require 'ox-latex)
+(unless (boundp 'org-latex-classes)
+  (setq org-latex-classes nil))
+(add-to-list 'org-latex-classes
+             '("IEEEtran"               
+               "\\documentclass{IEEEtran}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("ctexart"               
+               "\\documentclass{ctexart}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+
+
+;;移动，上下， 来自http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs
+(defun move-text-internal (arg)
+  (cond
+   ((and mark-active transient-mark-mode)
+    (if (> (point) (mark))
+        (exchange-point-and-mark))
+    (let ((column (current-column))
+          (text (delete-and-extract-region (point) (mark))))
+      (forward-line arg)
+      (move-to-column column t)
+      (set-mark (point))
+      (insert text)
+      (exchange-point-and-mark)
+      (setq deactivate-mark nil)))
+   (t
+    (let ((column (current-column)))
+      (beginning-of-line)
+      (when (or (> arg 0) (not (bobp)))
+        (forward-line)
+        (when (or (< arg 0) (not (eobp)))
+          (transpose-lines arg)
+          (when (and (eval-when-compile
+                       '(and (>= emacs-major-version 24)
+                             (>= emacs-minor-version 3)))
+                     (< arg 0))
+            (forward-line -1)))
+        (forward-line -1))
+      (move-to-column column t)))))
+
+(defun move-text-down (arg)
+  "Move region (transient-mark-mode active) or current line
+  arg lines down."
+  (interactive "*p")
+  (move-text-internal arg))
+
+(defun move-text-up (arg)
+  "Move region (transient-mark-mode active) or current line
+  arg lines up."
+  (interactive "*p")
+  (move-text-internal (- arg)))
+
+(global-set-key [M-S-up] 'move-text-up)
+(global-set-key [M-S-down] 'move-text-down)
+
+(add-hook 'org-mode-hook 'turn-on-reftex)
+
+(setq default-buffer-file-coding-system 'utf-8)
+
+;; c-x c-f 的时候用上下箭头来选择历史文件。
+;; from  http://stackoverflow.com/questions/3527150/open-recent-in-emacs
+(savehist-mode 1)
+ 
+
+ ;; auctex setup according to https://www.emacswiki.org/emacs/AUCTeX
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+(setq TeX-PDF-mode t)
+;; my add
+(add-hook 'LaTeX-mode-hook 'outline-minor-mode)
+
+;; from http://edutechwiki.unige.ch/en/Emacs  2.1 Some essential customization
+(setq default-directory "D:/emacs")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+'(case-fold-search t)
+'(current-language-environment "UTF-8")
+'(inhibit-startup-screen t)
+'(initial-major-mode (quote text-mode))
+'(initial-scratch-message nil)
+'(ispell-alternate-dictionary "c:/Program Files (x86)/Aspell/dict")
+'(ispell-complete-word-dict "c:/Program Files (x86)/Aspell/dict")
+;; '(ispell-program-name "c:/Program Files (x86)/Aspell/bin/aspell.exe")
+'(longlines-show-hard-newlines t)
+'(longlines-wrap-follows-window-size t)
+'(temporary-file-directory "c:/tmp")
+'(transient-mark-mode (quote identity)))
+
+;; from ac-ispell
+;; Completion words longer than 4 characters
+(custom-set-variables
+  '(ac-ispell-requires 4)
+  '(ac-ispell-fuzzy-limit 2))
+
+(eval-after-load "auto-complete"
+  '(progn
+      (ac-ispell-setup)))
+
+(add-hook 'LaTeX-mode-hook 'ac-ispell-ac-setup)
+
+;; https://github.com/cute-jumper/bing-dict.el
+(global-set-key (kbd "C-c d") 'bing-dict-brief)
+```
+{% endraw %}
+__原始方法：__
+由于我以前的emacs-bin-w64-24.5-1是免安装的，因此直接将其拷过来就行了，配置文件在roaming目录，也一并拷过来，以前安装的包还在，哈哈。
