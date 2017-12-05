@@ -82,9 +82,13 @@ __传统clustering要么将很多aeroplane的images聚成一类，要么只在�
 __那么有没有可能搞一个比较整体的representation呢？__
 
 ## 总结
-有label的时候，基本套路是：研究如何先用一组参数进行分割，然后考虑这个分割参数在下一个image上的performance。但这个调教模式在有label的NN领域是很常见的，在clustering领域貌似没见过。CNN作为有label学习的杰出代表，一个对象的representation是孤立的，是由很多部分组合起来的（分布式representation？）
+### 有监督学习的特点
+有监督学习的基本套路：研究如何先用一组参数进行分割，然后考虑这个分割参数在下一个image上的performance。
+但这个调教模式在clustering领域貌似没见过。
+CNN作为有label学习的杰出代表，一个对象的representation是孤立的，是由很多部分组合起来的（分布式representation？）
 
-在无label的领域，传统clustering要么将很多aeroplane的images聚成一类，要么只在单一的image内聚类（或称分割），各个image之间互不通信。与有监督的相反，无监督学习是否搞一个比较整体的representation才能好好learn呢？
+在无监督领域，传统clustering要么将很多aeroplane的images聚成一类，要么只在单一的image内聚类（或称分割），各个image之间互不通信。
+与有监督的相反，无监督学习是否搞一个比较整体的representation才能好好learn呢？
 这个“整体的representation”估计就是我所理解的common structure。
 每一个prototype既然是一种“整体的representation”，当然可以看作一个common structure。
 无监督地学习一些common  structure
