@@ -1,5 +1,5 @@
 --- 
-title: "Zero-Shot" Super-Resolution using Deep Internal Learning
+title: Zero-Shot Super-Resolution using Deep Internal Learning
 date:   2017-12-20
 ---
 

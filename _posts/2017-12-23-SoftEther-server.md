@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  SoftEther VPN Server 配置
+title:  SoftEther VPN Server 配置 （含本机作为server 以及 vps 作为server）
 categories: 系统环境
 tag: [配置文件]
 ---
@@ -8,25 +8,25 @@ tag: [配置文件]
 * content
 {:toc}
 
-## 缘由
+## 方式1：在本地计算机搭建server
+### 缘由以及可行性
 工作室的台式机可以方便地通过有线网访问v6，具体就是双网卡模式：
 将有线网卡的v4协议去掉，就不会弹出登录界面，同时有线网卡的v6还可以照常使用。
 而v4的网通过路由器即可使用
 
 因此可以将台式机作为 VPN Server，这样我的其他设备如笔记本，手机等都可以方便地用v6了。
 
-## 服务器端设置
+### 台式机服务器端设置
 好了开始折腾，自备梯子下载好SoftEther VPN Server之后，安装。
 下面进行配置。
 
-我发现有人采用vps的方式，即在其他地方搭一个vps server（如各种云主机），在该vps server 上安装SoftEther VPN Server，同时在工作室的电脑上也安装SoftEther VPN Server，然后让它俩连接（好像是桥接？），不明白为啥这么搞，我没法采用这种方式，嗯。
 下面介绍官网介绍的方式。
 
 打开软件之后，点击“连接”，就会弹出一个界面（当然我这个是设置过的，凑合看）：
 ![]({{ '/blog_images/2017-12-23-softether-server/new_connect.png' | prepend: site.baseurl}})
 默认是用local host作为server，上面我提到的vps server作为host的话就要填入vps server的主机名端口号和密码，用local host作server的话只需要设置密码就行了。
 
-然后弹出来一堆设置，大概按照 https://www.softether.org/4-docs/2-howto/1.VPN_for_On-premise/2.Remote_Access_VPN_to_LAN 的设置就行了。
+然后弹出来一堆设置，大概按照 [官网介绍](https://www.softether.org/4-docs/2-howto/1.VPN_for_On-premise/2.Remote_Access_VPN_to_LAN) 的设置就行了。
 注意我们只需要一个virtual hub就行了，我将其命名为VPN，
 如下图：
 ![]({{ '/blog_images/2017-12-23-softether-server/local_bridge.png' | prepend: site.baseurl}})
@@ -56,31 +56,72 @@ tag: [配置文件]
 注：一个很好的参考https://blog.feixueacg.com/softethervpn-easyvpn/
 看了这个我懂了，原来server地方随意，我们打开的只是一个管理器。
 
-## 客户端设置
+### 客户端设置
 在我的笔记本上安装SoftEther VPN Client，建立新连接，填入我们的vpnazure.net的域名，账户和密码，443端口，直接双击就能连接了。
 
 题外话，如同server端有线网卡的设置，我们需要设置client端的虚拟网卡的v6 dns server，就用https://github.com/lennylxx/ipv6-hosts 页面给的两个server就行了。还有client本地的host也设置成以上的链接中的host。
 
+由于在服务器端同时设置了本地网桥和secure nat，因此可以可以使用v6.
 
 
 
-## 更新
+## 方式2：在vps上搭建server
+### 服务器端
+我发现有人采用vps的方式，即在其他地方搭一个vps server（如各种云主机），在该vps server 上安装SoftEther VPN Server，同时在工本地电脑上 安装SoftEther VPN server 端管理器就行了
+
+
 我申请了digitalocean的一个主机，在上面搭建了softether server，为了省钱搞了个512的内存
-基本操作是这个链接：
-https://www.digitalocean.com/community/tutorials/how-to-setup-a-multi-protocol-vpn-server-using-softether#step-6-create-a-virtual-hub
 
+>基本操作可以参考 [这个链接](https://www.digitalocean.com/community/tutorials/how-to-setup-a-multi-protocol-vpn-server-using-softether#step-6-create-a-virtual-hub)
 我只是用它自己建了个hub：
 `HubCreate VPN`
 以及 `SecureNatEnable`
-其它类似开机自启啥的我都懒得设置了，反正基本上一直开着的。
+但这个连接貌似不太靠谱，还是暂时不要用了
 
-好像本地网桥也要设置。
+我是按照
+[跨网组建大型局域网之SoftEther VPN的搭建与连接](https://bbs.jiasuidc.com/index.php/2017/11/18/%E8%B7%A8%E7%BD%91%E7%BB%84%E5%BB%BA%E5%A4%A7%E5%9E%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B9%8Bsoftether-vpn%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%8E%E8%BF%9E%E6%8E%A5/)
+这个来的
+其它类似开机自启啥的我都懒得设置了，反正服务器基本上一直开着的。
 
-用 softether client 连接的时候，需要在client的电脑上新建一个vpn网卡，反正 softether client会自己建的，然后将这个网卡的v4和v6的dns server设为https://github.com/lennylxx/ipv6-hosts  给的那几个。
+注意我按照[跨网组建大型局域网之SoftEther VPN的搭建与连接](https://bbs.jiasuidc.com/index.php/2017/11/18/%E8%B7%A8%E7%BD%91%E7%BB%84%E5%BB%BA%E5%A4%A7%E5%9E%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B9%8Bsoftether-vpn%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%8E%E8%BF%9E%E6%8E%A5/)这个连接设置的，在协议设置窗口那里，只勾选了第一个框即`remote access  vpn server",没有勾选第二个，因此就没有必要设置本地网桥（还是别设了）
+
+### dns server的设置
+由于某种特殊的原因dns server的设置非常有必要，注意两个原则
+__要么让vpn client端设置dns server，要么在vpn server那里设置dns server，两者必选其一__
+
+先说第一种方案，在vpn client端设置dns server：
+>用 softether client 连接的时候，需要在client的电脑上新建一个vpn网卡，反正 softether client会自己建的，然后将这个网卡的v4和v6的dns server设为https://github.com/lennylxx/ipv6-hosts  给的那几个。
 也就是USA  USA
 Hostname    ordns.he.net    tserv1.lax1.he.net
 IPv6    2001:470:20::2  2001:470:0:9d::2
 IPv4    74.82.42.42 66.220.18.42
+注意我们要把softether client端的host文件设为电脑默认的。这样就能彻底依赖dns server了，只是速度好慢，估计是因为512内存太小了吧。
 
-注意我们要把softether client端的host文件设为电脑默认的。这样就能用了，只是速度好慢，估计是因为512内存太小了吧。
+再说第二种方案（推荐）
+> 在[跨网组建大型局域网之SoftEther VPN的搭建与连接](https://bbs.jiasuidc.com/index.php/2017/11/18/%E8%B7%A8%E7%BD%91%E7%BB%84%E5%BB%BA%E5%A4%A7%E5%9E%8B%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B9%8Bsoftether-vpn%E7%9A%84%E6%90%AD%E5%BB%BA%E4%B8%8E%E8%BF%9E%E6%8E%A5/)教程的securenat那里，securenat启用之后还是用的默认配置（注意mac地址那里不要改），并没有根据以上连接重新设置dns，默认情况下，dns server1人家默认设为了192.168.30.1，我们可以不用管它，只需要设置dns 服务器地址2 就行了，我们设为74.82.42.42，然后为了保险起见在域名那里再设置一个dns server，设为tserv1.lax1.he.net
+
+### 手机端连接
+由于我们开启了 L2TP服务器功能，即（ L2TP over IPsec )，而移动端基本都内置了这个协议，因此在安卓手机自带的vpn界面（在设置里边找）。
+新建一个vpn设置文件，名称随意设置，类型选为 L2TP/IPSec PSK
+填写服务器地址
+预共享密钥设为vpn
+填写用户名和密码就行了。
+
+有一个小trick，不开wifi连接vpn成功以后，再打开wifi会断开vpn，所以连上wifi再连vpn就行了，这个不是大问题。
+
+## 其它细节备份
+从do那里初始化一个Ubuntu之后，先apt-get update, apt-get install build-essential
+然后下载softether的server，使用wget命令，server程序的地址是 
+`http://www.softether-download.com/files/softether/v4.24-9652-beta-2017.12.21-tree/Linux/SoftEther_VPN_Server/64bit_-_Intel_x64_or_AMD64/softether-vpnserver-v4.24-9652-beta-2017.12.21-linux-x64-64bit.tar.gz`
+
+这个地址可以从网页端（可能需要翻墙）下载，然后就得到了该地址。
+在Ubuntu用
+`wget http://www.softether-download.com/files/softether/v4.24-9652-beta-2017.12.21-tree/Linux/SoftEther_VPN_Server/64bit_-_Intel_x64_or_AMD64/softether-vpnserver-v4.24-9652-beta-2017.12.21-linux-x64-64bit.tar.gz`
+就行了，然后解压使用 `tar -xvzf 文件名`
+`./.install.sh`
+执行 `./vpnserver start` 启动服务。 
+运行 `./vpncmd` 进入VPN的命令行,选择1 “Management of VPN Server or VPN Bridge” 在指定Hostname of IP Address of Destination:这里写 `localhost:433`
+然后Specify Virtual Hub Name: 这里直接回车，用默认的。
+
+紧接着就可以用Windows端的SoftEther VPN Server Manager直接登录server进行管理了。
 
