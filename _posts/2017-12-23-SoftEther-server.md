@@ -60,3 +60,27 @@ tag: [配置文件]
 在我的笔记本上安装SoftEther VPN Client，建立新连接，填入我们的vpnazure.net的域名，账户和密码，443端口，直接双击就能连接了。
 
 题外话，如同server端有线网卡的设置，我们需要设置client端的虚拟网卡的v6 dns server，就用https://github.com/lennylxx/ipv6-hosts 页面给的两个server就行了。还有client本地的host也设置成以上的链接中的host。
+
+
+
+
+## 更新
+我申请了digitalocean的一个主机，在上面搭建了softether server，为了省钱搞了个512的内存
+基本操作是这个链接：
+https://www.digitalocean.com/community/tutorials/how-to-setup-a-multi-protocol-vpn-server-using-softether#step-6-create-a-virtual-hub
+
+我只是用它自己建了个hub：
+`HubCreate VPN`
+以及 `SecureNatEnable`
+其它类似开机自启啥的我都懒得设置了，反正基本上一直开着的。
+
+好像本地网桥也要设置。
+
+用 softether client 连接的时候，需要在client的电脑上新建一个vpn网卡，反正 softether client会自己建的，然后将这个网卡的v4和v6的dns server设为https://github.com/lennylxx/ipv6-hosts  给的那几个。
+也就是USA  USA
+Hostname    ordns.he.net    tserv1.lax1.he.net
+IPv6    2001:470:20::2  2001:470:0:9d::2
+IPv4    74.82.42.42 66.220.18.42
+
+注意我们要把softether client端的host文件设为电脑默认的。这样就能用了，只是速度好慢，估计是因为512内存太小了吧。
+
