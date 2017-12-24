@@ -110,6 +110,7 @@ IPv4    74.82.42.42 66.220.18.42
 有一个小trick，不开wifi连接vpn成功以后，再打开wifi会断开vpn，所以连上wifi再连vpn就行了，这个不是大问题。
 
 ## 其它细节备份
+### Ubuntu vps端 softether server的安装
 从do那里初始化一个Ubuntu之后，先apt-get update, apt-get install build-essential
 然后下载softether的server，使用wget命令，server程序的地址是 
 `http://www.softether-download.com/files/softether/v4.24-9652-beta-2017.12.21-tree/Linux/SoftEther_VPN_Server/64bit_-_Intel_x64_or_AMD64/softether-vpnserver-v4.24-9652-beta-2017.12.21-linux-x64-64bit.tar.gz`
@@ -122,6 +123,15 @@ IPv4    74.82.42.42 66.220.18.42
 执行 `./vpnserver start` 启动服务。 
 运行 `./vpncmd` 进入VPN的命令行,选择1 “Management of VPN Server or VPN Bridge” 在指定Hostname of IP Address of Destination:这里写 `localhost:433`
 然后Specify Virtual Hub Name: 这里直接回车，用默认的。
+貌似还需要运行`VPN Server> ServerPasswordSet`设置远程管理密码
+（根据 [SoftEther VPN Server 安装手记 + 福利](https://www.bennythink.com/softether-vpnserver.html)的指示，直接 `./vpncmd` 然后ServerPasswordSet设置密码，这样才能用管理器远程连接服务器）
 
 紧接着就可以用Windows端的SoftEther VPN Server Manager直接登录server进行管理了。
 
+### 将vps端softether server开机自启
+根据[SoftEther VPN Server 安装手记 + 福利](https://www.bennythink.com/softether-vpnserver.html)将服务器加入到开机启动项中，这样服务器重启了就不用每次都手动到 SSH 里开启了。
+终端里依次输入：
+`vi /etc/rc.local`
+在 exit 0 之前写入
+`/root/vpnserver/vpnserver start`
+保存退出即可
