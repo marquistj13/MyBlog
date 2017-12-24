@@ -135,3 +135,13 @@ IPv4    74.82.42.42 66.220.18.42
 在 exit 0 之前写入
 `/root/vpnserver/vpnserver start`
 保存退出即可
+
+### Windows上面的local host
+如果在Windows上面安装了SoftEther VPN Server，默认好像自带了一个localhost的server，如果不小心删除了，再新建的话可能会出现需要Administrator登录的情况，而且无论如何都登录不了，这时候我们想到了重装SoftEther VPN Server，但卸载SoftEther VPN Server的时候很不干净，还需要去安装目录删除那些文件，我试了好几次都不成功，我又将SoftEther VPN Server的自启服务关掉（在任务管理器可以关掉它），卸载，删文件，然后重启，还是不行，这时候我感觉是win10的快速启动的原因，关机，关电源，开机，重装server，这时候终于可以连接local host了，只需要重设密码就行了，以后再也不搞了，呜呜
+
+### vps上只需要设securenat就行了
+记住不要设本地网桥！
+
+### server级联
+在[通过softether实现外网远程桌面连接校园网电脑](https://www.lookfor404.com/%E9%80%9A%E8%BF%87softether%E5%AE%9E%E7%8E%B0%E5%A4%96%E7%BD%91%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%94%B5%E8%84%91/),有人为了用windows的远程桌面访问办公室的电脑，专门在办公室的电脑设了个localhost server，然后找到“管理级联连接”，连接到vps上的服务器，然后家里的电脑就可以直接用softether-client连vps，用内网地址连接办公室电脑了
+我感觉不这么搞也行吧，办公室电脑用softether-client连vps，家里电脑也用softether-client连vps，两者自然处于同一个局域网，嗯这两种方式原理应该一样，不折腾了，没时间了。
