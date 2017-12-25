@@ -109,6 +109,16 @@ IPv4    74.82.42.42 66.220.18.42
 
 有一个小trick，不开wifi连接vpn成功以后，再打开wifi会断开vpn，所以连上wifi再连vpn就行了，这个不是大问题。
 
+### windows自带的vpn连接
+windows端使用SoftEther VPN Client的设置很简单，其协议为使用SSL-VPN协议连接。
+
+而如果使用windows自带的vpn，其设置需要一点技巧，其协议为L2TP （和手机端一样）。
+根据 [SoftEther VPN——Linux下搭建VPN可以如此简单](https://www.1fishsauce.com/?p=463)的介绍，
+>使用L2TP协议时应当注意：1）”VPN类型“需要选择”L2TP/IPsec“；2）需要到”高级设置“中输入先前设置的预共享密钥。细节就不再讲了，其他操作系统类似。
+
+盗个图哈哈：
+![]({{ '/blog_images/2017-12-23-softether-server/SoftEther-VPN-Config-9.jpg' | prepend: site.baseurl}})
+
 ## 其它细节备份
 ### Ubuntu vps端 softether server的安装
 从do那里初始化一个Ubuntu之后，先apt-get update, apt-get install build-essential
@@ -124,7 +134,7 @@ IPv4    74.82.42.42 66.220.18.42
 运行 `./vpncmd` 进入VPN的命令行,选择1 “Management of VPN Server or VPN Bridge” 在指定Hostname of IP Address of Destination:这里写 `localhost:433`
 然后Specify Virtual Hub Name: 这里直接回车，用默认的。
 貌似还需要运行`VPN Server> ServerPasswordSet`设置远程管理密码
-（根据 [SoftEther VPN Server 安装手记 + 福利](https://www.bennythink.com/softether-vpnserver.html)的指示，直接 `./vpncmd` 然后ServerPasswordSet设置密码，这样才能用管理器远程连接服务器）
+（根据 [SoftEther VPN Server 安装手记 + 福利](https://www.bennythink.com/softether-vpnserver.html)的指示，直接 `./vpncmd` 然后ServerPasswordSet设置密码，这样才能用管理器远程连接服务器，好像先不设密码也能连接？不管了。）
 
 紧接着就可以用Windows端的SoftEther VPN Server Manager直接登录server进行管理了。
 
@@ -145,3 +155,50 @@ IPv4    74.82.42.42 66.220.18.42
 ### server级联
 在[通过softether实现外网远程桌面连接校园网电脑](https://www.lookfor404.com/%E9%80%9A%E8%BF%87softether%E5%AE%9E%E7%8E%B0%E5%A4%96%E7%BD%91%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%94%B5%E8%84%91/),有人为了用windows的远程桌面访问办公室的电脑，专门在办公室的电脑设了个localhost server，然后找到“管理级联连接”，连接到vps上的服务器，然后家里的电脑就可以直接用softether-client连vps，用内网地址连接办公室电脑了
 我感觉不这么搞也行吧，办公室电脑用softether-client连vps，家里电脑也用softether-client连vps，两者自然处于同一个局域网，嗯这两种方式原理应该一样，不折腾了，没时间了。
+
+## 利用web.py搭建网站
+### hello world
+根据 [web.py 0.3 新手指南](http://webpy.org/tutorial3.zh-cn)的介绍搭建了一个hello world网站。
+
+首选安装python，去anaconda官网找到Linux下载文件的链接，是一个`.sh`的文件，用wget下载好之后，安装即可，安装的时候选择加入path就行了。
+然后就可以 `pip install web.py`就可以按照[web.py 0.3 新手指南](http://webpy.org/tutorial3.zh-cn)操作了。
+
+这个文件
+```python
+import web
+
+urls = (
+    '/', 'index'
+)
+
+class index:
+    def GET(self):
+        return "Hello, world!"
+
+if __name__ == "__main__":
+    app = web.application(urls, globals())
+    app.run()
+```
+可以直接用，由于默认的网页应该是80端口，因此运行时使用 `python code.py 80`,就可以访问网站了。
+
+###  怎么加入中文支持呢？
+按照 [Web.py HelloWorld与中文乱码](http://www.codexiu.cn/python/blog/19224/)的介绍，只需要在return之前，加入`web.header('Content-Type','text/html;charset=UTF-8')`即可，即
+```python
+# coding=utf-8
+import web
+urls=(
+      '/','index'
+)
+class index:
+    def GET(self):
+        web.header('Content-Type','text/html;charset=UTF-8')
+        return 'Hello Word!你好!'
+    
+if __name__=='__main__':
+    app=web.application(urls,globals())
+    app.run()
+```
+
+### 如何一直运行这个文件呢？
+根据[linux的nohup命令的用法](https://www.cnblogs.com/allenblogs/archive/2011/05/19/2051136.html), 在运行上述命令的时候 `nohup 命令 &`就行了，即 `nohup python code.py 80 &`
+这样即使关闭了ssh会话，它还在运行。
