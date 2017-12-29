@@ -119,6 +119,36 @@ windows端使用SoftEther VPN Client的设置很简单，其协议为使用SSL-V
 盗个图哈哈：
 ![]({{ '/blog_images/2017-12-23-softether-server/SoftEther-VPN-Config-9.jpg' | prepend: site.baseurl}})
 
+## 解决手机端wifi无法连接vpn的问题
+有时候会出现这种情况，用手机自带的vpn（在设置里边有）连接时，用数据流量很容易连接vpn，但连上wifi后就很难连接到vpn了
+
+这时候只需要重启vpn server就行了。
+
+为了不频繁手动重启，我决定搞一个crontab,定时重启哈哈。
+根据 [19. crontab 定时任务](http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html)的参考，可以在 `$HOME` 建一个crontab文件，`$HOME` 目录是啥，你 `echo $HOME`就知道了,我的就是 root目录。
+好了，我们新建一个 `marquis_cron` 的文件，文件名随意哈。
+
+根据示例文件：
+```sh
+# (put your own initials here)echo the date to the console every
+# 15minutes between 6pm and 6am
+0,15,30,45 18-06 * * * /bin/echo 'date' > /dev/console
+```
+
+我们打算在北京时间凌晨三点重启vpn server，换算一下，在utc 19点
+具体换算时间在 [UTC与本地时间(GMT +08)换算表](http://www.timebie.com/cn/stduniversal.php)可以看到
+因此 `marquis_cron` 的内容为：
+```sh
+0 19 * * * /root/vpnserver/vpnserver stop
+0 19 * * * /root/vpnserver/vpnserver start
+```
+
+然后运行 `crontab marquis_cron`就行了。
+
+如果不想要这个crontab文件了，可以用 `crontab -r`来删除，详情看上面的链接。
+用`crontab -l`可以查看当前cron的状态。
+
+也不知道能不能成功，我试了一下其他命令，好像没有执行？不管了。
 ## 其它细节备份
 ### Ubuntu vps端 softether server的安装
 从do那里初始化一个Ubuntu之后，先apt-get update, apt-get install build-essential
@@ -155,6 +185,15 @@ windows端使用SoftEther VPN Client的设置很简单，其协议为使用SSL-V
 ### server级联
 在[通过softether实现外网远程桌面连接校园网电脑](https://www.lookfor404.com/%E9%80%9A%E8%BF%87softether%E5%AE%9E%E7%8E%B0%E5%A4%96%E7%BD%91%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%94%B5%E8%84%91/),有人为了用windows的远程桌面访问办公室的电脑，专门在办公室的电脑设了个localhost server，然后找到“管理级联连接”，连接到vps上的服务器，然后家里的电脑就可以直接用softether-client连vps，用内网地址连接办公室电脑了
 我感觉不这么搞也行吧，办公室电脑用softether-client连vps，家里电脑也用softether-client连vps，两者自然处于同一个局域网，嗯这两种方式原理应该一样，不折腾了，没时间了。
+
+### 保存server端配置
+在主界面有一个大大的齿轮，名称是“编辑设置”，点开，它不能直接编辑，可以将其保存到文件，会生成一个`.config`的文件，用文本编辑器打开修改后，可以点击“导入文件并应用”，就生效了，而且还会自动重启server。
+
+
+__哈哈， 下次安装server的时候，直接导入这个文件就行了，就不用点那么多了。__
+
+还可以用这个文件关掉动态域名，将ddnsclient的 bool Disabled设为true就行了。
+
 
 ## 利用web.py搭建网站
 ### hello world
