@@ -140,7 +140,7 @@ windows端使用SoftEther VPN Client的设置很简单，其协议为使用SSL-V
 因此 `marquis_cron` 的内容为：
 ```sh
 0 19 * * * /root/vpnserver/vpnserver stop
-0 19 * * * /root/vpnserver/vpnserver start
+1 19 * * * /root/vpnserver/vpnserver start
 ```
 
 然后运行 `crontab marquis_cron`就行了。
@@ -148,7 +148,7 @@ windows端使用SoftEther VPN Client的设置很简单，其协议为使用SSL-V
 如果不想要这个crontab文件了，可以用 `crontab -r`来删除，详情看上面的链接。
 用`crontab -l`可以查看当前cron的状态。
 
-也不知道能不能成功，我试了一下其他命令，好像没有执行？不管了。
+
 ## 其它细节备份
 ### Ubuntu vps端 softether server的安装
 从do那里初始化一个Ubuntu之后，先apt-get update, apt-get install build-essential
