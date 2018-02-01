@@ -11,7 +11,7 @@ date:   2018-2-1
 
 ## 第三章  control sequences
 ### 初识
-_escape character_的作用：使得有限的键位足够versatile
+escape character的作用：使得有限的键位足够versatile
 又叫`control sequences`
 
 ### 空格
@@ -65,7 +65,7 @@ tex的游戏规则：当前page number存在一个register中， called `\count0
 而Output routines一般都保护在一个grouping中，因此对于 `\count0` 的更改就会在这个grouping中无效，咋办？
 `\global\advance\count0 by 1`
 
-## TeX运行，Debug
+## 第六章TeX运行，Debug
 ### tex的参数
 在cmd输入tex，会立马出现两个`*`号，如果在这输入了一个`\`开头的control sequence，那就很普通了，如输入`\relax`即“do nothing.”
 如果输入的不是`\`开头的control sequence（这时候你输入的必须得是一个已经存在的文件名），那么Tex就会自动给你插入一个`\input`,
@@ -169,6 +169,40 @@ l.3 \centerline{\bf A short \error Story}
 `\line {\hss #1 \hss }`
 1. 最后一行`l.3 \centerline{\bf A short \error Story}`是tex当前处理到的地方。
 
-__总结：__要看第一行和最后一行出错信息。
+__总结__要看第一行和最后一行出错信息。
 
 ## 第七章 How TEX Reads What You Type
+在plain tex中，`\ { } $ & # ^ _ % ~` 这10个字符是特殊字符，即保留字符。
+要用的话必须转义才是原来的字符。
+
+## 第八章The Characters You Type
+
+## 第十章 Dimensions
+### metric system
+```
+pt point (baselines in this manual are 12 pt apart)
+pc pica (1 pc = 12 pt)
+in inch (1 in = 72.27 pt)
+bp big point (72 bp = 1 in)
+cm centimeter (2.54 cm = 1 in)
+mm millimeter (10mm = 1 cm)
+dd didot point (1157 dd = 1238 pt)
+cc cicero (1 cc = 12 dd)
+sp scaled point (65536 sp = 1 pt)
+```
+
+### 两个相对单位
+`em` is the width of a “quad” in the current font;
+`ex` is the “x-height” of the current font
+
+### 很稳定的单位
+在Tex内部只有`sp`这个基本单位，因为可见光的波长大概是`100sp`
+故对于`sp`的rounding errors基本上对人言是没有啥差别的，因此对于tex的不同实现，同样的文档肯定是produce the same line breaks and the same page breaks。
+
+### 字体放大倍数
+在文档开头`\magnification=1200`，就是将所有字体放大到1.2倍。
+`\magnification=2000`是两倍。
+
+
+
+## 第十一章Boxes
