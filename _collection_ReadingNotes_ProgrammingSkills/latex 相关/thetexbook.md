@@ -175,6 +175,32 @@ __总结__要看第一行和最后一行出错信息。
 在plain tex中，`\ { } $ & # ^ _ % ~` 这10个字符是特殊字符，即保留字符。
 要用的话必须转义才是原来的字符。
 
+### tokens
+总共有两种token
+1. 已经attach了category code的字符（character） 。简称character token
+2. a control sequence.  简称control sequence token
+
+例如`{\hskip 36 pt}`会转化成具有8个token的list：
+![](thetexbook/token.png)
+其中下标表示category code。
+
+注意本章开头说了，256个字符，总共分配了16种category code：
+![](thetexbook/category code.png)
+
+
+###  token有啥用
+tex把text读进来之后，首先将其转化为token list。
+上面的例子中，左边大括号就是group的开始，category code为1
+ `hskip`没有下标，是因为，它代表的是第二类token，即control sequence token
+
+ 好了现在说一下有啥用：
+ __tex真正的排版过程是基于tokens的__
+
+ 另外有两点需要记住
+ 1. control sequence不管多长，都看做一个single object，地位一样。而且ignore-space rule只在转为token的时候有用，即token list中的空格没法ignore。（remember that：control sequence后边的空格会被absorb，但仅仅是text中的时候这么干）
+ 2. 第一种token：只要一个字符赋了一个category code，这个category code就不会变了，也就是永久的，也就是说，tex对于character token的处理仅仅依据其category code就行了。第二种token，即control sequence token不太一样，tex碰到control sequence token的时候，需要根据control sequence token的当前定义来figure out这个control sequence token的意思。
+
+
 ## 第八章The Characters You Type
 
 ## 第十章 Dimensions
