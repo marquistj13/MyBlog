@@ -181,11 +181,14 @@ __总结__要看第一行和最后一行出错信息。
 2. a control sequence.  简称control sequence token
 
 例如`{\hskip 36 pt}`会转化成具有8个token的list：
-![](thetexbook/token.png)
+![](thetexbook\token.png)
+
+![](teximpatient\box_illustration.png)
+
 其中下标表示category code。
 
 注意本章开头说了，256个字符，总共分配了16种category code：
-![](thetexbook/category code.png)
+![](thetexbook\categorycode.png)
 
 
 ###  token有啥用
