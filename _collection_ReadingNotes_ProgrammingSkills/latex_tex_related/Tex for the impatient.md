@@ -11,6 +11,12 @@ date:   2018-2-4
 
 
 ## 基本概念
+### tex的解剖学结构 anatomy of TEX
+eye：从输入文件将字符读到mouth中
+mouth：将字符character变成token
+gullet食道：将`macros, conditionals, and similar construct`进行展开，注意，展开一个token之后可能导致其他token也需要展开，一般情况下是从左到右展开，除非遇到了改变展开顺序的command 如`\expandafter`,然后将其送到stomach胃里边。
+stomach：将token按照group进行处理，其实就是将字符等组装成page，然后送到肠道。如line breaking（将段落break成行），page breaking（将行和其他vertical mode material转化成page）
+intestines（肠道）：将page转化为其他形式，将输出发送到`.dvi`文件。
 ### box
 来源：`p51 `
 box就是要排版的一个矩形
@@ -203,3 +209,15 @@ Alice inquired as to whether \the\toks1.
 如`\newbox\figbox`这么搞之后，`\figbox`只能和box相关的command一块儿用，如 `\setbox\figbox = \vbox{: : : }`
 
 ### 宏 macro
+来源：`p230 p75`
+`\def <control sequence> <parameter text> { <replacement text> }`
+
+macro其实就是一个定义，给这些token一个name
+
+最多可以使用9个参数。
+
+参数有两种类型：
+1. delimited parameters 
+2.  undelimited parameters
+即没有分割的参数，和有分割的参数。
+
