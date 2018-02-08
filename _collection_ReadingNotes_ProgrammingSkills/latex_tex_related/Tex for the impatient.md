@@ -221,3 +221,86 @@ macro其实就是一个定义，给这些token一个name
 2.  undelimited parameters
 即没有分割的参数，和有分割的参数。
 
+## 稍微上层一点的
+### noident
+来源：`p112`
+当tex结束一个段落的时候会进入vertical mode，此时noident命令就会执行以下命令：
+1. 首先插入`\parskip`这个段间glue，
+1. 将tex设为horizontal mode
+1. 开始一个unindented paragraph
+
+当然，noident还有另一个功能：
+取消段落首行的indent
+如下面例子
+```
+\parindent = 1em
+Tied round the neck of the bottle was a label with the
+words \smallskip \centerline{EAT ME}\smallskip
+\noindent beautifully printed on it in large letters
+```
+### par
+`\par` 用来结束一个段落
+将tex设为vertical mode
+
+注意：由于tex会将空行识别成`\par`这个token，因此这个命令不常用。
+
+由于`\par`也会产生interparagraph space，因此可以使用`\vskip -\lastskip`来把它取消掉。
+
+另外，`\par`不同于`\noident`,`\par`并不会让tex重新开始一个新的段落。
+
+### 其他终止段落用的命令
+`\smallskip`:用来skip 3个point,and can stretch or shrink by 1 point
+`\vskip`
+
+`\medskip` 等价于俩`\smallskip`
+`\bigskip` 等价于俩`\medskips`
+
+### llap
+`\llap <argument>`:将当前位置往左移动`<argument>`的宽度，输出`<argument>`
+一般用于将文本放到outside of the current margins
+
+### hbox 
+```
+\hbox { <horizontal mode material> }
+\hbox to <dimen> { <horizontal mode material> }
+\hbox spread <dimen> { <horizontal mode material> }
+```
+总共有以上三种用法。
+第一种，hbox具有{ <horizontal mode material> }的自然长度。
+第二种，hbox的长度为<dimen>
+第三种，hbox的长度为<dimen>+{ <horizontal mode material> }的自然长度
+
+对于后两种情况，一般需要手动加入`\hfil`
+如：
+```
+\hbox{ugly suburban sprawl}
+\hbox to 2in{ugly \hfil suburban \hfil sprawl}
+\hbox spread 1in {ugly \hfil suburban \hfil sprawl}
+% Without \hfil in the two preceding lines,
+% you'd get `underfull hbox'es.
+```
+
+另外:
+`\line <argument>`会产生一个等于当前行长度的hbox，并将argument放进去。
+   
+### leaders
+ `\leaders <box or rule> <skip command>`:重复<box or rule>，直到填满整个水平空间，这个水平空间由<skip command>指定。
+如以下示例：
+```
+\def\dotting{\leaders\hbox to 1em{\hfil.\hfil}\hfil}
+\line{The Political Process\dotting 18}
+\line{Bail Bonds\dotting 26}
+```
+会产生类似目录的效果，即项目...页码。
+其中`\hbox to 1em{\hfil.\hfil}`是要重复的东西，称为leader，而`<skip command>`就是后边的\hfil
+
+### 改变字体
+```
+\font\tenrm = pplr % Palatino
+% Define a macro for invoking Palatino.
+\def\pal{\let\rm = \tenrm \baselineskip=12.5pt \rm}
+\pal % Use Palatino from now on.
+```
+其中`\let <control sequence> = <token>`就是让`<control sequence>`获取`<token>`的当前meaning。
+而此处`\rm`就是一种和`\bf`,`\it`等并列的一种font style。
+
