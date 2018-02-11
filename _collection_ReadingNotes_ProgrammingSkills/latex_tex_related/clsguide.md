@@ -82,14 +82,14 @@ mands，因为LATEX2e支持不同的encodings。
 
 当用户使用无效的option时候，可以这么处理：
 ```
-\DeclareOption*{%
+\DeclareOption*{
 \PackageWarning{fred}{Unknown option `\CurrentOption'}%
 }
 ```
 
 也可以利用这个特性这么做：
 ```
-\DeclareOption*{%
+\DeclareOption*{
 \input{\CurrentOption enc.def}%
 }
 ```
@@ -97,7 +97,7 @@ mands，因为LATEX2e支持不同的encodings。
 
 也可以将未处理的option传给其他class或package：
 ```
-\DeclareOption*{%
+\DeclareOption*{
 \PassOptionsToClass{\CurrentOption}{article}%
 }
 ```
