@@ -56,7 +56,7 @@ ok,目前已经保存的tokens为，$\ex_2$，`\a`，`\b`，将这个列表放�
 tonjithesis.cls有这么一段用来设置cover的：
 ```
 \def\tongji@define@term#1{
-  \expandafter\gdef\csname #1\endcsname##1{%
+  \expandafter\gdef\csname #1\endcsname##1{
     \expandafter\gdef\csname tongji@#1\endcsname{##1}}
   \csname #1\endcsname{}}
 \tongji@define@term{secretlevel}
