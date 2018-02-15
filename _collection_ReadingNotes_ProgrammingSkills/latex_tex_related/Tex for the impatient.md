@@ -221,6 +221,61 @@ macro其实就是一个定义，给这些token一个name
 2.  undelimited parameters
 即没有分割的参数，和有分割的参数。
 
+没有分隔符的很容易理解。
+对于有分隔符的，举个例子：`\def\diet#1 #2.{On #1 we eat #2!}`
+那么调用的时候必须：`\diet Tuesday turnips.`或者`\diet {Sunday mornings} pancakes.`注意里边的空格和句号，必须对应。
+
+### 用一个宏定义另一个宏
+来源：`p78`
+这个需求在很多latex的class文件都有。
+例如，thuthesis的
+```
+\def\thu@def@term#1{
+  \define@key{thu}{#1}{\csname #1\endcsname{##1}}
+  \expandafter\gdef\csname #1\endcsname##1{
+    \expandafter\gdef\csname thu@#1\endcsname{##1}}
+  \csname #1\endcsname{}}
+\thu@def@term{secretlevel}
+\thu@def@term{secretyear}
+\thu@def@term{ctitle}
+\thu@def@term{etitle}
+```
+这个需求的详细表述：
+>define a macro that in turn defines a second macro
+
+我们应该如何才能不让Tex对第二个macro的参数不confused呢？
+答案是，在第一个macro展开的时候，写俩`#`.
+例如：
+`\def\first#1{\def\second##1{#1/##1}}`
+这样，当我们调用`\first{One}`的时候,就会将`\second`定义成：`\def\second#1{One/#1}`
+
+### csname
+`\csname <token list> \endcsname`
+这个用于从`<token list>`产生一个control sequence。
+多说一点，它主要用来合成一些很难直接写的控制序列。
+这样我们自定义一些“整齐”的命令名的时候就方便了
+
+注：`<token list>`本身也可以包含控制序列，如
+```
+\def\capTe{Te}
+This book purports to be about \csname\capTe X\endcsname
+```
+
+### expandafter
+`\expandafter <token1> <token2>`
+这个命令，让tex先展开一层`<token2>`（注意，一次只展开一层）,  然后再找机会展开 `<token1>`. 
+主要适用情况：`<token1>`会影响`<token2>`的展开，例如`<token1>`是`{`或者`\string`
+一个例子：
+```
+\def\aa{xyz}
+\tt % Use this font so `\' prints that way.
+[\string\aa] [\expandafter\string\aa]
+[\expandafter\string\csname TeX\endcsname]
+```
+最后输出：`[\aa] [xyz] [\TeX]`   
+
+我们重点关注一下第三个例子`\expandafter\string\csname TeX\endcsname`
+先展开`\csname`，后展开`\string`,而展开`\csname`时候，必须配对，即找到`\endcsname`为止，因此变成了`\string\TeX`
 ## 稍微上层一点的
 ### noident
 来源：`p112`
