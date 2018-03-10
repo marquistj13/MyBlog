@@ -109,6 +109,11 @@ IPv4    74.82.42.42 66.220.18.42
 
 有一个小trick，不开wifi连接vpn成功以后，再打开wifi会断开vpn，所以连上wifi再连vpn就行了，这个不是大问题。
 
+__18.3.10更新__：不知为何，L2TP协议没法用了。不得不使用手机端openvpn客户端。首先在服务器端用server管理器生成openvpn的配置文件，有俩，选其中一个就行了，我没用那个bridge的，我把它的扩展名改成.txt才会被openvpn识别。
+* 手机端openvpn客户端选择，用 [ics-openvpn](https://github.com/schwabe/ics-openvpn),不过只能在Google Play下载，以下给出解决方法。
+* 手机端openvpn客户端的下载，手机暂时没法访问Google Play，因此在电脑端找到openvpn的Google Play页面，可以使用其他下载方法，如 [apk-downloader](https://apps.evozi.com/apk-downloader/)，Google Play的链接复制过来即可。
+* 那个配置文件直接用app打开即可，会有弹框提示输入用户名和密码的。
+
 ### windows自带的vpn连接
 windows端使用SoftEther VPN Client的设置很简单，其协议为使用SSL-VPN协议连接。
 
