@@ -57,6 +57,8 @@ To see the current default target,
 1. multi-user.target (system fully up, no graphics) 
 2. graphical.target (system fully up, with graphics)
 
+如果临时希望打开图形界面，那么不要使用`startx`, 要用：`sudo lightdm start`
+
 ## 安装开发环境
 ### 安装git
 `sudo apt install git`
