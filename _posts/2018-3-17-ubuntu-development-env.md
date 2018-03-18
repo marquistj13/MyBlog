@@ -60,8 +60,19 @@ To see the current default target,
 如果临时希望打开图形界面，那么不要使用`startx`, 要用：`sudo lightdm start`
 
 ## 安装开发环境
-### 安装git
-`sudo apt install git`
+### 安装emacs
+如果在命令行干活的话，可以考虑emacs，以前用过几天的vim，不太习惯，只好投入emacs的阵营了。
+`sudo apt install emacs`
+
+由于我关闭了图形界面，因此可以指定emacs以无窗口的方式启动。
+[这里](https://askubuntu.com/questions/23645/how-do-i-download-the-command-line-emacs-instead-of-the-gui-one)介绍了如何启动：
+`emacs -nw`
+
+解释如下： `-nw, --no-window-system` 
+>Tell Emacs not to use its special interface to X. If you use this switch when invoking Emacs from an xterm(1) window, display is done in that window.
+
+
+### 安装git `sudo apt install git`
 
 ### 安装cmake
 `sudo apt install cmake`
