@@ -37,6 +37,26 @@ tag: [Ubuntu,OpenCV ]
 同时应该在ubuntu安装ssh server:
 `sudo apt install openssh-server`
 
+### 设置无图形界面的启动  Booting into text mode in 16.04
+为啥有这个需求？
+我的ubuntu放在virtualbox中，每次打开的时候主机风扇嗡嗡响，资源占用太多，所以我就琢磨着把图形界面关掉啦。的确有点用。好了，切入正题。
+
+根据[Booting into text mode in 16.04](https://askubuntu.com/questions/870221/booting-into-text-mode-in-16-04/870226)的介绍
+可以这么办：
+`sudo systemctl set-default multi-user.target`
+
+To return to default booting into X, use
+`sudo systemctl set-default graphical.target`
+
+To see the current default target,
+`sudo systemctl get-default`
+
+答主给的解释：
+现在ubuntu使用 systemd 作为 init system。
+启动系统的时候，systemd会去查询default.target这个值，这个值有俩状态：
+1. multi-user.target (system fully up, no graphics) 
+2. graphical.target (system fully up, with graphics)
+
 ## 安装开发环境
 ### 安装git
 `sudo apt install git`
