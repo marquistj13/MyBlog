@@ -183,4 +183,11 @@ set(CMAKE_CXX_FLAGS   "-std=c++11")             # c++11
 
 也就是在CMakeLists.txt中加入`set(CMAKE_CXX_FLAGS   "-std=c++11")`即可。
 
+## 安装vscode
+打开c++文件后，会提示装对应的代码高亮插件，我把它推荐的插件全装了。
 
+有的include它会提示一个小灯泡，此时按照它的提示将这些include加到 `.json` 的配置文件里就行了，这样就能更好滴提示补全和跳转了。
+
+貌似有个插件用clang解析的？所以一直提示装clang，我在系统里装了clang之后。就没有提示了。
+
+森博让我装了vs icon很爽。
