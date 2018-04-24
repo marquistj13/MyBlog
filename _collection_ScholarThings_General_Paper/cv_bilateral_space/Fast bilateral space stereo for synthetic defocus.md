@@ -140,7 +140,7 @@ ing Sci.,2013
 
 ## 平滑项
 ###  将平滑项初步转换到bilateral space
-对于平滑项 $\frac{1}{2}\sum_i\sum_j\hat{A}_{i,j}(p_i-p_j)^2$ , 像素i,j直接的仿射性 $\hat{A}_{i,j}$ 越强（即数值越大），就会迫使可行解 $p_i$  与 $p_j$ 的差异越小。
+对于平滑项 $$\frac{1}{2}\sum_i\sum_j\hat{A}_{i,j}(p_i-p_j)^2$$ , 像素i,j直接的仿射性 $\hat{A}_{i,j}$ 越强（即数值越大），就会迫使可行解 $p_i$  与 $p_j$ 的差异越小。
 
 显然：
 $$\sum_i\sum_j\hat{A}_{i,j}p_i^2= \sum_ip_i^2\sum_j\hat{A}_{i,j}=(p_1^2+\dots+p_n^2)\hat{A}I$$
@@ -158,9 +158,9 @@ $$A \approx S^T\bar{B} S$$
 
 我们要用这个矩阵分解做一个变量替换，这样我们的优化变量就从像素的 disparity 值 p 变成了 格点 (grid 或 bilateral space vertex)的disparity值 $v$
 $$p=S^Tv$$
-由于格点数远低于像素数，因此就降维了。求得 $v^*$ 就求得了 $p^*=S^Tv^*$.
+由于格点数远低于像素数，因此就降维了。求得 $v^{optimal}$ 就求得了 $p^{optimal}=S^Tv^{optimal}$.
 
-好了，由于  $p^*=S^Tv^*$，并且 $v$ 的长度远小于 $v$ 的长度， $p^*$ 所在空间的维度顶多和 $v^*$ 的一样（因为这俩空间是线性变换的关系嘛）。
+好了，由于  $p^{optimal}=S^Tv^{optimal}$，并且 $v$ 的长度远小于 $v$ 的长度， $p^{optimal}$ 所在空间的维度顶多和 $v^{optimal}$ 的一样（因为这俩空间是线性变换的关系嘛）。
 换言之，并不是所有的solution都是expressible，每一个pixel的disparity都是bilateral space vertice的插值函数（也就是slice啦），这样我们的output space就会有严重的constraint了。
 
 ### 平滑项的初步理解
@@ -197,7 +197,7 @@ $$v^T(SS^T-SNS^T\bar{B}SNS^T)v=v^T(C^{'}_S -C^{'}_N\bar{B}C^{'}_N)v$$
 由于 $A \approx S^T\bar{B} S$ , 那么直接bistochasticize $\bar{B}$ 不就行了？
 别急，由于每一个vertex的pixel的数目不一致，因此，需要将 $\bar{B}$ 除以 各个 vertex 的pixel的数目 （即该vertex的mass）。
 
-注意，我们的仿射矩阵 $A$ 不是通过指定 $\sigma _{d}$ 和 $\sigma _{r}$ 计算得到的, 而是要手动构造splat矩阵  $S$ 和 blur 矩阵 $\bar{B}$。
+注意，我们的仿射矩阵 $A$ 不是通过指定 $\sigma_{d}$ 和 $\sigma_{r}$ 计算得到的, 而是要手动构造splat矩阵  $S$ 和 blur 矩阵 $\bar{B}$。
 那么   $S$ 是啥样？
 维度是 $n_{vertex}\times n_{pixel}$, 也就是对于每一行，该列的元素只有0或1,1代表该列对应的pixel属于该行的vertex。
 因此每一个vertex对应的pixel的数目就是： $m=SI$.
