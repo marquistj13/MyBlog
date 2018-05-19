@@ -21,3 +21,5 @@ Emacs中频繁使用 `ctrl space` 用来mark，但这个键被傻逼windows强�
 找到右边的Virtual Key `20000000`,将`20`修改为 `FF`
 
 重启电脑，搞定。
+
+__update__: 完了，第二天就失效了，这个方法不行啊，流氓windows！
