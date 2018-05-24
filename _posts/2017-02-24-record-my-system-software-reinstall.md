@@ -204,7 +204,9 @@ jekyll serve --port 3000 -b ""
 ## 电子阅读器转换软件
 在 [Reading arXiv preprints on an e-reader?](https://www.reddit.com/r/MachineLearning/comments/5xtnl4/d_reading_arxiv_preprints_on_an_ereader/)提到了两个软件，一个是应用程序 [k2pdfopt](http://www.willus.com/k2pdfopt/),可以直接转换pdf，一个是Chrome扩展 [dontprint](http://dontprint.net/)
 
-##  Emacs
+##  emacs
+__update18.5.24:__
+根据[emacs的company-mode让生活更美好]({{{ site.baseurl }}{% post_url 2018-5-24-emacs-company-mode-connect-to-melpa %}})的说明，[这里](https://github.com/m-parashar/emax64)有一个很完美的build，而且还是emacs26.1，自带gnutls和各种dll，完美啊。
 __update17.11.19:__
 我发现我以前的emacs安装都来自 [这个github](https://github.com/zklhp/emacs-w64/releases)， 里边有各种图片的dll，算是作者为windows优化好的，直接用就行了。
 解压后，直接运行。然后在 `C:\Users\houpe\AppData\Roaming` 加入一个名为 `.emacs` 的文件，该文件调用d盘的详细配置文件，即调用`D:\emacs\etc\.emacs`, 设置完以上两个文件以后。由于还需要安装 [cnfonts 原来叫： chinese-fonts-setup](https://github.com/tumashu/cnfonts#org8dffa7c), 因此要先执行 `M-x package-install RET cnfonts RET`,这样就会将其安装到 `C:\Users\houpe\AppData\Roaming\.emacs.d` 目录，注意我们重新安装emacs的时候只需要`C:\Users\houpe\AppData\Roaming\.emacs` 和`D:\emacs\etc\.emacs` 就行了。
@@ -212,7 +214,6 @@ __update17.11.19:__
 ###  `C:\Users\houpe\AppData\Roaming\.emacs`
 {% raw  %}
 ```
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -229,22 +230,33 @@ __update17.11.19:__
  '(TeX-source-correlate-start-server t)
  '(TeX-view-program-list
    (quote
-    (("Sumatra PDF" "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %o"))) t)
+    (("Sumatra PDF" "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %o"))))
+ '(ac-ispell-fuzzy-limit 2)
+ '(ac-ispell-requires 4)
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(case-fold-search t)
+ '(current-language-environment "UTF-8")
  '(custom-enabled-themes (quote (tango-dark)))
- '(org-agenda-files
-   (quote
-    ("d:/emacs/paper/firstDraft.org" "d:/emacs/test.org")))
+ '(inhibit-startup-screen t)
+ '(initial-major-mode (quote text-mode))
+ '(initial-scratch-message nil)
+ '(longlines-show-hard-newlines t)
+ '(longlines-wrap-follows-window-size t)
  '(org-export-backends (quote (ascii beamer html latex md)))
  '(org-file-apps
    (quote
     ((auto-mode . emacs)
      ("\\.mm\\'" . default)
      ("\\.x?html?\\'" . default)
-     ("\\.pdf\\'" . "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %s")))))
+     ("\\.pdf\\'" . "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %s"))))
+ '(package-selected-packages (quote (company-auctex company auctex cnfonts)))
+ '(reftex-plug-into-AUCTeX t)
+ '(safe-local-variable-values (quote ((TeX-master . t))))
+ '(temporary-file-directory "c:/tools/emacs_tmp")
+ '(transient-mark-mode (quote identity)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -257,80 +269,13 @@ __update17.11.19:__
 ###  `D:\emacs\etc\.emacs`
 {% raw  %}
 ```
-;;自动indent,即*号自动indent
-(setq org-startup-indented t)
 
-;;设置字体
-;; Setting English Font
-(set-face-attribute 'default nil :font "Consolas-14.0")
-;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-                    charset (font-spec :family "宋体"
-                                       :size 15)))
-  
-;;设置源，这是为了安装`chinese-fonts-setup'包
-(require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize) ;; You might already have this line
-
-;;好了，可以启用设置字体的包了
-;;(require 'cnfonts)
-;; 让 cnfonts 随着 Emacs 自动生效。
-(cnfonts-enable)
-;; 让 spacemacs mode-line 中的 Unicode 图标正确显示。
-;; (cnfonts-set-spacemacs-fallback-fonts)
-
-;;(add-hook 'org-mode-hook 'wc-mode)
-;;(add-hook 'org-mode-hook 'turn-on-flyspell)
-;;将flyspell 的检查语言设为英文，要不然会报错，说找不到汉语词典
-;; use apsell as ispell backend  
-;;(setq-default ispell-program-name "aspell")  
-;; use American English as ispell default dictionary  
-;;(ispell-change-dictionary "american" t)  
-
-;;截屏
-;;http://lists.gnu.org/archive/html/emacs-orgmode/2011-07/msg01292.html
-;;http://superuser.com/questions/312722/how-do-i-paste-a-raw-image-from-the-clipboard-into-emacs
-(defun org-screenshot ()
-  "Take a screenshot into a time stamped unique-named file in the same 
-directory as the org-buffer and insert
-a link to this file."
-  (interactive)
-  (setq tilde-buffer-filename
-        (replace-regexp-in-string "/" "\\" (buffer-file-name) t t))
-  (setq filename
-        (concat
-         (make-temp-name
-          (concat tilde-buffer-filename
-                  "_"
-                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".jpg"))
-  ;; Linux: ImageMagick: (call-process "import" nil nil nil filename)
-  ;; Windows: Irfanview
-  (call-process "C:\\Program\sFiles\s(x86)\\IrfanView\\i_view32.exe" nil nil nil (concat "/clippaste /convert=" filename))
-  (insert (concat "[[file:" filename "]]"))
-  (org-display-inline-images))
-;;设置快捷键
-(global-set-key [f5] 'org-screenshot)
-
-
-;;要显示图片需要下载图片dll至bin目录
-;;根据这个网页http://darksun.blog.51cto.com/3874064/1385541
-
-;;以下来自http://greybeard.iteye.com/blog/1345082
-;;显示行号  
 ;;(require 'linum)  
 ;;(global-linum-mode t)  
 ;;显示列号    
 ;;(column-number-mode t)  
 ;;让Emacs 可以直接打开和显示图片
 (setq auto-image-file-mode t)
-
-
 
 
 ;;Q：在org-mode中没有自动换行，实现方法参看Emacs org mode学习笔记A：修改配置文件SUBDIRS.EL或.emacs，加上一句即可
@@ -373,8 +318,8 @@ a link to this file."
      ))
   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
 )  
-
 (add-hook 'org-mode-hook 'org-mode-reftex-setup) 
+(add-hook 'org-mode-hook 'turn-on-reftex)
 
 ;;设置产生pdf的过程   这个是不行的
 ;;(setq org-latex-to-pdf-process
@@ -387,29 +332,9 @@ a link to this file."
 (setq org-latex-pdf-process
   '("latexmk -pdflatex='xelatex -interaction nonstopmode' -pdf -bibtex -f %f" "latexmk -c"))
 
-(require 'ox-latex)
-(unless (boundp 'org-latex-classes)
-  (setq org-latex-classes nil))
-(add-to-list 'org-latex-classes
-             '("IEEEtran"               
-               "\\documentclass{IEEEtran}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("ctexart"               
-               "\\documentclass{ctexart}"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-
-
-;;移动，上下， 来自http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs
+;;移动，上下，即，将某一行上下移动 
+;;来自http://stackoverflow.com/questions/2423834/move-line-region-up-and-down-in-emacs
 (defun move-text-internal (arg)
   (cond
    ((and mark-active transient-mark-mode)
@@ -437,32 +362,29 @@ a link to this file."
             (forward-line -1)))
         (forward-line -1))
       (move-to-column column t)))))
-
 (defun move-text-down (arg)
   "Move region (transient-mark-mode active) or current line
   arg lines down."
   (interactive "*p")
   (move-text-internal arg))
-
 (defun move-text-up (arg)
   "Move region (transient-mark-mode active) or current line
   arg lines up."
   (interactive "*p")
   (move-text-internal (- arg)))
-
 (global-set-key [M-S-up] 'move-text-up)
 (global-set-key [M-S-down] 'move-text-down)
 
-(add-hook 'org-mode-hook 'turn-on-reftex)
 
+;; 设置默认编码
 (setq default-buffer-file-coding-system 'utf-8)
 
 ;; c-x c-f 的时候用上下箭头来选择历史文件。
 ;; from  http://stackoverflow.com/questions/3527150/open-recent-in-emacs
 (savehist-mode 1)
  
-
- ;; auctex setup according to https://www.emacswiki.org/emacs/AUCTeX
+;;设置auctex
+;; auctex setup according to https://www.emacswiki.org/emacs/AUCTeX
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
@@ -475,40 +397,17 @@ a link to this file."
 ;; my add
 (add-hook 'LaTeX-mode-hook 'outline-minor-mode)
 
-;; from http://edutechwiki.unige.ch/en/Emacs  2.1 Some essential customization
-(setq default-directory "D:/emacs")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-'(case-fold-search t)
-'(current-language-environment "UTF-8")
-'(inhibit-startup-screen t)
-'(initial-major-mode (quote text-mode))
-'(initial-scratch-message nil)
-'(ispell-alternate-dictionary "c:/Program Files (x86)/Aspell/dict")
-'(ispell-complete-word-dict "c:/Program Files (x86)/Aspell/dict")
-;; '(ispell-program-name "c:/Program Files (x86)/Aspell/bin/aspell.exe")
-'(longlines-show-hard-newlines t)
-'(longlines-wrap-follows-window-size t)
-'(temporary-file-directory "c:/tmp")
-'(transient-mark-mode (quote identity)))
-
-;; from ac-ispell
-;; Completion words longer than 4 characters
-(custom-set-variables
-  '(ac-ispell-requires 4)
-  '(ac-ispell-fuzzy-limit 2))
-
-(eval-after-load "auto-complete"
-  '(progn
-      (ac-ispell-setup)))
-
-(add-hook 'LaTeX-mode-hook 'ac-ispell-ac-setup)
-
+;;设置必应词典的快捷键
 ;; https://github.com/cute-jumper/bing-dict.el
 (global-set-key (kbd "C-c d") 'bing-dict-brief)
+
+;;Inverse search with Emacs/AucTeX and SumatraPDF
+;;https://tex.stackexchange.com/questions/286028/inverse-search-with-emacs-auctex-and-sumatrapdf-on-windows-10
+(server-start)
+
+;;设置：使用 company-mode in all buffers
+;;来自：http://company-mode.github.io/
+(add-hook 'after-init-hook 'global-company-mode)
 ```
 {% endraw %}
 __原始方法：__
