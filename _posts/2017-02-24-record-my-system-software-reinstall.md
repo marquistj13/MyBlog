@@ -206,7 +206,7 @@ jekyll serve --port 3000 -b ""
 
 ##  emacs
 __update18.5.24:__
-根据[emacs的company-mode让生活更美好]({{{ site.baseurl }}{% post_url 2018-5-24-emacs-company-mode-connect-to-melpa %}})的说明，[这里](https://github.com/m-parashar/emax64)有一个很完美的build，而且还是emacs26.1，自带gnutls和各种dll，完美啊。
+根据[emacs的company-mode让生活更美好]({{ site.baseurl }}{% post_url 2018-5-24-emacs-company-mode-connect-to-melpa %})的说明，[这里](https://github.com/m-parashar/emax64)有一个很完美的build，而且还是emacs26.1，自带gnutls和各种dll，完美啊。
 __update17.11.19:__
 我发现我以前的emacs安装都来自 [这个github](https://github.com/zklhp/emacs-w64/releases)， 里边有各种图片的dll，算是作者为windows优化好的，直接用就行了。
 解压后，直接运行。然后在 `C:\Users\houpe\AppData\Roaming` 加入一个名为 `.emacs` 的文件，该文件调用d盘的详细配置文件，即调用`D:\emacs\etc\.emacs`, 设置完以上两个文件以后。由于还需要安装 [cnfonts 原来叫： chinese-fonts-setup](https://github.com/tumashu/cnfonts#org8dffa7c), 因此要先执行 `M-x package-install RET cnfonts RET`,这样就会将其安装到 `C:\Users\houpe\AppData\Roaming\.emacs.d` 目录，注意我们重新安装emacs的时候只需要`C:\Users\houpe\AppData\Roaming\.emacs` 和`D:\emacs\etc\.emacs` 就行了。

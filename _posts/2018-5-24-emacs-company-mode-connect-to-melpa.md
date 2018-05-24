@@ -9,7 +9,7 @@ tag: [emacs,latex]
 {:toc}
 
 以前用的是 `emacs-25.3_1-x86_64`。
-记得在前面的博客：[使用irony将emacs打造为c++ IDE，代码补全]({{{ site.baseurl }}{% post_url 2018-4-24-emacs-cpp-ide-irony %}})
+记得在前面的博客：[使用irony将emacs打造为c++ IDE，代码补全]({{ site.baseurl }}{% post_url 2018-4-24-emacs-cpp-ide-irony %})
 中，ubuntu上的emacs上用company-mode实现了c++的补全前端。
 
 现在要写latex啦，默认的 `M+/` 补全实在不好使，咋安装company-mode呢？
