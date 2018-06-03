@@ -11,7 +11,8 @@ tag: [zotero]
 ## 前言
 以下默认安装了zotero的Better Bib(La)TeX 。
 且已经导出了keep updated的文献库（文件，导出文献库，格式，better bibtex，勾选keep updated）。
-以下：
+
+本文将解决以下问题：
 1. cite key部分用来将citation key设为`simon_training_2002`这种形式，即作者名字+题目首个单词+年份。
 1. 调教bib文件的field部分，用来定制产生的bib文件的field。
 
@@ -51,17 +52,21 @@ __具体步骤。__
 ## 调教Better BibTeX 插件生成的bib文件的field
 针对 `gbt-7714-2015-author-year.bst` 或 `gbt-7714-2015-numerical.bst` 的需求，我们导出文献库的时候应选择 `Better bibtex`, 而非`Better biblatex`。
 
-并且，需要加入 `language` 域。
+并且，需要加入 `lang` 域。
+并将原`language` 域删除。
 
 如果有中文参考文献的话, 需要手动加入pinyin 域，从而满足`gbt-7714-2015-author-year.bst`的排序需求。
 
 对于zotero而言，可以定制生成的bib文件的field（域），在，首选项，better bibtex， advanced， postscript中，写入：
 ```javascript
 if (Translator.BetterBibTeX && this.has.title) {
-  this.add({name: 'language', replace: true, value:item.title.match(/[\u4E00-\u9FA5]/) ? 'cn' : 'en'})
+  this.add({name: 'lang', replace: true, value:item.title.match(/[\u4E00-\u9FA5]/) ? 'zh' : 'en'})
+  delete this.has['language']
 }
 ```
 即可。
+`记得刷新哈，选择所有文献（方法是点击我的文库，ctral+a)，邮件选择文献，refresh bibtexkey`
+>要想看懂以上脚本，请看[这里](https://retorque.re/zotero-better-bibtex/scripting/)，需要懂一点点的javascript,我反正没学过javascript，边搜边学，哈哈。
 
 我建议针对中文文献单独维持一个bib文件，对其手动加入pinyin 域，毕竟我引的中文文献很少。
 在主文件中设置倆bib文件就行了，如： `\bibliography{总的文献库的位置,中文文献库的位置}`。
