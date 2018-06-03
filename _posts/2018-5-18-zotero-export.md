@@ -52,11 +52,14 @@ __具体步骤。__
 ## 调教Better BibTeX 插件生成的bib文件的field
 针对 `gbt-7714-2015-author-year.bst` 或 `gbt-7714-2015-numerical.bst` 的需求，我们导出文献库的时候应选择 `Better bibtex`, 而非`Better biblatex`。
 
-并且，需要加入 `lang` 域。
-并将原`language` 域删除。
+由于zotero获取的元数据的field可能是：language={中文}，我们的bst可能认不出来，
+因此可以这么解决
+1. 要么，需要加入 `lang` 域。 并将原`language` 域删除。并进行语言设置
+2. 要么，保留language 域，并进行语言设置。
+3. 删除language 域，让bst自己判断语言。
 
-如果有中文参考文献的话, 需要手动加入pinyin 域，从而满足`gbt-7714-2015-author-year.bst`的排序需求。
-
+根据以上说明，再加上我们的bst的特殊性，可以采用多种方法进行定制：
+### 方法1：去掉 language 域，加入lang域
 对于zotero而言，可以定制生成的bib文件的field（域），在，首选项，better bibtex， advanced， postscript中，写入：
 ```javascript
 if (Translator.BetterBibTeX && this.has.title) {
@@ -68,5 +71,25 @@ if (Translator.BetterBibTeX && this.has.title) {
 `记得刷新哈，选择所有文献（方法是点击我的文库，ctral+a)，邮件选择文献，refresh bibtexkey`
 >要想看懂以上脚本，请看[这里](https://retorque.re/zotero-better-bibtex/scripting/)，需要懂一点点的javascript,我反正没学过javascript，边搜边学，哈哈。
 
-我建议针对中文文献单独维持一个bib文件，对其手动加入pinyin 域，毕竟我引的中文文献很少。
+### 方法2：保留 language 域
+```javascript
+if (Translator.BetterBibTeX && this.has.title) {
+  this.add({name: 'language', replace: true, value:item.title.match(/[\u4E00-\u9FA5]/) ? 'chinese' : 'english'})
+}
+```
+注：这里的Chinese和方法1里的zh等价。
+
+### 方法3：删掉 language 域
+```javascript
+if (Translator.BetterBibTeX && this.has.title) {
+  delete this.has['language']
+}
+```
+
+### 其他悄悄话
+对于使用author-year引用的同学：
+如果有中文参考文献的话, 需要手动加入pinyin 域，从而满足`gbt-7714-2015-author-year.bst`的排序需求。
+当然，对于使用序号引用的同学：就不需要加入pinyin域了，因为反正是按照出现顺序排序的。
+
+因此，我建议针对中文文献单独维持一个bib文件，对其手动加入pinyin 域，毕竟我引的中文文献很少。
 在主文件中设置倆bib文件就行了，如： `\bibliography{总的文献库的位置,中文文献库的位置}`。
