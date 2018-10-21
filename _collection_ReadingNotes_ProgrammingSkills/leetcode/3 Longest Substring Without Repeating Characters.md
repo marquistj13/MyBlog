@@ -78,3 +78,29 @@ public:
     }
 };
 ```
+
+## python 版
+```py
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        maxlen=0
+        hist = set()
+        L = len(s)
+        i, j = 0, 0
+        while j< L:
+            if s[j] in hist:
+                if i<j:
+                    hist.remove(s[i])
+                    i+=1
+                pass
+            else:
+                hist.add(s[j])
+                j+=1
+                maxlen=max(maxlen,j-i)
+                pass
+        return maxlen
+```        

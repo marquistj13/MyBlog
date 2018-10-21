@@ -58,3 +58,41 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     }
 };
 ```
+
+## 使用Python
+```py
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        result = ListNode(0)
+        p_result = result
+        
+        p1 = l1 
+        p2 = l2
+        step_val=0
+        while p1!=None or p2!=None:             
+            if p1!=None:
+                val1=p1.val
+            else:
+                val1=0
+            if p2!=None:
+                val2=p2.val
+            else:
+                val2=0
+            sum_val = val1+val2+step_val            
+            p_result.next=ListNode(sum_val%10) 
+            p_result= p_result.next
+            step_val=sum_val/10 
+            if p1!=None:
+                p1 = p1.next
+            if p2!=None:
+                p2 = p2.next
+        if step_val!=0:
+            p_result.next=ListNode(step_val)
+        
+        return result.next
+```        

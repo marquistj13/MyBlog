@@ -72,3 +72,22 @@ public:
          
 };
 ```
+
+## 使用Python
+```py
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        
+        Len = len(nums)
+        u_map = dict(zip(nums, range(Len)))
+        for i in range(Len):
+            to_find = target - nums[i]
+            find = u_map.get(to_find)
+            if (find!=None) and find != i:
+                return [i, find]
+```                
