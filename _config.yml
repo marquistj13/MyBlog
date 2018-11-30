@@ -12,29 +12,21 @@ collections:
   collection_ReadingNotes_ProgrammingSkills:
     output: true
     permalink: /ReadingNotes/ProgrammingSkills/:path
-  collection_ScholarThings_Clustering:
+  collection_ScholarThings_EarlyCVBasicsAndRepresentation:
     output: true
-    permalink: /ScholarThings/Clustering/:path
-  collection_ScholarThings_General_Paper:
+    permalink: /ScholarThings/EarlyCVBasicsAndRepresentation/:path
+  collection_ScholarThings_EarlyClusteringExplore:
     output: true
-    permalink: /ScholarThings/General_Paper/:path
-  collection_ScholarThings_PaperToRead:
-    output: true
-    permalink: /ScholarThings/PaperToRead/:path
+    permalink: /ScholarThings/EarlyClusteringExplore/:path
 defaults:
 - scope:
     path: ''
-    type: collection_ScholarThings_PaperToRead
+    type: collection_ScholarThings_EarlyCVBasicsAndRepresentation
   values:
     layout: page
 - scope:
     path: ''
-    type: collection_ScholarThings_General_Paper
-  values:
-    layout: page
-- scope:
-    path: ''
-    type: collection_ScholarThings_Clustering
+    type: collection_ScholarThings_EarlyClusteringExplore
   values:
     layout: page
 - scope:
