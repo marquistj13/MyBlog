@@ -18,6 +18,9 @@ collections:
   collection_ScholarThings_EarlyClusteringExplore:
     output: true
     permalink: /ScholarThings/EarlyClusteringExplore/:path
+  collection_ScholarThings_SLAM:
+    output: true
+    permalink: /ScholarThings/SLAM/:path
 defaults:
 - scope:
     path: ''
@@ -27,6 +30,11 @@ defaults:
 - scope:
     path: ''
     type: collection_ScholarThings_EarlyClusteringExplore
+  values:
+    layout: page
+- scope:
+    path: ''
+    type: collection_ScholarThings_SLAM
   values:
     layout: page
 - scope:

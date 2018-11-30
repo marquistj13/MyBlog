@@ -9,5 +9,6 @@ menus:
   menu_list:
   - EarlyCVBasicsAndRepresentation
   - EarlyClusteringExplore
+  - SLAM
 
  
