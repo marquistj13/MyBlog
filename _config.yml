@@ -74,7 +74,6 @@ permalink: /:year/:month/:title/
 plugins:
 - jekyll-paginate
 - jekyll-sitemap
-- jekyll-feed
 - jemoji
 resume_site: ''
 title: 侯桑的博客
