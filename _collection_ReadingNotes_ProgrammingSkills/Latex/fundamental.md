@@ -28,7 +28,7 @@ control sequences有两类
 Tex对于标点后边一般会自动加个额外的空格，如果不想要这个空格，咱们就在后边自己加`\ `,如 `Proc.\ Royal Acad.\ of Twits`
 如果标点的前面有字母，tex就不加空格了，如果我们想要空格，就可以自己加： `A computer from IBM\null?`,这个`\null`就把字母M和问号分离了。 (这是因为句号前面如果是大写字母的话，tex认为这个句子还没有结束，不会加额外的空格 如果想主动结束可以这么搞 `DNA\null`)
 ## expandafter
-在[Tex for the impatient的笔记]({{ site.baseurl }}{% link _collection_ReadingNotes_ProgrammingSkills/latex_tex_related/Tex for the impatient.md %})中，我们已经了解了`\expandafter`的基本用法，下面根据另一篇文章`A Tutorial on \expandagter `（TUGboat 1988年的文章），来深入探讨一下其用法，主要是摘抄几个核心的例子。
+在[Tex for the impatient的笔记]({{ site.baseurl }}{% link _collection_ReadingNotes_ProgrammingSkills/Latex/Tex for the impatient.md %})中，我们已经了解了`\expandafter`的基本用法，下面根据另一篇文章`A Tutorial on \expandagter `（TUGboat 1988年的文章），来深入探讨一下其用法，主要是摘抄几个核心的例子。
 ###  简单的展开例子
 ```
 \def\xx{\yy}
@@ -67,7 +67,7 @@ tonjithesis.cls有这么一段用来设置cover的：
 看懂了上面的例子之后，很容易得出来这个`\tongji@define@term`的庐山真面目,就拿`\tongji@define@term{secretlevel}`来说：
 `\gdef\secretlevel#1{\gdef\tongji@secretlevel{#1}}`
 
-（注，用一个宏定义另一个宏的`##1`技巧，我们在[Tex for the impatient的笔记]({{ site.baseurl }}{% link _collection_ReadingNotes_ProgrammingSkills/latex_tex_related/Tex for the impatient.md %})已经介绍过了，回忆一下就是：`\def\first#1{\def\second##1{#1/##1}}`
+（注，用一个宏定义另一个宏的`##1`技巧，我们在[Tex for the impatient的笔记]({{ site.baseurl }}{% link _collection_ReadingNotes_ProgrammingSkills/Latex/Tex for the impatient.md %})已经介绍过了，回忆一下就是：`\def\first#1{\def\second##1{#1/##1}}`
 这样，当我们调用`\first{One}`的时候,就会将`\second`定义成：`\def\second#1{One/#1}`）
 
 好了，`\gdef\secretlevel#1{\gdef\tongji@secretlevel{#1}}`这么定义之后，我们就可以用`\secretlevel{绝密}`来定义一个`\tongji@secretlevel`宏了，接着可以用`\tongji@secretlevel`来表示密级，进而将其用于cover的排版。
