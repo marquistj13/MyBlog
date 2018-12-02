@@ -11,7 +11,7 @@ tag: [Ubuntu,OpenCV ]
 
 ## ubuntu16.04系统安装和配置
 ### 系统下载
-在清华大学开源软件镜像站找到[这个ubuntu16.04的链接](https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cdimage/ubuntu-gnome/releases/16.04/release/),我能访问v6网站，因此直接用浏览器下载，10m每秒。
+在清华大学开源软件镜像站找到[这个ubuntu16.04的链接](https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/16.04/),我能访问v6网站，因此直接用浏览器下载，10m每秒。
 
 ### VirtualBox 
 同样也在清华大学开源软件镜像站，[这里](https://mirror.tuna.tsinghua.edu.cn/help/virtualbox/)
