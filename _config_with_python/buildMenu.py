@@ -73,12 +73,12 @@ def directories_from_dict(dic):
 
 if __name__ == '__main__':
     # related files for setting up our blog menus
-    yamlMenuFile = r".\menu_config.yml"
-    yamlConfigFile = r"..\_config.yml"
-    yaml_template_ConfigFile = r".\template_config.yml"
-    template_header_file = r".\template_header.html"
-    template_index_file = r".\template_index.html"
-    header_file = r"..\_includes\header.html"
+    yamlMenuFile = r"./menu_config.yml"
+    yamlConfigFile = r"../_config.yml"
+    yaml_template_ConfigFile = r"./template_config.yml"
+    template_header_file = r"./template_header.html"
+    template_index_file = r"./template_index.html"
+    header_file = r"../_includes\header.html"
 
     # extract menus from menu_config.yml
     menu_config = yaml.load(file(yamlMenuFile, 'r'))
