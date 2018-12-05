@@ -45,3 +45,28 @@ Zang, Andi, Zichen Li, David Doria, and Goce Trajcevski. “Accurate Vehicle Sel
 4. even occupancy grids
 
 有了 HD map，可以通过triangulation使用特征进行定位。
+
+###  DATASET DESCRIPTION
+#### Vehicle and Sensor Configuration
+包含一个校准过的 HERE True platform，__用来提供真值__
+> Velodyne 32 LiDAR unit, 高分辨率相机，高分辨率定位单元
+
+能得到：
+1. well-registered point clouds
+2. street view imagery
+
+还有
+1. 消费级的 dash camera
+2. 消费级的 GPS
+
+camera和gps的位置关系未给定。
+
+已经将真值，dash camera，GPS的数据进行时间戳同步（对齐）。
+
+#### High Precision Map Modeling
+将road 分为 12米长的段。
+
+并提供了包含三部分的road model：
+1. Lane Boundary。 lane marking 以及 路肩都有。
+2. Occupancy Grid:light poles, road signs, and overpass bridges,等的occupancy grid
+3. Road Sign：限速标记，路段确认等。
