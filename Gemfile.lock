@@ -13,7 +13,9 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
+    eventmachine (1.2.7)
     eventmachine (1.2.7-x64-mingw32)
+    ffi (1.9.25)
     ffi (1.9.25-x64-mingw32)
     forwardable-extended (2.6.0)
     gemoji (3.0.0)
@@ -36,8 +38,6 @@ GEM
       pathutil (~> 0.9)
       rouge (>= 1.7, < 4)
       safe_yaml (~> 1.0)
-    jekyll-feed (0.11.0)
-      jekyll (~> 3.3)
     jekyll-paginate (1.1.0)
     jekyll-sass-converter (1.5.2)
       sass (~> 3.4)
@@ -58,6 +58,8 @@ GEM
     mercenary (0.3.6)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    nokogiri (1.8.5)
+      mini_portile2 (~> 2.3.0)
     nokogiri (1.8.5-x64-mingw32)
       mini_portile2 (~> 2.3.0)
     pathutil (0.16.2)
@@ -79,10 +81,10 @@ GEM
       thread_safe (~> 0.1)
 
 PLATFORMS
+  ruby
   x64-mingw32
 
 DEPENDENCIES
-  jekyll-feed
   jekyll-paginate
   jekyll-sitemap
   jemoji

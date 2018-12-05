@@ -1,0 +1,67 @@
+<header class="navbar navbar-inverse navbar-fixed-top docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>    
+    </div>
+    
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">    
+        <li>
+          <a href="{{ '/' | prepend: site.baseurl }}">Home</a>
+        </li>
+        <li>
+          <a href="{{ '/categories' | prepend: site.baseurl }}">Categories</a>
+        </li>
+        <li>
+          <a href="{{ '/tag' | prepend: site.baseurl }}">Tag</a>
+        </li>
+      </ul>    
+      
+       <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a><span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_uv"></span>次</span></a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">阅读<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+             
+                  <li>
+                       <a href="{{  '/ReadingNotes/DeepLearning/' |  prepend: site.baseurl }}">DeepLearning</a>
+                  </li>          
+              
+                  <li>
+                       <a href="{{  '/ReadingNotes/ProgrammingSkills/' |  prepend: site.baseurl }}">ProgrammingSkills</a>
+                  </li>          
+              
+          </ul>
+        </li><li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">学术目录<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+             
+                  <li>
+                       <a href="{{  '/ScholarThings/EarlyCVBasicsAndRepresentation/' |  prepend: site.baseurl }}">EarlyCVBasicsAndRepresentation</a>
+                  </li>          
+              
+                  <li>
+                       <a href="{{  '/ScholarThings/EarlyClusteringExplore/' |  prepend: site.baseurl }}">EarlyClusteringExplore</a>
+                  </li>          
+              
+                  <li>
+                       <a href="{{  '/ScholarThings/SLAM/' |  prepend: site.baseurl }}">SLAM</a>
+                  </li>          
+              
+          </ul>
+        </li>
+      
+       <li>
+         <a href="{{ '/search/' | prepend: site.baseurl }}">搜索</a>
+       </li> 
+           
+      </ul>    
+    </nav>
+  </div>
+</header>
