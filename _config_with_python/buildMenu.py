@@ -78,7 +78,7 @@ if __name__ == '__main__':
     yaml_template_ConfigFile = r"./template_config.yml"
     template_header_file = r"./template_header.html"
     template_index_file = r"./template_index.html"
-    header_file = r"../_includes\header.html"
+    header_file = r"../_includes/header.html"
 
     # extract menus from menu_config.yml
     menu_config = yaml.load(file(yamlMenuFile, 'r'))
@@ -125,11 +125,11 @@ if __name__ == '__main__':
         menu_name_en = k
         for collection_iterm_name in v:
             collection_name = 'collection_' + menu_name_en + '_' + collection_iterm_name
-            collection_iterm_path = '..\_collection_' + menu_name_en + '_' + collection_iterm_name
+            collection_iterm_path = '../_collection_' + menu_name_en + '_' + collection_iterm_name
             try:
                 os.makedirs(collection_iterm_path)
                 h_template_index_file = codecs.open(template_index_file, "r", "utf-8")
-                h_index_file = codecs.open(collection_iterm_path + '\index.html', "w", "utf-8")
+                h_index_file = codecs.open(collection_iterm_path + '/index.html', "w", "utf-8")
                 jinja_template = Template(h_template_index_file.read())
                 h_index_file.write(
                     jinja_template.render(collection_iterm_name=collection_iterm_name, collection_name=collection_name))
@@ -141,7 +141,7 @@ if __name__ == '__main__':
                     raise  # it's a file name
                 else:
                     h_template_index_file = codecs.open(template_index_file, "r", "utf-8")
-                    h_index_file = codecs.open(collection_iterm_path + '\index.html', "w", "utf-8")
+                    h_index_file = codecs.open(collection_iterm_path + '/index.html', "w", "utf-8")
                     jinja_template = Template(h_template_index_file.read())
                     h_index_file.write(
                         jinja_template.render(collection_iterm_name=collection_iterm_name, collection_name=collection_name))
