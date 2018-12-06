@@ -40,7 +40,7 @@ GNSS 的缺点：
 GNSS 没法用的时候还能用 IMU ，但 IMU的会随着时间积累误差。
 
 地图匹配技术经常用来改善GNSS的定位精度。
-有了GIS，就能将GPS的测量值投射到GIS的road link上，这样垂直于道路方向（维纬度方向）的 GPS 误差就能减少， 但经度方向（道路方向）的位置目前还没法改善。
+有了GIS，就能将GPS的测量值投射到GIS的road link上，这样垂直于道路方向（纬度方向）的 GPS 误差就能减少， 但经度方向（道路方向）的位置目前还没法改善。
 
 文献调研
 分为两部分：
@@ -97,6 +97,9 @@ image space 的摄影几何 和 road 所在空间（object space）的欧式几�
 这样就得到了image space 和 object space的四个对应点。
 若已知camera的内参，且已经标定，则单应变化可分解为旋转矩阵和平移向量。
 
+
+## 实验
+数据集：[Lane Level Localization, University Grand Challenge, 2016](https://conference.eng.unimelb.edu.au/its-gc/)
 
 ## CONCLUSION
 利用 image content 估计platform 相对于road的位置，然后根据 HD 地图将该位置转化到global坐标系

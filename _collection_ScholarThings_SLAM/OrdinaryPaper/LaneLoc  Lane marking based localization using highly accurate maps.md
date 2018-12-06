@@ -27,7 +27,7 @@ GNSS 在市区无法达到分米级的精度。
 Mapping 和 online localization 是完全分开的。
 mapping的时候用高精度GNSS，并使用360度的velodyne laser得到complete road geometry（包含交叉路口等）。
 
-俯视相机自带lane detection算法，
+俯视的广角相机，然后进行lane detection，
 相机视角较小，远处的lane以及road boundary由lasers canner的图像来获取。
 
 

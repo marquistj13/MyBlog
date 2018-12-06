@@ -38,7 +38,9 @@ Zang, Andi, Zichen Li, David Doria, and Goce Trajcevski. “Accurate Vehicle Sel
 1. LiDAR 可直接获取 3D 信息，缺点是cost and weather dependency
 2. 从 2D stereo camera （双目或多目相机）亦可以重建 3D 信息，
 
-亦可以通过检测以下object进行定位
+还有 SLAM 定位。
+
+还有基于图像+高清地图的定位，通过检测以下lane-level的object进行定位
 1. lane markings ， 
 2. pole-like objects , 
 3. curbs , 
