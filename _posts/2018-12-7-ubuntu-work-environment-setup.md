@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  ubuntu18.04 我的常用软件安装
+title:  ubuntu18.04 我的常用软件环境安装
 categories:  [系统环境]
 tag: [日常琐事]
 ---
@@ -87,3 +87,59 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 
 此时，虽然可以使用搜狗输入中文，但很可能没法切换成英文，点击电脑右上角的键盘符号，选择Restart，过一会儿就行了。
 
+## 交换 `Ctrl` 和 `Caps`
+习惯了 Emacs 的快捷键以后，为了保护手指，需要将 `Ctrl` 和 不常用的 大小写转换按键`Caps`进行交换。
+
+Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https://www.emacswiki.org/emacs/MovingTheCtrlKey)
+
+首先搜索安装 `Gnome tweaks`,安装好之后，可以搜索到，它的名变成了 Tweaks，差不多吧。
+现在的版本和上面链接给出的不太一样了，不过功能一样。
+找到 `Keyboard & Mouse`,然后 点击 `Additional Layout Options`，找到 `Ctrl position`，选择 `Swap Ctrl and Cas Lock`，搞定。
+
+注：`sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
+## gitkraken
+git 的一个gui
+这个在software center有，直接搜索安装即可。
+
+## jekyll
+按照 [Jekyll on Ubuntu](https://jekyllrb.com/docs/installation/ubuntu/) 的安装说明就能安装 Jekyll 了。
+
+由于我的博客目录[MyBlog](https://github.com/marquistj13/MyBlog)已经有了一个`Gemfile`:
+```ruby
+source 'https://rubygems.org'
+#gem 'github-pages', group: :jekyll_plugins
+# gem 'jekyll-feed'
+gem 'jekyll-paginate'
+gem 'jekyll-sitemap'
+gem 'jemoji'
+```
+因此需要去其目录安装这些"依赖"：`bundle install`
+然后就可以运行`jekyll serve`了。
+
+我的特殊配置：
+在`MyBlog`目录（也就是我的博客的根目录）的同级目录，放置一个名为`run_myblog`的脚本：
+```
+cd MyBlog
+cd _config_with_python
+python buildMenu.py
+cd ../
+jekyll serve --port 4000 --incremental
+```
+不过鉴于我的博客依赖Python进行目录的生成，并使用`yaml` 和 `jinjia2`，因此可能还需要安装一下：
+```
+sudo apt install python-yaml
+sudo apt install python-jinja2
+```
+
+## vscode
+### vscode
+可以利用系统的software center 搜索安装 vscode。
+### 安装icon插件，让icon更漂亮
+然后在vscode 中安装一个插件`vscode-icons`
+### markdown 预览
+vscode自带了markdown的预览，使用快捷键：`Ctrl+K V` 即可调出预览窗口，并且可以滚动同步，很良心！
+### markdown 主题和快捷键
+按照 [官方介绍Markdown and Visual Studio Code](https://code.visualstudio.com/docs/languages/markdown)，我又安装了：
+`Markdown Shortcuts`  `Markdown TOC` `Markdown Theme Kit`
+
+其中，`Markdown Shortcuts` 定义了很多快捷键，不过我熟悉的设置heading的并没有绑定，可用的方法是，使用 `ctrl +m ctrl m`调出快捷键窗口，然后点击就行了
