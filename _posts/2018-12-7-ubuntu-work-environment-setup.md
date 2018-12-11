@@ -10,7 +10,8 @@ tag: [日常琐事]
 
 ##  安装 显卡驱动
 笔记本自带了 1050 的显卡。
-打开搜索框，搜索 Additional Drivers，根据这个窗口，选择 使用  Nvidia binary driver，确定就行了。
+打开搜索框，搜索 Additional Drivers，根据这个窗口，选择 使用  Nvidia binary
+(注意，先`sudo apt-get update`,要不然会找不到驱动)
 
 在我的 18.04刚安装好的时候，无法正常关机，只能按电源键强行关机，为啥呢？
 因为没装显卡驱动。
@@ -28,12 +29,16 @@ tag: [日常琐事]
 实际上只需要解压即可，官方建议将其解压到 `/opt/zotero` 目录，可以先解压，再移动过去，或者直接解压过去：
 `tar jxvf 文件名 -C /opt`。
 
-zotero官方提供了 `set_launcher_icon` 脚本，用来生成 `zotero.desktop` 文件，它负责在侧边栏放置一个启动项。
-生成之后，生成该文件在 `~/.local/share/applications/` 的一个软链接，如 `ln -s /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop`，此时仍然没有出现在侧边栏。
+此时直接运行 zotero，就行了，然后邮件图标，固定到launcher就行了
 
-此时运行 zotero 命令即可打开Zotero的窗口，在 16.04 里，zotero打开之后，在侧边栏里可以点击右键固定在launcher上，只是可能没法显示正确的图标，此时只需要将执行固定操作后生成的`.desktop`文件修改，将其`Icon`值设为我么生成的`zotero.desktop`中的`Icon`值即可。
+如果没法正确显式到launcher，就按照如下步骤：
+>
+1. zotero官方提供了 `set_launcher_icon` 脚本，用来生成 `zotero.desktop` 文件，它负责在侧边栏放置一个启动项。
+生成之后，生成该文件在 `~/.local/share/applications/` 的一个软链接，如 `ln -s /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop`，此时仍然没有出现在侧边栏。
+2. 此时运行 zotero 命令即可打开Zotero的窗口，在 16.04 里，zotero打开之后，在侧边栏里可以点击右键固定在launcher上，只是可能没法显示正确的图标，此时只需要将执行固定操作后生成的`.desktop`文件修改，将其`Icon`值设为我么生成的`zotero.desktop`中的`Icon`值即可。
 而在18.04里没有这个选项了，即没法直接右键，加入favourite了，怎么办？
 重启电脑，打开zotero，此时就可以右键加入favourite了，而且图标也是正确的。
+
 ### 同步设置
 登录zotero账号，由于zotero本身提供的存储空间太小，因此我们仅用其存储比较小的索引，即文献的名称。
 而附件和全文都由支持webdav的云（如国内的坚果云）进行存储。
@@ -61,7 +66,7 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 不要自己设置快捷键啦！
 
 ## 安装汉语支持和输入法
-### 基本安装
+### 基本安装(这个就是使用自带的输入法啦，如果使用搜狗，就不需要这一步)
 搜索language support,点击 `Install /Remove Languages`，找到 chinese (simplified)，安装就行了。
 
 此时，我的18.04 的右上角并没有出现输入法的切换选项。
@@ -70,10 +75,10 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 
 此时就可以用汉语输入法啦。
 
-### 将ibus替换为fcitx
+### 将ibus替换为fcitx（搜狗需要这一步）
 有人说自带的ibus框架比较难用，所以要换一下。
 `sudo apt-get install fcitx`
-重启电脑，在language support的keyboard input method system那里选择fcitx即可。
+重启电脑（貌似不重启也行），在language support的keyboard input method system那里选择fcitx即可。
 
 ### 安装搜狗输入法
 自带的话，还得培养词库。
@@ -99,7 +104,7 @@ Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https
 注：`sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
 ## gitkraken
 git 的一个gui
-这个在software center有，直接搜索安装即可。
+直接下载安装即可。
 
 ## jekyll
 按照 [Jekyll on Ubuntu](https://jekyllrb.com/docs/installation/ubuntu/) 的安装说明就能安装 Jekyll 了。
@@ -114,6 +119,10 @@ gem 'jekyll-sitemap'
 gem 'jemoji'
 ```
 因此需要去其目录安装这些"依赖"：`bundle install`
+>注，这一步可能会出现关于Nokogiri的错误，
+按照[这里](https://stackoverflow.com/questions/47038472/nokogiri-v-1-8-1-issue-when-running-bundle-install)的步骤就行了：
+`sudo apt install libxml2-dev zlib1g-dev`
+
 然后就可以运行`jekyll serve`了。
 
 我的特殊配置：
