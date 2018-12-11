@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  ubuntu18.04 我的常用软件环境安装
+title:  ubuntu18.04 以及 16.04 我的常用软件环境安装
 categories:  [系统环境]
 tag: [日常琐事]
 ---
@@ -97,11 +97,36 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 
 Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https://www.emacswiki.org/emacs/MovingTheCtrlKey)
 
+### 方法1，使用图形界面（不推荐）
 首先搜索安装 `Gnome tweaks`,安装好之后，可以搜索到，它的名变成了 Tweaks，差不多吧。
 现在的版本和上面链接给出的不太一样了，不过功能一样。
 找到 `Keyboard & Mouse`,然后 点击 `Additional Layout Options`，找到 `Ctrl position`，选择 `Swap Ctrl and Cas Lock`，搞定。
+>注：在18.04上没问题，但在我的16.04上就有问题，第一个就是安装问题，得用命令行安装，好像是`sudo apt install genome-tweak-tool`，第二个问题是重启以后可能失效。
 
-注：`sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
+### 方法2，使用配置文件（推荐）
+建立 ` ~/.xmodmap` 文件，写入：
+```
+!
+! Swap Caps_Lock and Control_L
+!
+remove Lock = Caps_Lock
+remove Control = Control_L
+keysym Control_L = Caps_Lock
+keysym Caps_Lock = Control_L
+add Lock = Caps_Lock
+add Control = Control_L
+```
+然后 `xmodmap ~/.xmodmap`。
+重启以后也会失效，因此我们需要登陆之后手动运行这个命令。
+
+能不能开机启动这个命令呢？但我尝试了很多方法都不行，例如
+1. 搜索`startup applications`，然后加入上述命令 `xmodmap ~/.xmodmap` 。
+2. 使用`crontab`，建立一个文件，例如 `~/.marquis_cron`，写入：
+`@reboot /usr/bin/xmodmap ~/.xmodmap`
+
+### 方法3，没搞成功
+`sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
+
 ## gitkraken
 git 的一个gui
 直接下载安装即可。
@@ -143,6 +168,8 @@ sudo apt install python-jinja2
 ## vscode
 ### vscode
 可以利用系统的software center 搜索安装 vscode。
+目测还是自己去官网下载安装更快。
+
 ### 安装icon插件，让icon更漂亮
 然后在vscode 中安装一个插件`vscode-icons`
 ### markdown 预览
