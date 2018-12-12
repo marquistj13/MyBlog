@@ -117,12 +117,41 @@ add Lock = Caps_Lock
 add Control = Control_L
 ```
 然后 `xmodmap ~/.xmodmap`。
+
 重启以后也会失效，因此我们需要登陆之后手动运行这个命令。
 
-能不能开机启动这个命令呢？但我尝试了很多方法都不行，例如
+能不能开机启动这个命令呢？
+但我尝试了很多方法都不行，例如
 1. 搜索`startup applications`，然后加入上述命令 `xmodmap ~/.xmodmap` 。
 2. 使用`crontab`，建立一个文件，例如 `~/.marquis_cron`，写入：
 `@reboot /usr/bin/xmodmap ~/.xmodmap`
+3. 我也试了各种启动脚本，如`.profile`，都不行，尝试加入`sleep 4`也不行。
+
+这个答案[Permanent xmodmap in Ubuntu 13.04](https://askubuntu.com/questions/325272/permanent-xmodmap-in-ubuntu-13-04/514277#514277) 搞了一个Python脚本来实现这个功能，我心想应该不需要这么麻烦吧，先不试啦。
+
+__最终的解决方案：__
+将 ` ~/.xmodmap` 更名为 ` ~/.Xmodmap`
+它就会自动配置啦。
+
+借鉴自：[Activating the .Xmodmap at startup](https://cweiske.de/howto/xmodmap/ar01s06.html)
+```
+Some distributions automatically load the ~/.Xmodmap when a user logs on in X - if yours does, consider yourself happy. One of the distris which doesn't do it is Gentoo, while SuSE does.
+
+Here is how you get it loaded automatically: You've got to open
+
+$KDEDIR/share/config/kdm/Xsession
+and insert the following code at the beginning of the file (but after the shebang #!/bin/sh):
+
+if [ -f $HOME/.Xmodmap ]; then
+    /usr/bin/xmodmap $HOME/.Xmodmap
+fi
+Now save, logout and log in again. Your modmap should have been loaded now.
+
+Using a global Xmodmap file
+Xorg (at least in version 7.0) has an xinit script at /etc/X11/xinit/xinitrc that loads a global Xmodmap file for all users. The default location is /etc/X11/Xmodmap. Since KDE doesn't automatically do this, you should add it: Open the Xsession file (as described above) and add the following line:
+
+[ -f /etc/X11/Xmodmap ] && xmodmap /etc/X11/Xmodmap
+```
 
 ### 方法3，没搞成功
 `sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
