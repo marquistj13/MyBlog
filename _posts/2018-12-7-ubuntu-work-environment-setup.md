@@ -104,7 +104,7 @@ Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https
 >注：在18.04上没问题，但在我的16.04上就有问题，第一个就是安装问题，得用命令行安装，好像是`sudo apt install genome-tweak-tool`，第二个问题是重启以后可能失效。
 
 ### 方法2，使用配置文件（推荐）
-建立 ` ~/.xmodmap` 文件，写入：
+建立 `~/.xmodmap` 文件，写入：
 ```
 !
 ! Swap Caps_Lock and Control_L
@@ -130,7 +130,7 @@ add Control = Control_L
 这个答案[Permanent xmodmap in Ubuntu 13.04](https://askubuntu.com/questions/325272/permanent-xmodmap-in-ubuntu-13-04/514277#514277) 搞了一个Python脚本来实现这个功能，我心想应该不需要这么麻烦吧，先不试啦。
 
 __最终的解决方案：__
-将 ` ~/.xmodmap` 更名为 ` ~/.Xmodmap`
+将 `~/.xmodmap` 更名为 `~/.Xmodmap`
 它就会自动配置啦。
 
 借鉴自：[Activating the .Xmodmap at startup](https://cweiske.de/howto/xmodmap/ar01s06.html)
