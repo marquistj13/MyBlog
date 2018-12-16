@@ -8,13 +8,13 @@ tag: [方案借鉴]
 * content
 {:toc}
 
-## 安装 openwrt （现在是 `18.06.1`的版本啦）
+## 简单配置 openwrt 相关
+### 安装 openwrt （现在是 `18.06.1`的版本啦）
 路由器型号： linksys WRT1200AC
 在 [Linksys WRT AC Series](https://openwrt.org/toh/linksys/wrt_ac_series#stable) 找到 [Repository](https://downloads.openwrt.org/releases/18.06.1/targets/mvebu/cortexa9/)，然后找到路由器型号对应的文件，即 `linksys-wrt1200ac-squashfs-factory.img`，进行下载即可。
 
 在路由器上将固件文件写入（建议插网线）。
 
-## 简单配置 openwrt
 ### 网页端访问 openwrt
 安装好 openwrt 之后，自带 luci 界面，默认wifi是关闭的。
 用网线连接路由器的lan口，浏览器输入`192.168.1.1`，默认不带 root 密码，登陆进去，设置密码，ok。
@@ -40,8 +40,11 @@ tag: [方案借鉴]
 只需要等一会儿，luci 界面 就会变成中文啦。
 
 
-## 第一种 openvpn 设置（路由器可以登录openvpn账户，但没法正常工作，不推荐这么做了）
-以下来自：[opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
+## 第一种 openvpn 设置（路由器自己可以上google，但设备没法上。很奇怪，目前不知道结解决方法。）
+以下参考自：
+1. [opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
+2. 来自[Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
+
 ### 安装 openvpn
 `opkg install openvpn-openssl luci-app-openvpn openssl-util`
 ### 创建网络接口（这个是tun的接口，应该是隧道吧）
@@ -89,6 +92,8 @@ uci commit openvpn && service openvpn restart
 `scp ./vpnclient.ovpn root@192.168.1.1:/etc/openvpn/`
 
 ### 然后设置`vpnclient.ovpn`的内容
+如果你的openvpn只需要配置文件，不需要密码验证，只需要把配置文件传过去就行了，不需要添加用户验证文件。
+下面考虑需要输入用户名和密码的情况：
 1. 首先运行：
 ```
 sed -r -i "
@@ -113,23 +118,65 @@ EOF
 1. 最后重启openvpn：
 `service openvpn restart`
 
-## debug
-### 保证openvpn运行
-运行：`ps | grep [o]penvpn; echo && logread -e openvpn` 若无输出，说明没有运行，我重启了路由器，
-然后运行了好几次`service openvpn restart`，就能在在luci的`网络->接口`界面看到在运行了，`ps | grep [o]penvpn; echo && logread -e openvpn`也有输出啦。
-
-__马后炮：__ 实际上，只需要重启路由器，它就会自动运行openvpn，并登陆我们设置的账户。 或者每次运行`service openvpn restart`就会登录一次账户。
-
-### 我运行 vpn 的时候无法访问网络
-在`服务->OpenVPN`界面，可以看到我们的`vpnclient`在运行，在我自己的openvpn server端也看到路由器登陆vpn成功了，但此时路由器无法访问网络，
+### dns 的设置
+刚才我们执行了`service openvpn restart`，很大概率此时终端无法通过路由器上网了，即 `ping baidu.com` 都不行，因此`ping google.com`更不行。
 只有将`服务->OpenVPN`界面的`vpnclient`给`stop`了才能正常访问网络，当然，此时openvpn也就下线了。
+也就无法达到我们的目的了，怎么办？
 
-有人说通过设置dns可以解决这个问题，我没搞成功……
+我们可以通过设置，让服务器端给我们解析地址。
+具体而言，就是在ovpn配置文件中，告诉openvpn：“兄弟，你给我执行两个脚本，让服务器端给我们解析地址吧！”
+
+好了，打开`/etc/openvpn/vpnclient.ovpn`，在其开头（其实应该啥地方都行）加入：
+```bash
+script-security 2 # needed to be able to use 'up' and 'down' scripts
+up "/etc/openvpn/updns" # FIX DNS, we will create it later
+down "/etc/openvpn/downdns" # FIX DNS, we will create it later
+```
+
+下面建立处理dns的两个脚本。
+首先运行即可：
+```bash
+cat<<'EOF' > /etc/openvpn/updns
+#!/bin/sh
+mv /tmp/resolv.conf.auto /tmp/resolv.conf.auto.hold
+echo $foreign_option_1 | sed -e 's/dhcp-option DOMAIN/domain/g' -e 's/dhcp-option DNS/nameserver/g' >/tmp/resolv.conf.auto
+echo $foreign_option_2 | sed -e 's/dhcp-option DOMAIN/domain/g' -e 's/dhcp-option DNS/nameserver/g' >> /tmp/resolv.conf.auto
+echo $foreign_option_3 | sed -e 's/dhcp-option DOMAIN/domain/g' -e 's/dhcp-option DNS/nameserver/g' >> /tmp/resolv.conf.auto
+EOF
+
+
+cat<<'EOF' > /etc/openvpn/downdns
+#!/bin/sh
+mv /tmp/resolv.conf.auto.hold /tmp/resolv.conf.auto
+EOF
+```
+
+然后增加可执行权限
+```bash
+chmod 755 /etc/openvpn/updns
+chmod 755 /etc/openvpn/downdns
+```
+
+检查一下：`ls -l /etc/openvpn/*dns` 可以看到这俩文件啦。
+
+最后重启openvpn服务：`service openvpn restart`
+
+运行：`ps | grep [o]penvpn; echo && logread -e openvpn` 若无输出，说明没有运行
+此时可以再次运行`service openvpn restart`。
+
+如果运行：`ps | grep [o]penvpn; echo && logread -e openvpn` 看到 `Initialization Sequence Completed`，恭喜你，成功啦。
+然后可以`CTRL+C`退出命令啦。
+现在可以`ping baidu.com` 以及`ping google.com`啦
+
+## debug
+路由器自己可以上google，但设备没法上。很奇怪，目前不知道结解决方法。
 
 
  
 ## 以下是第二种 openvpn 设置
-来自[Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
+以下参考自：
+1. [opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
+2. 来自[Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
 
 ## 基本步骤
 ### 首先搭建Streisand服务器
@@ -269,7 +316,7 @@ chmod 755 /etc/openvpn/downdns
 第一种方法：在终端执行 `service openvpn restart`
 第二种方法：在luci界面的`服务->Openvpn`那里，点一下，将我们的`streisand`给`start`。
 
-## 运行相关的命令
+## debug 相关的命令
 ### 查看运行情况
 如果上一步中，我们在配置文件中加入了log，那么可以查看log文件：
 ```
