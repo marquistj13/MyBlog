@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  将 openwrt 路由器作为 openvpn client
-categories:  [定位]
-tag: [方案借鉴]
+categories:  [系统环境]
+tag: [配置文件,OpenWrt]
 ---
 
 * content
