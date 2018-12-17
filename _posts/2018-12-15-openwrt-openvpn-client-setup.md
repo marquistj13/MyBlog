@@ -39,11 +39,21 @@ tag: [方案借鉴]
 执行 `opkg install luci-i18n-base-zh-cn`
 只需要等一会儿，luci 界面 就会变成中文啦。
 
+## 下面将介绍两种配置方法，我的经验是：第一种不work，第二种work
+本文的client的配置适用以下方法设置的openvpn server：
+1. [SoftEtherVPN](https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases)
+2. [StreisandEffect/streisand](https://github.com/StreisandEffect/streisand)
+3. [angristan/openvpn-install](https://github.com/angristan/openvpn-install)
 
-## 第一种 openvpn 设置（路由器自己可以上google，但设备没法上。很奇怪，目前不知道结解决方法。）
+
+## 第一种 openvpn 设置（失败的尝试，不要参照这个做，直接按照下面的`第二种 openvpn 设置`操作就行了)
 以下参考自：
-1. [opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
-2. 来自[Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
+1. 主要部分来自：[opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
+2. dns的设置部分来自：[Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
+
+### 故障描述
+根据这种方法设置好之后，可以发现路由器自己可以上google，但连接路由器的设备没法上。很奇怪，目前不知道结解决方法。
+我不想把这一部分删掉，有兴趣的同学可以将这个失败的方法和成功的方法对照，看看啥地方的原因，我猜测是这种方法把各种东西，如接口啊，防火墙的zone啊都起名为`vpnclient`，很有可能吧。
 
 ### 安装 openvpn
 `opkg install openvpn-openssl luci-app-openvpn openssl-util`
@@ -173,14 +183,12 @@ chmod 755 /etc/openvpn/downdns
 
 
  
-## 以下是第二种 openvpn 设置
+## 第二种 openvpn 设置
 以下参考自：
-1. [opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
-2. 来自[Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
+1. 每个子配置部分（如接口配置）之后的生效部分参考自：[opwnwrt官方教程OpenVPN Client](https://openwrt.org/docs/guide-user/services/vpn/openvpn/client)
+2. 主要部分来自 [Setting an OpenWrt Based Router as OpenVPN Client](https://github.com/StreisandEffect/streisand/wiki/Setting-an-OpenWrt-Based-Router-as-OpenVPN-Client)
 
 ## 基本步骤
-### 首先搭建Streisand服务器
-按照[Streisand](https://github.com/StreisandEffect/streisand)的介绍搭建一个服务器
 
 ### 保证路由器空间大于 1M
 `df -h`
@@ -243,6 +251,9 @@ uci set openvpn.streisand.config='/etc/openvpn/streisand.conf'
  
 uci commit openvpn && service openvpn restart
 ```
+注释：
+> 此处的配置文件指定为 `/etc/openvpn/streisand.conf`，其实你可以任意起名字，扩展名也无所谓，我一般叫它 `vpnclient.ovpn`，如果你也这么配置的话，下面对应的部分也改成 `vpnclient.ovpn`即可。
+
 
 ### dns 的设置
 原作者建议不要在路由器上自己设置，而是使用服务器端的：
@@ -254,18 +265,24 @@ uci commit openvpn && service openvpn restart
 下面我们将建立文件并在里面设置dns，然后建立这两个脚本。
 
 ### 获取ovpn配置文件
+1. [SoftEtherVPN](https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases)搭建的话直接可以用server端的gui界面导出`.ovpn`的配置文件
+1. 如果你是按照[Streisand](https://github.com/StreisandEffect/streisand)的介绍搭建的服务器
 这搭建好Streisand之后，会生成一个`streisand.html`文件，从这个文件可以下载。
 里边有很多下载选项，我就点的第一个`alarm-laugh`，就下载了一个`[ip]-direct.ovpn`这种名字的配置文件。
-__注意__：
->`streisand`的配置文件默认应该是没有密码的，所以无需我们自己建密码文件了。
+__注意__：>`streisand`的配置文件默认应该是没有密码的，所以无需我们自己建密码文件了。
+1. [angristan/openvpn-install](https://github.com/angristan/openvpn-install)也是直接生成配置文件的。
 
-### 根据ovpn配置文件生成我们自己的配置文件 '/etc/openvpn/streisand.conf'
-下面将利用 `cat` 和`EOF' `从终端生成文件（作者应该是懒得教我们使用`scp`了）。
+### 根据ovpn配置文件生成我们自己的配置文件 `/etc/openvpn/streisand.conf` 
+当然配置文件的名称只要和上面一致就行，即和 `uci set openvpn.streisand.config='/etc/openvpn/streisand.conf'` 一致就行了。
 
+
+下面以[Streisand](https://github.com/StreisandEffect/streisand)的配置文件为例，介绍如何进行dns的配置。
+>1. [angristan/openvpn-install](https://github.com/angristan/openvpn-install)的配置文件的修改和这个一样
+1. 貌似[SoftEtherVPN](https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases)需要建立用户名和密码，因此除了这里的介绍之外，还需要参照上面`第一种 openvpn 设置`的介绍建立一个`vpnclient.auth`的文件用于存放用户名和密码。
+
+我们将利用 `cat` 和`EOF' `从终端生成文件（不用`scp`的时候就可以用这种方法）
 首先，用纯文本编辑器打开`[ip]-direct.ovpn`
-
 找到这一行 `router [ip] 255.255.255.255 net_gateway`，在此行开头加 `#` 将其注释。因为这一行我们从服务器端可以得到，所以要注释掉。
-
 在文件开头加入：
 ```bash
 script-security 2 # needed to be able to use 'up' and 'down' scripts
