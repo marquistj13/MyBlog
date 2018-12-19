@@ -354,3 +354,58 @@ tail -f /var/log/openvpn.log  # monitor log.
 这里去trace其他的ip也是可以的。
 
 或者访问[这个网页](https://duckduckgo.com/?q=ip+address&ia=answer)看到我们的ip在服务器那边就行啦。
+
+### 使用 crontab 定时重启
+
+#### 基本知识
+每次快到晚上的时候貌似都会断开连接，因此我决定每隔几分钟就要重启一次服务。
+根据[linux下crontab每隔5分钟执行一次任务的写法](http://outofmemory.cn/code-snippet/434/linux-crontab-meige-5-fenzhong-execution-yici-task-xiefa)的说明，
+>有两种写法
+第一种写法是*/5，这种写法有的系统会不支持
+`*/5 * * * * /xxx/task.sh`
+第二种写法比较繁琐，但所有系统都支持：
+`0,5,10,15,20,25,30,35,40,45,50,55 * * * * /xx/task.sh`
+
+
+[OpenWrt Cron and crontab 官网介绍](https://openwrt.org/docs/guide-user/base-system/cron)有教程，且两种指定方式都支持
+据我的测试，这种 `0,5,10,15,20,25,30,35,40,45,50,55 * * * * /xx/task.sh` 更好使一点。
+
+
+我发现吗，每次restart大概耗时3秒左右。
+我目前打算每隔三十分钟执行一次,可以用：
+`*/30 * * * * service openvpn restart`
+或者：
+`0,30 * * * * service openvpn restart`
+
+创建一个文件如`vim marquis_cron`，写入上述命令
+然后执行 `crontab marquis_cron` 就行了。
+
+执行完可以用`crontab -l`查看所有的配置，用`crontab -r`删除配置。
+
+#### 使能cron
+[官方教程](https://oldwiki.archive.openwrt.org/doc/howto/cron)说没有默认启用cron，因此要Activating cron，只需要运行一次就行啦：
+```
+/etc/init.d/cron start
+/etc/init.d/cron enable
+```
+
+#### 寻找能运行的命令
+以下测试的时候我用的5分钟。
+
+上面 `0,5,10,15,20,25,30,35,40,45,50,55 * * * * service openvpn restart` 运行之后，，使用 
+`ps | grep [o]penvpn; echo && logread -e openvpn` 看到了我们的cron脚本的运行结果：
+>Wed Dec 19 11:25:00 2018 cron.info crond[3327]: USER root pid 3970 cmd service openvpn restart
+
+但是我在luci界面看到的正在运行的openvpn的pid不是这个数字。
+同时手动运行`service openvpn restart`发现luci界面的openvpn的 pid就是手动运行之后使用`ps | grep [o]penvpn; echo && logread -e openvpn`看到的pid，同时这个命令的输出给出了完整的运行命令，即：
+`/usr/sbin/openvpn --syslog openvpn(streisand) --status /var/run/openvpn.streisand.status --cd /etc/openvpn --config /etc/openvpn/streisand.conf`
+
+但我试了还是不行。
+在[openwrt下的openvpn client实现](https://segmentfault.com/a/1190000004172000)中找到了一个命令`/etc/init.d/openvpn restart`，因此将crontab文件修改为：
+`0,5,10,15,20,25,30,35,40,45,50,55 * * * * /etc/init.d/openvpn restart`
+
+每半小时的：
+`0,30 * * * * /etc/init.d/openvpn restart`
+
+完美。
+
