@@ -28,13 +28,15 @@ tag: [日常琐事]
 下载好之后，根据[Installation Help](https://www.zotero.org/support/installation)进行安装，
 实际上只需要解压即可，官方建议将其解压到 `/opt/zotero` 目录，可以先解压，再移动过去，或者直接解压过去：
 `tar jxvf 文件名 -C /opt`。
+但实际经验告诉我，放在`/opt/zotero` 目录会遇到更新时的目录权限问题，因此，我将其放在我的home目录，并将该命令命名为Zotero
+因此上述解压命令为：`tar jxvf 文件名 -C ~/Zotero`。
 
 此时直接运行 zotero，就行了，然后邮件图标，固定到launcher就行了
 
 如果没法正确显式到launcher，就按照如下步骤：
 >
 1. zotero官方提供了 `set_launcher_icon` 脚本，用来生成 `zotero.desktop` 文件，它负责在侧边栏放置一个启动项。
-生成之后，生成该文件在 `~/.local/share/applications/` 的一个软链接，如 `ln -s /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop`，此时仍然没有出现在侧边栏。
+生成之后，生成该文件在 `~/.local/share/applications/` 的一个软链接，如 `ln -s ~/Zotero/zotero.desktop ~/.local/share/applications/zotero.desktop`，此时仍然没有出现在侧边栏。
 2. 此时运行 zotero 命令即可打开Zotero的窗口，在 16.04 里，zotero打开之后，在侧边栏里可以点击右键固定在launcher上，只是可能没法显示正确的图标，此时只需要将执行固定操作后生成的`.desktop`文件修改，将其`Icon`值设为我么生成的`zotero.desktop`中的`Icon`值即可。
 而在18.04里没有这个选项了，即没法直接右键，加入favourite了，怎么办？
 重启电脑，打开zotero，此时就可以右键加入favourite了，而且图标也是正确的。
@@ -208,3 +210,63 @@ vscode自带了markdown的预览，使用快捷键：`Ctrl+K V` 即可调出预�
 `Markdown Shortcuts`  `Markdown TOC` `Markdown Theme Kit`
 
 其中，`Markdown Shortcuts` 定义了很多快捷键，不过我熟悉的设置heading的并没有绑定，可用的方法是，使用 `ctrl +m ctrl m`调出快捷键窗口，然后点击就行了
+
+### Emacs 快捷键插件
+`Emacs Friendly Keymap`
+
+### tex 语法高亮插件
+`LaTeX language support`
+
+## TeXLive
+主要参考自：[在 Ubuntu 中安装 TeX Live 2018](https://stone-zeng.github.io/fduthesis/2018-05-13-install-texlive-ubuntu/)
+
+### 安装 perl
+如果想用图形界面安装的话，就需要按照perl啦
+`sudo apt-get install perl-tk perl-doc`
+
+这样，以后的texlive命令后面只需要加上`-gui`就出来界面啦。
+
+### 安装texlive
+我是直接从[TUNA](https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/)下载的光盘镜像 `texlive2018.iso`
+
+然后挂载到一个目录：`sudo mount /home/hdd/texlive2018.iso /media/marquis/`
+
+进入光盘目录：`/media/marquis/`
+
+开始安装：`sudo ./install-tl` （当然，`sudo ./install-tl -gui` 就是带图形界面的安装啦）。
+
+### 设置texlive 的环境变量
+此时 TeX Live 虽已安装，但其路径对于 Linux 来说仍是不可识别的。所以需要更改环境变量。
+
+打开 ~/.bashrc，在最后添加
+```bash
+export PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH
+export MANPATH=/usr/local/texlive/2018/texmf-dist/doc/man:$MANPATH
+export INFOPATH=/usr/local/texlive/2018/texmf-dist/doc/info:$INFOPATH
+```
+
+还需保证开启 sudo 模式后路径仍然可用。命令行中执行
+`sudo visudo`
+找到如下一段代码
+```bash
+Defaults        env_reset
+Defaults        mail_badpass
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+```
+将第三行更改为
+```bash
+Defaults        secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+```
+也就是加入 TeX Live 的执行路径。如果在安装时作了修改，这里的路径也都要与安装时的保持一致。
+
+### 更新参考文献宏包
+由于我自己的模板使用了`biblatex-gb7714-2015`的最新版，因此需要将其更新。
+
+先更新宏包管理器
+`sudo tlmgr update --self`
+
+然后使用命令：
+`sudo tlmgr update biblatex-gb7714-2015`
+更新参考文献的宏包。
+
+当然，也可以 `sudo tlmgr -gui`使用图形界面的形式进行更新。
