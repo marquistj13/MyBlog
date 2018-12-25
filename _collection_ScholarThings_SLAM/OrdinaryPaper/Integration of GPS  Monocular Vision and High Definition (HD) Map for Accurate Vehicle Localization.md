@@ -1,6 +1,6 @@
 --- 
-title: Pole-based localization for autonomous vehicles in urban scenarios
-date:   2018-12-24
+title: Integration of GPS, Monocular Vision, and High Definition (HD) Map for Accurate Vehicle Localization
+date:   2018-12-25
 ---
 
 
@@ -10,51 +10,56 @@ date:   2018-12-24
 
 
 以下来自：
-[1]SPANGENBERG R, GOEHRING D, ROJAS R. Pole-based localization for autonomous vehicles in urban scenarios[C]//2016 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). Daejeon, South Korea: IEEE, 2016: 2161–2166.
+[1]CAI H, HU Z, HUANG G等. Integration of GPS, Monocular Vision, and High Definition (HD) Map for Accurate Vehicle Localization[J]. Sensors, 2018, 18(10): 3270.
+
 
 ## 摘要
 本文：
-1. 将 pole-like landmarks 作为 primary features，因为这些 pole-like landmarks， distinct, long-term stable and can be detected reliably with a stereo camera system
-2. 将 a stereo camera system 作为 main sensor
-3. 将 vehicle odometry 和 GPS 作为 secondary information sources    
-4. 定位 使用 particle filter 和 Kalman filter 的耦合
-5. lateral accuracy below 20cm
+1. 在卡尔曼滤波的prediction step，使用黑箱模型而非常用的运动学模型（Kinematic model）
+2. 卡尔曼滤波的观测数据分为两部分，一个是raw GPS coordinate，另一个是（从单目相机计算出来的）车辆和车道线之间的距离。
 
 
+## 本文方法
+### 地图
+![](./IntegrationofGPSMonocularVision/hdmap.png)
 
-## 总览
-1. 建图阶段，根据rSGM 算法得到的disparity map进行Pole detection and tracking 。
-2. GPS 为 particle filter 提供初始化，然后 particle filter 根据 landmark 进行更新。
-3. 输出端使用 Kalman filter 来 __隐藏计算延迟__，并保证 100 Hz update rate。
-4. 定位结果可直接用于behavior planning and low-level control。
+将地图的坐标转换成 UTM 坐标，并使用方程表示每一个 line segment:
+![](./IntegrationofGPSMonocularVision/lineeq.png)
+其中，$(n_x,n_y)$ 为单位法向量， d 为到原点的距离。
 
-![](./Polebasedlocalizationforautonomous/dataflow.png)
+### 测量数据
+车道检测采用如下文献的方法：
+>31. Li, J.; Mei, X.; Prokhorov, D. Deep neural network for structural prediction and lane detection in traffic scene.
+IEEE Trans. Neural Netw. Learn. Syst. 2017, 28, 690–703. [CrossRef] [PubMed]
 
-## 定位
-### 粒子滤波部分
-车辆的姿态估计 $\text{p}$ 由Universal Transverse Mercator (UTM)坐标系中， k 时刻的诸多粒子 $\text{p}_{k}^{i}$ 表示：
-$$\text{p}_{k}^{i}=[E_{i}N_{i}\psi_{i}]^{T}$$
-预测方程：
-![](./Polebasedlocalizationforautonomous/prediction.png)
+相机的标定采用：
+>32. Zhang, Z. A flexible new technique for camera calibration. IEEE Trans. Pattern Anal. Mach. Intell. 2000,
+22, 1330–1334. [CrossRef]
 
-似然计算以及重采样略过。
-### 卡尔曼滤波部分
-为了保证robustness，以及smooth state estimation with an update rate of 100 Hz。
-卡尔曼滤波器的状态为：
-$$\mathbf{x}=(x,\ y,\ \psi,\ v,\dot{\psi})^{\text{T}}$$
-vehicle dynamics采用Constant Turn Rate and Velocity Model (CTRV)。
+然后利用路面的法向量，计算路面和图像之间的单应变换，据此可以算出车辆与车道线之间的距离。
+![](./IntegrationofGPSMonocularVision/distance.png)
+这里的d应该就是后面提到的 $d_v$。
+### Data-Driven Motion Model for State Transition
+状态转移矩阵的求取比较简单。
+首先根据
+![](./IntegrationofGPSMonocularVision/statetrans.png)
+得到这些系数以后，就得到状态转移矩阵了：
+![](./IntegrationofGPSMonocularVision/matrix.png)
 
-在各路传感器输入的频率都很低的情况下，如何保证最终的输出是高频率的呢？
->The Kalman filter includes all results as soon as they are available, time stamping makes sure that the filter is updated correctly, partially redoing calculations if measurements arrive too late.
-__The output is generated independently from the sensor input by filter prediction.__
+### 观测数据
+测量数据分为两部分。
 
+第一部分是gps测量：
+![](./IntegrationofGPSMonocularVision/gpsmeasure.png)
+这个测量值确定了测量矩阵的一小部分。
 
-为了避免粒子滤波估计的车辆姿态出现sudden jumps，对其输出施加了一个validation gate，即抛弃掉明显不合理的输出，此时仅使用odometry measurements。
+第二部分就是利用上面的节提到的车辆到旁边的车道线的距离了。（当然也可以同时计算车的左右车道线的距离，下面以检测到一个车道线为例）。
+根据当前GPS坐标，确定临近的车道线，然后将gps坐标代入该车道线的方程，即可得到点到直线的距离：
+![](./IntegrationofGPSMonocularVision/p2l.png)
+也就得到了第二部分的测量：
+![](./IntegrationofGPSMonocularVision/2ndmeasure.png)
 
-## 实验部分
-作者着重算法的可重复性。
-在同一路段，跑很多圈，并记录每次的定位结果。
+最终总的测量如下：
+![](./IntegrationofGPSMonocularVision/finalmeasure.png)
 
-![](./Polebasedlocalizationforautonomous/trajectory.png)
-
-可以看到，粒子滤波在某些地方会出现跳变，经过卡尔曼滤波之后更smooth，而传感器的原始数据Applanix的可重复性最差。
+如果是检测到两个车道线，那么观测方程就有四行了。
