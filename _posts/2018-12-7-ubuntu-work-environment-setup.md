@@ -270,3 +270,39 @@ Defaults        secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local
 更新参考文献的宏包。
 
 当然，也可以 `sudo tlmgr -gui`使用图形界面的形式进行更新。
+
+## spacemacs
+### Ubuntu 库里的emacs版本貌似是24，太低了装不了spacemacs
+### 首先下载 emacs，并安装
+从 [tuna](https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/)下载最新版，我下的是26.1.
+解压。
+安装步骤参考目录里的 `INSTALL` 文件即可。
+运行 `./configure`，如果提示缺少库最好安装上，如提示我缺少 `xpm`
+就可：`sudo apt install libxpm-dev`，
+貌似还提示我装gnutils，装上即可。
+
+然后`make`，根据`INSTALL` 文件的指示，先测试能否运行，`./src/emacs -Q` 貌似是这个命令哈，不记得了。
+如果能运行，那就安装到系统中吧，`sudo make install`，然后就可以把安装文件删掉了。
+### 安装 spacemacs
+`git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d`
+然后打开emacs，就会自动安装很多东西。
+### 使用搜狗输入法
+我的系统默认语言是英语。
+打开emacs，此时使用我设置好的快捷键`ctrl_,`无法切换到搜狗输入法，从系统右上角的图标切换到搜狗，仍然无法输入汉字。
+参考：
+1. http://www.voidcn.com/article/p-fzepkvdm-um.html
+1. http://heartnheart.github.io/blog/2015/01/15/SogouIME_on_English_Ubuntu_14.04/
+1. https://emacs-china.org/t/topic/974
+
+有好几种解决方法：
+1. 在命令行直接运行emacs：`LC_CTYPE='zh_CN.UTF-8' emacs`
+1. 在 `.bashrc`中加入 `export LC_CTYPE=zh_CN.UTF-8` 然后运行 emacs
+1. 编辑/etc/environment文件。`sudo gedit /etc/environment`，在后面加上，
+`LC_CTYPE="zh_CN.utf8"`
+
+这里我用的是第三中方法。
+然后打开emacs，将emacs的图标固定到launcher即可。
+此时就可以用搜狗啦。
+
+注：
+>如果用第二种方法，那么固定到launcher之后还是没法用。
