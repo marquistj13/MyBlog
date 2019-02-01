@@ -297,6 +297,47 @@ Defaults        secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local
 
 当然，也可以 `sudo tlmgr -gui`使用图形界面的形式进行更新。
 
+## qtikz 在线预览tikz图片
+### 基本安装并使用中文
+在[KtikZ – Editor for the TikZ language](http://www.hackenberger.at/blog/ktikz-editor-for-the-tikz-language/) 下载 `QtikZ 0.10 binary package for Ubuntu Lucid`，
+安装，然后修改默认的配置文件，即
+`sudo gedit /usr/share/qtikz/templates/template_example.pgs`
+修改为：
+```tex
+\documentclass[border=0pt]{standalone}
+\usepackage{amsmath}
+%\usepackage{mathptmx}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,shadows.blur,fit,decorations.text,arrows,arrows.meta,
+backgrounds,mindmap,trees,matrix,shapes}
+\usepackage{pifont}
+\renewcommand{\labelitemi}{\ding{112}}
+\usepackage{xeCJK}
+%\setCJKmainfont{SimSun}
+%\usepackage{color}
+\usepackage[active,xetex,tightpage]{preview}
+\PreviewEnvironment[]{tikzpicture}
+\PreviewEnvironment[]{pgfpicture}
+\DeclareSymbolFont{symbolsb}{OMS}{cmsy}{m}{n}
+\SetSymbolFont{symbolsb}{bold}{OMS}{cmsy}{b}{n}
+\DeclareSymbolFontAlphabet{\mathcal}{symbolsb}
+\begin{document}
+<>
+\end{document}
+```
+即可。然后在编辑区写入 `\begin{tikzpicture} \end{tikzpicture}` 就能使用中文啦。
+当然还需要将编译命令设为xelatex，在settings->Configure QTikz的 PDFLatex那里选为xelatex的路径，
+即`/usr/local/texlive/2018/bin/x86_64-linux/xelatex`。
+
+### 添加自定义的style
+例如我想用一个不在ctan中的库 [moeptikz](https://github.com/moepinet/moeptikz)，就可以将其style文件下载，然后放入模板文件所在的目录，即`/usr/share/qtikz/templates/`，
+并在模板文件中加入
+```tex
+\usepackage[shading]{moeptikz}
+\newcommand*{\nodelabel}[1]{{\scriptsize\bfseries\ttfamily #1}}
+```
+即可编译[moeptikz](https://github.com/moepinet/moeptikz)提供的示例图片啦。
+
 ## spacemacs
 ### Ubuntu 库里的emacs版本貌似是24，太低了装不了spacemacs
 ### 首先下载 emacs，并安装
