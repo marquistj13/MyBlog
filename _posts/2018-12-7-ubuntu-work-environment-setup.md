@@ -18,7 +18,33 @@ tag: [日常琐事]
 搜索 `software & updates`，切换到 `Additional Drivers`，装上驱动，重启电脑，就行了。
 
 ## vpn
+### 基本配置
 按照，[在ubuntu16.04 上的 openvpn 折腾笔记  以及 ubuntu18.04 dns 设置]({{ site.baseurl }}{% link _posts/2018-12-4-ubuntu16.04-ubuntu18.04-installopenvpn.md %})，装好openvpn就行了。
+
+### 特殊配置
+#### 安装 OpenVPN 2.4
+使用 streisand 得到的配置文件必须得用 OpenVPN 2.4 的版本，而Ubuntu 16.04的仓库中只有2.3的（你装好之后使用 `openvpn --version`就能看到版本号啦。，因此得自己编译安装。
+当然2.4的无法使用network manager的归，因此装好之后得使用 `sudo openvpn 配置文件名字`运行。
+下面介绍OpenVPN 2.4 的安装。
+首先下载[openvpn源码](https://github.com/OpenVPN/openvpn)。
+按照`INSTALL`文件的指示：
+```
+autoreconf -i -v -f
+./configure
+make
+sudo make install
+```
+进行编译安装。make的时候若提示缺库，可按照[Unable to install openvpn-2.3.6 on Ubuntu 14.04 LTS to work work with TUN/TAP](https://stackoverflow.com/questions/27729139/unable-to-install-openvpn-2-3-6-on-ubuntu-14-04-lts-to-work-work-with-tun-tap)运行：
+`sudo apt-get install libssl-dev liblzo2-dev libpam0g-dev`。
+#### 修改配置文件,由vpn server下发dns
+OpenVPN 2.4 应该是增加了新的语法，因此可以不用在Ubuntu本机修改dns，而是由vpn server下发dns。
+详细说明可参照  streisand  生成的说明文件，我把核心部分贴一下。
+需要在`.ovpn`配置文件的头部加入：
+```
+script-security 2
+up /etc/openvpn/update-resolv-conf
+down /etc/openvpn/update-resolv-conf
+```
 
 ## chrome
 有了vpn，就可以直接下载chrome啦。
