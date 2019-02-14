@@ -243,6 +243,11 @@ vscode自带了markdown的预览，使用快捷键：`Ctrl+K V` 即可调出预�
 ### tex 语法高亮插件
 `LaTeX language support`
 
+## Mathpix 将图片转化为 LaTex 公式
+[Convert images to LaTeX](https://mathpix.com/)
+这个很好使啊，从此以后做笔记再也不用手动敲公式了！
+快捷键： `Ctrl+Alt+M`。
+
 ## TeXLive
 主要参考自：[在 Ubuntu 中安装 TeX Live 2018](https://stone-zeng.github.io/fduthesis/2018-05-13-install-texlive-ubuntu/)
 
