@@ -63,7 +63,7 @@ tag: [emac]
             c-c++-default-mode-for-headers 'c++-mode)
      gtags
      auto-completion
-     ;; pdf-tools
+     pdf-tools
      ;; better-defaults
      emacs-lisp
      ;; git
@@ -81,6 +81,44 @@ tag: [emac]
 注意，gtags用于查询源代码中各种符号的 definitions or references，用于查看源代码时进行各种跳转。
 它只是一个client，因此需要安装`global`，即 `sudo apt-get install global`.
 当然使用的时候，要首先产生tags，要么运行`helm-gtags-create-tags`或 (`SPC m g c`)，要么直接在你的根目录运行`gtags`，另外还可以给`gtags`不同的选项以支持不同的语言（如Python等）。
+## 用户自定义设置，即变量 `dotspacemacs/user-config`
+下面的配置中
+1. `(setq reftex-default-bibliography '("/home/marquis/Documents/MyLibrary.bib"))` 用于配置参考文献的地址，在前面tex配置的地方讲过。
+1. `(setq-default fill-column 100)` 用于配置类似换行的东西，貌似没啥用。
+1. `TeX-view-program-list,TeX-view-program-selection,TeX-source-correlate-start-server` 用于指定tex生成的pdf的打开程序。注意由于在layer的配置中我们加载了`pdf-tools`因此会自动用`pdf-tools`进行打开，这里不需要设置。我把这些写下来仅仅是方便以后改用其他pdf打开程序。
+
+```lisp
+(defun dotspacemacs/user-config ()
+  "Configuration function for user code.
+This function is called at the very end of Spacemacs initialization after
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
+  (setq reftex-default-bibliography '("/home/marquis/Documents/MyLibrary.bib"))
+  ;;(require 'fill-column-indicator)
+;;  (setq auto-fill-mode nil)
+  (setq-default fill-column 100)
+  (setq TeX-view-program-list ;; pdf view setting
+        '(("SumatraPDF" "\"C:/Program Files/SumatraPDF/SumatraPDF.exe\" -reuse-instance %o") ; windows
+          ("Gsview" "gsview32.exe %o") ; windows
+          ("Okular" "okular --unique %o")
+          ("Evince" "evince --page-index=%(outpage) %o")
+          ("Firefox" "firefox %o")
+          ("PDF Tools" TeX-pdf-tools-sync-view)
+          ("Skim"
+           (concat
+            "/Applications/Skim.app/Contents/SharedSupport/displayline"
+            " %n %o %b")) ; mac
+          )
+        TeX-view-program-selection
+        '(
+          (output-pdf "PDF Tools")
+          )
+        TeX-source-correlate-start-server t  
+        )
+  )
+```
 
 ## projectile 的一些小技巧
 `M-m p`就是projectile的各种命令了，这里我经常用`p`切换工程，`f` 查看工程的文件，`t` 显式工程目录。
