@@ -2,7 +2,7 @@
 layout: post
 title:  spacemacs 的配置
 categories:  [编辑器等文档工具]
-tag: [emac]
+tag: [emacs]
 ---
 
 * content
