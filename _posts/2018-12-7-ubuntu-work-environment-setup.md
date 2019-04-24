@@ -378,3 +378,71 @@ backgrounds,mindmap,trees,matrix,shapes}
 
 注：
 >如果用第二种方法，那么固定到launcher之后还是没法用。
+
+
+## tmux
+### 安装tmux
+按照[官方说明](https://github.com/tmux/tmux) 安装就行了。
+
+### 安装定制插件
+按照[Oh My Tmux! 的说明](https://github.com/gpakosz/.tmux) 进行安装。
+安装完重启shell就能用这个插件了，如果不行就重启电脑吧。
+
+### 根据修改修改默认的prefix
+由于我有时候需要在终端运行emacs，即 `emacs -nw`，而 不管是 `C-a` 还是 `C-b` 在 emacs 中都很常用，因此 tmux 默认的 prefix `C-a` 以及 Oh My Tmux 默认的 prefix `C-b` 需要改一下。
+
+>注意：不改也是可以的，这时候根据[If I set key bind of C-b to c-a in tmux how can I move the cursor to the beginning of the line?](https://stackoverflow.com/questions/11557076/if-i-set-key-bind-of-c-b-to-c-a-in-tmux-how-can-i-move-the-cursor-to-the-beginni) 的说明，`C-b C-b` 就会把真正的 `C-b` 发给terminal，同理 `C-a C-a` 也是。
+
+如果要改的话，根据[Oh My Tmux! 的说明](https://github.com/gpakosz/.tmux)，只需要修改文件 `~/.tmux.conf.local` 即可。
+在该文件最下面的地方有一段配置：
+```bash
+# replace C-b by C-a instead of using both prefixes
+# set -gu prefix2
+# unbind C-a
+# unbind C-b
+# set -g prefix C-a
+# bind C-a send-prefix
+```
+
+将这一段改成：
+```bash
+# set C-j as the only prefix
+set -gu prefix2
+unbind C-a
+unbind C-b
+set -g prefix C-j
+bind C-j send-prefix
+```
+然后保存，重启电脑就行啦。
+
+### 常用快捷键汇总
+本节主要参考：
+1. [Tmux 快捷键 & 速查表](https://gist.github.com/ryerh/14b7c24dfd623ef8edc7)
+1. [Oh My Tmux! 的说明](https://github.com/gpakosz/.tmux)
+
+窗口相关：
+>
+    c  创建新窗口
+    w  列出所有窗口(然后就可以切换过去啦)   
+    f  查找窗口(然后就可以切换过去啦)
+    ,  重命名当前窗口
+    &  关闭当前窗口
+    `<prefix> C-h` 和 `<prefix> C-l` 用来快速切换（左右的）窗口，上面的 `w` 和 `f` 还得按导航键或输入数字进行切换。
+    `<prefix> Tab` 切换至 last active window
+
+
+
+pane相关：
+>
+`<prefix> - ` 垂直分割 pane
+`<prefix> _ ` 水平分割pane
+`<prefix> h, <prefix> j, <prefix> k and <prefix> l` 通过 Vim 的方式对pane进行导航
+`<prefix> H, <prefix> J, <prefix> K, <prefix> L`  快速 resize panes
+`<prefix> < and <prefix> >` 交换 panes
+`<prefix> +` 将当前 pane 最大化，并将其放到一个新的 window
+`<prefix> m` 开启或关闭鼠标模式
+`x`  关闭pane
+
+
+
+
