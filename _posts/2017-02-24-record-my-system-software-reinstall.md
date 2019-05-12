@@ -207,6 +207,13 @@ jekyll serve --port 3000 -b ""
 在 [Reading arXiv preprints on an e-reader?](https://www.reddit.com/r/MachineLearning/comments/5xtnl4/d_reading_arxiv_preprints_on_an_ereader/)提到了两个软件，一个是应用程序 [k2pdfopt](http://www.willus.com/k2pdfopt/),可以直接转换pdf，一个是Chrome扩展 [dontprint](http://dontprint.net/)
 
 ##  emacs
+__update19.5.12:__
+我现在用 spacemacs 了，在我的windows上的安装方法：
+1. 先安装 [emacs](https://www.gnu.org/software/emacs/download.html#windows)
+1. 打开 `cmd`, `cd` 进入 home目录的 `AppData\Roaming` 目录，然后运行 `git clone https://github.com/syl20bnr/spacemacs  .emacs.d` 
+
+需要注意的是，由于spacemacs默认的字体我们没有安装，所以需要安装[adobe-fonts/source-code-pro](https://github.com/adobe-fonts/source-code-pro)字体，在我的 2k 屏上，得把size设为 20 才感觉爽。
+其余的配置就参考[我在Linux下的配置吧]({% link _posts/2019-02-1-spacemacs-config.md %})
 __update18.5.24:__
 根据[emacs的company-mode让生活更美好]({{ site.baseurl }}{% post_url 2018-5-24-emacs-company-mode-connect-to-melpa %})的说明，[这里](https://github.com/m-parashar/emax64)有一个很完美的build，而且还是emacs26.1，自带gnutls和各种dll，完美啊。
 __update17.11.19:__
