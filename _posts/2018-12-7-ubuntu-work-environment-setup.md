@@ -8,6 +8,19 @@ tag: [日常琐事]
 * content
 {:toc}
 
+## 换源
+在教育网环境下tuna的源很快，可以按照 [Ubuntu 镜像使用帮助](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/) 换一下。
+
+## 台式机 无线网卡不稳定
+台式机的无线网卡是usb的外接网卡，型号是 `RTL8188EUS`，不过每次开机都要好久才能用，我同时用了两种方法来处理，现在是好了，不过不知道是哪一种起了作用。
+1. 把它插到后面板的2.0接口上（原先在3.0上插着）。
+1. 安装 [quickreflex/rtl8188eus](https://github.com/quickreflex/rtl8188eus) 的驱动。
+
+## 18.04 老是弹出 `System Program Problem Detected` 对话框，很烦
+怎么关掉呢？
+运行 `sudo gedit /etc/default/apport`
+然后将 `enabled=1` 改成 `enabled=0`。
+
 ##  安装 显卡驱动
 笔记本自带了 1050 的显卡。
 打开搜索框，搜索 Additional Drivers，根据这个窗口，选择 使用  Nvidia binary
@@ -36,6 +49,9 @@ sudo make install
 ```
 进行编译安装。make的时候若提示缺库，可按照[Unable to install openvpn-2.3.6 on Ubuntu 14.04 LTS to work work with TUN/TAP](https://stackoverflow.com/questions/27729139/unable-to-install-openvpn-2-3-6-on-ubuntu-14-04-lts-to-work-work-with-tun-tap)运行：
 `sudo apt-get install libssl-dev liblzo2-dev libpam0g-dev`。
+
+>注意：最新版貌似很难 `autoreconf -i -v -f` 成功了，怎么办呢？ 只能去[openvpn官网](https://openvpn.net/index.php/download/community-downloads.html)(当然被墙啦)下载别人conf过的版本，里边自带了 `configure` 不需要我们通过`autoreconf -i -v -f` 来生成  `configure` 了。
+
 #### 修改配置文件,由vpn server下发dns
 OpenVPN 2.4 应该是增加了新的语法，因此可以不用在Ubuntu本机修改dns，而是由vpn server下发dns。
 详细说明可参照  streisand  生成的说明文件，我把核心部分贴一下。
@@ -116,22 +132,25 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 安装成功后。
 重启电脑。
 
-就会发现电脑右上角有一个键盘图标，点击，选择 Configure Current Input Method，点击加号，然后取消勾选"Only show current language"，在下方搜索框输入pinyin，就能找到'Sougou Pinyin'啦，选择它，然后将其拖到原来的"keyboard-English(US)"之前，就搞定了。
+就会发现电脑右上角有一个键盘图标，点击，选择 Configure Current Input Method，点击加号，然后取消勾选"Only show current language"，在下方搜索框输入pinyin，就能找到'Sougou Pinyin'啦，选择它，然后将其拖到原来的"keyboard-English(US)"之前，就搞定了。（由于经常需要用英文输入cmd，因此最好不要把中文放在前面）。
 
 此时，虽然可以使用搜狗输入中文，但很可能没法切换成英文，点击电脑右上角的键盘符号，选择Restart，过一会儿就行了。
+
+### 改掉输入法切换命令 `Ctrl+Space`
+系统自带的的英文输入法和我们安装的搜狗之间的切换是`Ctrl+Space`，很明显不太好，对于 18.04而言，可以邮件右上角输入法图标，选择 `configure`, 然后是 `global configure`, 在 `hotkey->Trigger input method` 那里改成其他的，如 `ctrl+,` 就行了。
 
 ## 交换 `Ctrl` 和 `Caps`
 习惯了 Emacs 的快捷键以后，为了保护手指，需要将 `Ctrl` 和 不常用的 大小写转换按键`Caps`进行交换。
 
 Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https://www.emacswiki.org/emacs/MovingTheCtrlKey)
 
-### 方法1，使用图形界面（不推荐）
+### 方法1，使用图形界面（在18.04上推荐使用，在16.04上不推荐）
 首先搜索安装 `Gnome tweaks`,安装好之后，可以搜索到，它的名变成了 Tweaks，差不多吧。
 现在的版本和上面链接给出的不太一样了，不过功能一样。
 找到 `Keyboard & Mouse`,然后 点击 `Additional Layout Options`，找到 `Ctrl position`，选择 `Swap Ctrl and Cas Lock`，搞定。
 >注：在18.04上没问题，但在我的16.04上就有问题，第一个就是安装问题，得用命令行安装，好像是`sudo apt install genome-tweak-tool`，第二个问题是重启以后可能失效。
 
-### 方法2，使用配置文件（推荐）
+### 方法2，使用配置文件（在16.04上推荐使用，在18.04上不推荐）
 建立 `~/.xmodmap` 文件，写入：
 ```
 !
@@ -180,6 +199,7 @@ Xorg (at least in version 7.0) has an xinit script at /etc/X11/xinit/xinitrc tha
 
 [ -f /etc/X11/Xmodmap ] && xmodmap /etc/X11/Xmodmap
 ```
+不过这种方法在 18.04上就有问题.
 
 ### 方法3，没搞成功
 `sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
