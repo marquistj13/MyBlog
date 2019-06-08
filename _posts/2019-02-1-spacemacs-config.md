@@ -30,7 +30,30 @@ tag: [emacs]
 另外，为了让一行容纳更多字数，即不要频繁换行，我还设了`(setq-default fill-column 100)`， 不过目测没啥用……
 ## 配置文件的地址
 输入 `M-m f e d`
-## 字体大小
+## 安装 adobesourcecode pro字体
+按照 [enzinier/install_font_adobe_source_code_pro.sh](https://gist.github.com/enzinier/8d00d3f37d2e23985dcfa65662d163fa#file-install_font_adobe_source_code_pro-sh) 提供的脚本运行一下就行啦：
+```sh
+#!/bin/sh
+# Userland mode (~$USER/), (~/).
+
+# ~/.fonts is now deprecated and that
+#FONT_HOME=~/.fonts
+# ~/.local/share/fonts should be used instead
+FONT_HOME=~/.local/share/fonts
+
+echo "installing fonts at $PWD to $FONT_HOME"
+mkdir -p "$FONT_HOME/adobe-fonts/source-code-pro"
+# find "$FONT_HOME" -iname '*.ttf' -exec echo '{}' \;
+
+(git clone \
+   --branch release \
+   --depth 1 \
+   'https://github.com/adobe-fonts/source-code-pro.git' \
+   "$FONT_HOME/adobe-fonts/source-code-pro" && \
+fc-cache -f -v "$FONT_HOME/adobe-fonts/source-code-pro")
+```
+
+字体大小
 在配置文件的 `dotspacemacs-default-font` 设定 `:size 15` 即可。
 
 另外我的快捷键模式是emacs类型的，即 `dotspacemacs-editing-style 'emacs`
