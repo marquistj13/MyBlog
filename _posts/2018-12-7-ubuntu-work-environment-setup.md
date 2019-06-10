@@ -399,6 +399,15 @@ backgrounds,mindmap,trees,matrix,shapes}
 注：
 >如果用第二种方法，那么固定到launcher之后还是没法用。
 
+### 如果上面的设置还是用不了搜狗输入法的话，那么就勉强用spacemacs 自带的 chinese layer 中的`pyim`吧。
+根据[Chinese layer](http://spacemacs.org/layers/+intl/chinese/README.html)的说明，我们只需要在`dotspacemacs-configuration-layers`中加入`chinese`,然后在`dotspacemacs/user-config`中加入配置：
+```lisp
+(setq-default dotspacemacs-configuration-layers '((chinese :variables
+chinese-enable-fcitx t)))  
+(require 'pyim-basedict)
+(pyim-basedict-enable)
+```
+注意：输入法的切换命令是：`C+\`。
 
 ## tmux
 ### 安装tmux
