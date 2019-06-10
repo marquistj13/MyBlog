@@ -241,6 +241,11 @@ jekyll serve --port 4000 --incremental
 sudo apt install python-yaml
 sudo apt install python-jinja2
 ```
+或者：
+```python
+pip install PyYAML
+pip install jinja2
+```
 
 ## vscode
 ### vscode

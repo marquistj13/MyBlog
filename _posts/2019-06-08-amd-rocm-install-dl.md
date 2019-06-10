@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: 通过 rocm 的方式安装 dl 环境
@@ -72,6 +71,11 @@ docker run -it -v $HOME:/data --privileged --rm --device=/dev/kfd --device=/dev/
 就会提示：`http://(4760b8da6769 or 127.0.0.1):8888/?token=a8f4c65a6c97db87fc38d199fe6399562741aa44a05e3829`
 
 由于我们已经将host的18888端口映射到docker镜像的8888端口，因此，只需在host上打开：`http://127.0.0.1:18888/?token=a8f4c65a6c97db87fc38d199fe6399562741aa44a05e3829` 就行了。
+
+### 如何删除多余的docker
+这次探索之后运行 `docker images` 会出现好多image，可以使用 `docker rmi <iamgeid>` 来删除，只保留有用的一个。
+当然，很可能我们在commit的时候忘了加tag， 那么repo:tag 都是空的，这时候就会很难删除了，这时可以先用 `docker tag` 打上repo 和 tag,然后再删掉就行了。
+
 
 ### 根据[rocm官网](https://rocm.github.io/install.html)的指示安装rocm
 这里和[rocm官网](https://rocm.github.io/install.html)官网基本一样，我抄到这里是为了方便：
@@ -235,7 +239,7 @@ sudo docker run -it -v $HOME:/data --privileged --rm --device=/dev/kfd --device=
 其他的都能通过，只要和`test_cuda`相关的都不通过。
 
 使用 `docker ps` 查看 container id,然后：
-`docker commit -a 'author name' -m 'pytorch installed' <container_id> `
+`docker commit -a 'author name' -m 'pytorch installed' <container_id> repo:tag`
 然后， 由于自己建的docker image没有tage，还需要改一下tag： ` docker tag <image_id> 'install_torch'`
 
 如何查看是否安装成功？
@@ -256,10 +260,9 @@ drun rocm/tensorflow
 ```
 1. 采用pypi, 由于我的ananconda装的是python3.7，因此没必要显式指定pip3
 ```sh
-# Install some ROCm dependencies
+\# Install some ROCm dependencies
 sudo apt install rocm-libs miopen-hip cxlactivitylogger
-
-# Pip3 install the whl package from PyPI
+\# Pip3 install the whl package from PyPI
 pip install --user tensorflow-rocm --upgrade
 ```
 
