@@ -33,7 +33,7 @@ CHAPTER 6 Deep learning
 注意，$a_{x,  y}$是$x,y$处的input activation。
 这就意味着，这个hidden layer检测的是同一种feature，如这个$5\times5$的区域中是否存在竖线等。如果我们定义 input layer to the hidden layer 的映射为**feature map**，那么，显然一个feature map一般是不够的，我们如果定义三个feature map的话，那么这个hidden layer的neuron数目就是$3\times24\times24$，顺便提一下，由于feature map是在input image的各个区域都要来一遍的，因此它具有平移不变性。
 如果用feature map的权值值作为灰度值，那么我们就能可视化学习到的feature map了，作者通过一个20个feature map的例子说明了，这些学习到的feature map很明显不是随机的值，而是有明显的结构，但是我们很难猜出来这些权值的意义。关于这类work，作者提到一篇文章：Visualizing and Understanding Convolutional Networks by Matthew Zeiler and Rob Fergus (2013).
-共享eights and biases的好处很明显：减少了卷积网络的参数，如果我们用20个feature map，总共需要$20\times (5\times 5+1)=520$个参数，而如果采用普通的网络结构，隐含层有30个neuron的话，得需要大概$784\times 30+30=23550$的参数，相差40倍啊！当然这个是不能直接比的，但很明显**卷积层利用平移不变性大大减少了参数**，使得训练速度加快。
+共享weights and biases的好处很明显：减少了卷积网络的参数，如果我们用20个feature map，总共需要$20\times (5\times 5+1)=520$个参数，而如果采用普通的网络结构，隐含层有30个neuron的话，得需要大概$784\times 30+30=23550$的参数，相差40倍啊！当然这个是不能直接比的，但很明显**卷积层利用平移不变性大大减少了参数**，使得训练速度加快。
 
 
 * Pooling layers
@@ -74,7 +74,7 @@ baseline的效果是97.80，用一个卷积层是98.78，用两个是99.06。
 
 
 * 为啥只在全连接层使用Dropout
-原则上卷积层也可以用，但是卷积层已经有considerable inbuilt resistance to overfitting了，因为贡献权值意味着convolutional filters（即feature map）已经强迫学习整个image了，这就使得它们不太可能学习到一些训练数据的局部特写，因此没有必要在卷积层使用regularizer，如dropout。
+原则上卷积层也可以用，但是卷积层已经有considerable inbuilt resistance to overfitting了，因为共享权值意味着convolutional filters（即feature map）已经强迫学习整个image了，这就使得它们不太可能学习到一些训练数据的局部特写，因此没有必要在卷积层使用regularizer，如dropout。
 
 
 * 性能永无止境
@@ -110,7 +110,7 @@ baseline的效果是97.80，用一个卷积层是98.78，用两个是99.06。
 
 
 * 本节风格提示
-本书的风格就是关注于那些具有 lasting interest 的 ideas such as backpropagation, regularization, and convolutional networks，没去管那些很时髦的东西。 有人就说了，你现在将的那些image recognition 不也是时髦的东西么，你还讲它作甚？
+本书的风格就是关注于那些具有 lasting interest 的 ideas such as backpropagation, regularization, and convolutional networks，没去管那些很时髦的东西。 有人就说了，你现在讲的那些image recognition 不也是时髦的东西么，你还讲它作甚？
 这种说法也对哈，很多paper的finer details都会变得没啥用了，但DNN在image recognition 还是有很大的进展的，试想一下，假如一百年后有人要回顾历史，它们肯定会将2011到现在的这段时期作为由DNN推动的huge breakthroughs的时期。这意味着一个important transition 正在发生。因此以下我们要了解一些正在发生的exciting discoveries。
 
 
@@ -125,7 +125,7 @@ baseline的效果是97.80，用一个卷积层是98.78，用两个是99.06。
  当然也可以看Alex Krizhevsky's cuda-convnet（Theano-based large-scale visual recognition with multiple GPUs, by Weiguang Ding, Ruoyan Wang, Fei Mao, and Graham Taylor (2014).）及其后续作品。还有Theano版本的代码https://github.com/uoguelph-mlrg/theano_alexnet 。而且Caffe也实现了KSH
  
  * The 2014 ILSVRC competition
- 赢家是这篇Google的*Going deeper with convolutions, by Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich (2014).用了22层！精度93.33！比13年的88.3和12年的84.7强了很多。
+ 赢家是这篇Google的Going deeper with convolutions, by Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, and Andrew Rabinovich (2014).用了22层！精度93.33！比13年的88.3和12年的84.7强了很多。
  14年还有这个竞赛的survey paper：ImageNet large scale visual recognition challenge, by Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma, Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, Alexander C. Berg, and Li Fei-Fei (2014).这篇文章提到，93.33已经和人类不相上下了。
  自此以后，有人将误差讲到了5.1%，因此就有媒体说击败了人类，实际上这些结果能够得出来战胜了人类的结论，是很误导人的。这个ILSVRC challenge 仅仅是一个很limited的问题，我们距离solving the problem of image recognition or, more broadly, computer vision还很遥远。
  
@@ -158,7 +158,7 @@ RNNs have been used to set new records for certain language benchmarks.
 
  * RNN的work机理以及LSTM
 很多feedforward的NN的idea都可以直接用到RNN中。
-RNN不好训练，原因就是梯度的unstable，将long short-term memory units (LSTMs)的idea 嵌入到 RNNs知乎就很容易得到好的结果（易训练了）。
+RNN不好训练，原因就是梯度的unstable，将long short-term memory units (LSTMs)的idea 嵌入到 RNNs之后就很容易得到好的结果（易训练了）。
 
 
 * Deep belief nets, generative models, and Boltzmann machines

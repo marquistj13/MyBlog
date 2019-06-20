@@ -40,8 +40,8 @@ Neural networks approach其实是另一种解决方式：你给我一堆训练�
 作为一个 原型问题，它很具有挑战性-你解决了它不是啥壮举，但又没那么难（难指的是要么需要多么复杂的解，要么需要大量的计算资源）
 也可用来develop更高级的技巧即DL
 * 本章的point
-我们 ** 要develop 很多NN的key ideas ** （即，NN的重要组成：the perceptron and the sigmoid neuron，以及SGD）
-focus on explaining **why things are done the way they are, and on building your neural networks intuition ** . 
+我们 **要develop 很多NN的key ideas** （即，NN的重要组成：the perceptron and the sigmoid neuron，以及SGD）
+focus on explaining **why things are done the way they are, and on building your neural networks intuition** . 
 ##  Perceptrons
 Perceptrons发明于五六十年代，一堆二进制的输入，一个二进制的输出
 * 数学形式

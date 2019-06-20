@@ -60,8 +60,7 @@ BP其实就是巧妙地计算每一层的error $\delta^l_j$,然后再用这个er
 
 
 * 输出层的误差
-  \delta^L_j = \frac{\partial C}{\partial a^L_j} \sigma'(z^L_j).
-\tag{BP1}\end{eqnarray}$
+  $\delta^L_j = \frac{\partial C}{\partial a^L_j} \sigma'(z^L_j). \tag{BP1}$
 右边第一项表明，如果cost不依赖于第$j$个neuron，那么这一项就很小，第二项测量的是激活函数在$z^L_j$处的变化率。
 写成矢量形式：$ \begin{eqnarray}
   \delta^L = \nabla_a C \odot \sigma'(z^L).

@@ -113,13 +113,13 @@ reducing overfitting的一种方法就是增加训练数据，另一种方法就
 *  Regularization的其它好处
 除了reduce overfitting and to increase classification accuracies之外，还能使得每次训练的结果很稳定，即 the regularized runs have provided much more easily replicable results.
 原因：对于未正则化的 cost function，权值矢量有可能会变得非常大，非常大的时候呢，这些权值矢量基本上都指着同一个方向（因为changes due to gradient descent only make tiny changes to the direction, when the length is long），这就使得权值矢量无法properly explore the weight space, and consequently harder to find good minima of the cost function.
-(**注意：此处的length指的是 $\|\delta^l\|$ ** ，这个在第五章提到了）
+(**注意：此处的length指的是 $\|\delta^l\|$** ，这个在第五章提到了）
 * 为什么正则化可以减少过拟合
 一般的解释就是：smaller weights are, in some sense, lower complexity, and so provide a simpler and more powerful explanation for the data, and should thus be preferred。
 一种观点就是，in science，我们一般使用simpler explanation，因为simpler explanation一般不会很巧合地出现。对于NN来说，the smallness of the weights 一般意味着the behaviour of the network won't change too much if we change a few random inputs here and there. 即 a regularized network to learn the effects of local noise in the data。而对于有大weights的NN，large weights may change its behaviour quite a bit in response to small changes in the input.
 也可以这么理解：正则化使得NN只能学习到一些简单的模型，这些模型只能学习到在data中经常出现的pattern。
 但对于这个 "Occam's Razor"的idea，它并不是一个general scientific principle，作者也举出两个反例，证明complex explanations也会是对的。
-作者给出三个警告：1 般情况下，很难确定哪个explanation更simple，2 即使能够确定，simplicity也必须谨慎使用 3 he true test of a model is not simplicity，而是其预测新的phenomenon时的效果。
+作者给出三个警告：1 般情况下，很难确定哪个explanation更simple，2 即使能够确定，simplicity也必须谨慎使用 3 the true test of a model is not simplicity，而是其预测新的phenomenon时的效果。
 * 正则化背后的boss：泛化性能，即： the question of how we generalize
 正则化既不是最好的approach，也不能帮助我们理解generalization到底是怎么回事。
 作者相信，在将来，我们可以develop more powerful techniques for regularization in artificial neural networks，使得我们能够generalize well even from small data sets.
@@ -166,7 +166,7 @@ he message to take away, especially in practical applications, is that what we w
 ## Weight initialization
 如果将所有的weight和bias都这么初始化：均值为0，标准差为1，那么很有可能会出现一种情况，即大家都很大，使得hidden neuron处于饱和状态，因此权值每次更新都会特别小，学习速率很慢。
 对于output neuron来说，我们可以巧妙地设计cost function，但对于hidden neuron来说就没那么好办了，因此应该好好初始化啊。
-分析一下初始权值比较大的原因：我们现在只考虑一个hidden neuron的情况，加入input neuron有1000个，简化一下问题，即输入x中有500个为0,500个为1，那么这个hidden neuron的z就服从一个高斯分布，均值为0，标准差为$\sqrt{501} \approx 22.4$
+分析一下初始权值比较大的原因：我们现在只考虑一个hidden neuron的情况，假如input neuron有1000个，简化一下问题，即输入x中有500个为0,500个为1，那么这个hidden neuron 就由 500 个标准差为1 的普通neuron 和 1 个标准差为1 的bias组成，即501个标准差为1的正态分布的随机变量之和组成，其z就服从一个高斯分布，均值为0，标准差为$\sqrt{501} \approx 22.4$
 因此，如果将初始权值的标准差设为$1/\sqrt{n_{\rm in}}$,而bais的标准差仍然为1，那么z的均值仍然为0，标准差为：$\sqrt{500/1000+1} \approx1.22$，这样大多数权值就很小了
 ## Handwriting recognition revisited: the code
 作者的code风格很好，单独搞了个cost function的class：
