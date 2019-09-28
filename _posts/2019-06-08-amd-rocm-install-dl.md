@@ -171,6 +171,12 @@ sudo sed -i 's/find_dependency(hip)/find_dependency(HIP)/g' /opt/rocm/rocblas/li
 2.7连安装都不成功。
 
 ### 第二类方法（成功啦）
+注：rocm的版本是越高越好
+我们的host装了新版本的rocm，照样可以pull 低版本rocm的image来用。
+### 第0 个（官方已经安装好py3.6版本的pytorch的docker）
+`docker pull rocm/pytorch:rocm2.3_ubuntu16.04_py3.6_pytorch`
+人家已经装好了，不需要编译。
+
 #### 第一个（官方docker）
 预处理：
 1. 由于前两步将pytorch目录搞的很乱，因此需要重新下载pytorch，我先删掉吧。
