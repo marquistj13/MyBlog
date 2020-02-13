@@ -9,7 +9,10 @@ tag: [日常琐事]
 {:toc}
 
 ## 换源
+1. 第一种方法
 在教育网环境下tuna的源很快，可以按照 [Ubuntu 镜像使用帮助](https://mirror.tuna.tsinghua.edu.cn/help/ubuntu/) 换一下。
+2. 第二种方法
+搜索 `software & updates` ， 在 `download from` 那里选择清华的源就行了，当然也可以让它自己选择最快的源。
 
 ## 台式机 无线网卡不稳定
 台式机的无线网卡是usb的外接网卡，型号是 `RTL8188EUS`，不过每次开机都要好久才能用，我同时用了两种方法来处理，现在是好了，不过不知道是哪一种起了作用。
@@ -81,7 +84,7 @@ down /etc/openvpn/update-resolv-conf
 生成之后，生成该文件在 `~/.local/share/applications/` 的一个软链接，如 `ln -s ~/Zotero/zotero.desktop ~/.local/share/applications/zotero.desktop`，此时仍然没有出现在侧边栏。
 2. 此时运行 zotero 命令即可打开Zotero的窗口，在 16.04 里，zotero打开之后，在侧边栏里可以点击右键固定在launcher上，只是可能没法显示正确的图标，此时只需要将执行固定操作后生成的`.desktop`文件修改，将其`Icon`值设为我么生成的`zotero.desktop`中的`Icon`值即可。
 而在18.04里没有这个选项了，即没法直接右键，加入favourite了，怎么办？
-重启电脑，打开zotero，此时就可以右键加入favourite了，而且图标也是正确的。
+__重启电脑，打开zotero，此时就可以右键加入favourite了，而且图标也是正确的__。
 
 ### 同步设置
 登录zotero账号，由于zotero本身提供的存储空间太小，因此我们仅用其存储比较小的索引，即文献的名称。
@@ -110,7 +113,7 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 不要自己设置快捷键啦！
 
 ## 安装汉语支持和输入法
-### 基本安装(这个就是使用自带的输入法啦，如果使用搜狗，就不需要这一步)
+### 使用基本的汉语输入法(这个就是使用自带的输入法啦，如果使用搜狗，就不需要这一步)
 搜索language support,点击 `Install /Remove Languages`，找到 chinese (simplified)，安装就行了。
 
 此时，我的18.04 的右上角并没有出现输入法的切换选项。
@@ -119,39 +122,33 @@ google以下，找到了 [ubuntu自带截图工具--方便好用](https://blog.c
 
 此时就可以用汉语输入法啦。
 
-### 将ibus替换为fcitx（搜狗需要这一步）
-有人说自带的ibus框架比较难用，所以要换一下。
-`sudo apt-get install fcitx`
-重启电脑（貌似不重启也行），在language support的keyboard input method system那里选择fcitx即可。
+### 如何安裝搜狗输入法
+以下主要参考自 [How to install Sogou Pinyin in non-Chinese versions of Ubuntu 18.04](https://www.yanlongwang.net/Ubuntu/install-sogou-ubuntu-18/).
 
-### 安装搜狗输入法
-自带的话，还得培养词库。
-可以装一下搜狗啊。
-去搜狗官网下载`.deb`，文件，然后：
-`sudo apt-get install -f ./sougoupinyin后面一长串文件名哈哈`
-安装成功后。
-重启电脑。
-
-就会发现电脑右上角有一个键盘图标，点击，选择 Configure Current Input Method，点击加号，然后取消勾选"Only show current language"，在下方搜索框输入pinyin，就能找到'Sougou Pinyin'啦，选择它，然后将其拖到原来的"keyboard-English(US)"之前，就搞定了。（由于经常需要用英文输入cmd，因此最好不要把中文放在前面）。
-
-此时，虽然可以使用搜狗输入中文，但很可能没法切换成英文，点击电脑右上角的键盘符号，选择Restart，过一会儿就行了。
-
-### 改掉输入法切换命令 `Ctrl+Space`
-系统自带的的英文输入法和我们安装的搜狗之间的切换是`Ctrl+Space`，很明显不太好，对于 18.04而言，可以邮件右上角输入法图标，选择 `configure`, 然后是 `global configure`, 在 `hotkey->Trigger input method` 那里改成其他的，如 `ctrl+,` 就行了。
+1. 首先安装 fcitx
+```sh
+sudo apt install fcitx-bin
+sudo apt install fcitx-table
+```
+然后卸载 ibus
+```sh
+sudo apt purge ibus
+sudo apt autoremove
+```
+此时， 打开 `Language Support`， 如果提示 `The language support is not installed completely` 那就选择 `Remind Me later`.
+然后就能发现 ` Key board input method system` 已经替换为 `fctix`了，如果不是，那就手动替换一下吧。
+最后重启系统。
+2. 下载搜狗的deb安装文件，双击打开并安装，重启电脑。
+3.  `Ctrl+Space`
+系统自带的的英文输入法和我们安装的搜狗之间的切换是`Ctrl+Space`，很明显不太好，对于 18.04而言，可以右键右上角输入法图标，选择 `configure`, 然后是 `global configure`, 在 `hotkey->Trigger input method` 那里改成其他的，如 `ctrl+,` 就行了。
 
 ## 交换 `Ctrl` 和 `Caps`
 习惯了 Emacs 的快捷键以后，为了保护手指，需要将 `Ctrl` 和 不常用的 大小写转换按键`Caps`进行交换。
 
-Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https://www.emacswiki.org/emacs/MovingTheCtrlKey)
+Emacs贴心地给出了各个系统上的交换教程：[MovingTheCtrlKey](https://www.emacswiki.org/emacs/MovingTheCtrlKey)，但我发现使用 Gnome Tweak tool的话，重启电脑之后貌似就失效了。
 
-### 方法1，使用图形界面（在18.04上推荐使用，在16.04上不推荐）
-首先搜索安装 `Gnome tweaks`,安装好之后，可以搜索到，它的名变成了 Tweaks，差不多吧。
-现在的版本和上面链接给出的不太一样了，不过功能一样。
-找到 `Keyboard & Mouse`,然后 点击 `Additional Layout Options`，找到 `Ctrl position`，选择 `Swap Ctrl and Cas Lock`，搞定。
->注：在18.04上没问题，但在我的16.04上就有问题，第一个就是安装问题，得用命令行安装，好像是`sudo apt install genome-tweak-tool`，第二个问题是重启以后可能失效。
-
-### 方法2，使用配置文件（在16.04上推荐使用，在18.04上不推荐）
-建立 `~/.xmodmap` 文件，写入：
+使用配置文件的方式最靠谱啦。（在16.04和18.04上都推荐使用）
+建立 `~/.Xmodmap` 文件，写入：
 ```
 !
 ! Swap Caps_Lock and Control_L
@@ -163,22 +160,8 @@ keysym Caps_Lock = Control_L
 add Lock = Caps_Lock
 add Control = Control_L
 ```
-然后 `xmodmap ~/.xmodmap`。
+然后 `xmodmap ~/.Xmodmap`。
 
-重启以后也会失效，因此我们需要登陆之后手动运行这个命令。
-
-能不能开机启动这个命令呢？
-但我尝试了很多方法都不行，例如
-1. 搜索`startup applications`，然后加入上述命令 `xmodmap ~/.xmodmap` 。
-2. 使用`crontab`，建立一个文件，例如 `~/.marquis_cron`，写入：
-`@reboot /usr/bin/xmodmap ~/.xmodmap`
-3. 我也试了各种启动脚本，如`.profile`，都不行，尝试加入`sleep 4`也不行。
-
-这个答案[Permanent xmodmap in Ubuntu 13.04](https://askubuntu.com/questions/325272/permanent-xmodmap-in-ubuntu-13-04/514277#514277) 搞了一个Python脚本来实现这个功能，我心想应该不需要这么麻烦吧，先不试啦。
-
-__最终的解决方案：__
-将 `~/.xmodmap` 更名为 `~/.Xmodmap`
-它就会自动配置啦。
 
 借鉴自：[Activating the .Xmodmap at startup](https://cweiske.de/howto/xmodmap/ar01s06.html)
 ```
@@ -199,10 +182,7 @@ Xorg (at least in version 7.0) has an xinit script at /etc/X11/xinit/xinitrc tha
 
 [ -f /etc/X11/Xmodmap ] && xmodmap /etc/X11/Xmodmap
 ```
-不过这种方法在 18.04上就有问题.
 
-### 方法3，没搞成功
-`sxhkd` 配合 `xte` 命令也能实现更换键位（或定义快捷键）的效果，但我折腾了半天实现不了键位的更换。
 
 ## gitkraken
 git 的一个gui
@@ -213,7 +193,7 @@ git 的一个gui
 
 由于我的博客目录[MyBlog](https://github.com/marquistj13/MyBlog)已经有了一个`Gemfile`:
 ```ruby
-source 'https://rubygems.org'
+source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
 #gem 'github-pages', group: :jekyll_plugins
 # gem 'jekyll-feed'
 gem 'jekyll-paginate'
@@ -369,7 +349,7 @@ backgrounds,mindmap,trees,matrix,shapes}
 即可编译[moeptikz](https://github.com/moepinet/moeptikz)提供的示例图片啦。
 
 ## spacemacs
-### Ubuntu 库里的emacs版本貌似是24，太低了装不了spacemacs
+Ubuntu 库里的emacs版本貌似是24，太低了装不了spacemacs
 ### 首先下载 emacs，并安装
 从 [tuna](https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/)下载最新版，我下的是26.1.
 解压。
@@ -395,9 +375,9 @@ backgrounds,mindmap,trees,matrix,shapes}
 1. 在命令行直接运行emacs：`LC_CTYPE='zh_CN.UTF-8' emacs`
 1. 在 `.bashrc`中加入 `export LC_CTYPE=zh_CN.UTF-8` 然后运行 emacs
 1. 编辑/etc/environment文件。`sudo gedit /etc/environment`，在后面加上，
-`LC_CTYPE="zh_CN.utf8"`
+`export LC_CTYPE="zh_CN.utf8"`
 
-这里我用的是第三中方法。
+这里我用的是第三种方法。
 然后打开emacs，将emacs的图标固定到launcher即可。
 此时就可以用搜狗啦。
 
