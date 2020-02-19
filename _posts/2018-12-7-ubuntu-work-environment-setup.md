@@ -457,6 +457,15 @@ pane相关：
 `<prefix> m` 开启或关闭鼠标模式
 `x`  关闭pane
 
+## 视频播放组件
+参考 [How To Enable Ubuntu 18.04 LTS To Play Videos Files](https://websiteforstudents.com/how-to-enable-ubuntu-18-04-lts-beta-to-play-videos-files/) .
+ 运行：
+ ```sh
+ sudo apt install libdvdnav4 libdvdread4 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg
+ sudo apt install ubuntu-restricted-extras
+ ```
+ 实际上，只运行第一行就行了，第二行貌似安装了一坨字体，感觉不是很有必要。
 
 
-
+## 录屏软件
+[OBS Studio](https://obsproject.com/) ，主播专用，可以推流，也可以录屏、录窗口。
