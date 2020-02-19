@@ -24,6 +24,16 @@ collections:
 defaults:
 - scope:
     path: ''
+    type: collection_ReadingNotes_DeepLearning
+  values:
+    layout: page
+- scope:
+    path: ''
+    type: collection_ReadingNotes_ProgrammingSkills
+  values:
+    layout: page
+- scope:
+    path: ''
     type: collection_ScholarThings_EarlyCVBasicsAndRepresentation
   values:
     layout: page
@@ -35,16 +45,6 @@ defaults:
 - scope:
     path: ''
     type: collection_ScholarThings_SLAM
-  values:
-    layout: page
-- scope:
-    path: ''
-    type: collection_ReadingNotes_DeepLearning
-  values:
-    layout: page
-- scope:
-    path: ''
-    type: collection_ReadingNotes_ProgrammingSkills
   values:
     layout: page
 description: Actually, less is more!

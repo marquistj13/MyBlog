@@ -6,6 +6,7 @@ import codecs  # enforce "utf-8" coding when reading files
 import os
 
 
+
 def dict_from_collection(collection):
     """
     This function is purely for debugging purpose, and is not used in this python script.
@@ -19,7 +20,7 @@ def dict_from_collection(collection):
     menus = defaultdict(list)
     menu_name_en = ""
     menu_iterm = ""
-    for k, v in collection.iteritems():
+    for k, v in collection.items():
         menu_name_en = v['permalink'].split('/')[1]
         menu_iterm = v['permalink'].split('/')[2]
         menus[menu_name_en].append(menu_iterm)
@@ -37,7 +38,7 @@ def collections_from_dict(dic):
     'ReadingNotes_test': {'output': True, 'permalink': '/ReadingNotes/test/:path'}}
     """
     collection = {}
-    for k, v in dic.iteritems():
+    for k, v in dic.items():
         menu_name_en = k
         for collection_directory in v:
             menu_iterm = 'collection_' + menu_name_en + '_' + collection_directory
@@ -57,7 +58,7 @@ def defaults_from_dict(dic):
                       'values': {'layout': 'page'}}]
     """
     defaults = []
-    for k, v in dic.iteritems():
+    for k, v in dic.items():
         menu_name_en = k
         for collection_directory in v:
             menu_iterm = 'collection_' + menu_name_en + '_' + collection_directory
@@ -81,7 +82,7 @@ if __name__ == '__main__':
     header_file = r"../_includes/header.html"
 
     # extract menus from menu_config.yml
-    menu_config = yaml.load(file(yamlMenuFile, 'r'))
+    menu_config = yaml.safe_load(codecs.open(yamlMenuFile, 'r', encoding='utf8'))
     menus = menu_config['menus']
     # menus is a list of menu dictionaries:
     # [
@@ -96,17 +97,17 @@ if __name__ == '__main__':
     for menu in menus:
         menus_dict[menu['menu_name_en']] = menu['menu_list']
 
-    print "/.....................The configuration process begins...................../"
+    print("/.....................The configuration process begins...................../")
 
     # update collections related configurations in yamlConfigFile, so Jekyll knows who are collections
-    h_yamlConfigFile = yaml.load(file(yaml_template_ConfigFile, 'r'))
-    streamyamlConfigFile = file(yamlConfigFile, 'w')
+    h_yamlConfigFile = yaml.safe_load(codecs.open(yaml_template_ConfigFile, 'r', encoding='utf8'))
+    streamyamlConfigFile = codecs.open(yamlConfigFile, 'w', encoding='utf8')
     # note that the initial collections are overwritten, change the following two lines if you don't want this.
     h_yamlConfigFile['collections'] = collections_from_dict(menus_dict)
     h_yamlConfigFile['defaults'] = defaults_from_dict(menus_dict)
     yaml.dump(h_yamlConfigFile, streamyamlConfigFile, default_flow_style=False, allow_unicode=True)
     streamyamlConfigFile.close()
-    print "File:(%s) is updated succefully!"%yamlConfigFile
+    print("File:(%s) is updated succefully!"%yamlConfigFile)
 
     # update header_file in the _includes directory, so the menus are shown in the header of our blog.
     h_template_header_file = codecs.open(template_header_file, "r", "utf-8")
@@ -115,13 +116,13 @@ if __name__ == '__main__':
     h_header_file.write(jinja_template.render(menus=menus))
     h_header_file.close()
     h_template_header_file.close()
-    print "File:(%s) is updated succefully!"%header_file
+    print("File:(%s) is updated succefully!"%header_file)
 
     # now create an index.html in the dictory of each collection.
     # if the directory does not exist, then create it and
     # place there an index.html, which lists the content of that directory.
     collection_iterm_path = ""
-    for k, v in menus_dict.iteritems():
+    for k, v in menus_dict.items():
         menu_name_en = k
         for collection_iterm_name in v:
             collection_name = 'collection_' + menu_name_en + '_' + collection_iterm_name
@@ -135,7 +136,7 @@ if __name__ == '__main__':
                     jinja_template.render(collection_iterm_name=collection_iterm_name, collection_name=collection_name))
                 h_index_file.close()
                 h_template_index_file.close()
-                print "an index.html is generated in your new directory:(%s)"%collection_iterm_path
+                print("an index.html is generated in your new directory:(%s)"%collection_iterm_path)
             except OSError:  # the directory already exists or it's a file name
                 if not os.path.isdir(collection_iterm_path):
                     raise  # it's a file name
@@ -147,12 +148,12 @@ if __name__ == '__main__':
                         jinja_template.render(collection_iterm_name=collection_iterm_name, collection_name=collection_name))
                     h_index_file.close()
                     h_template_index_file.close()
-                    print "Dictory (%s) already exists. The index.html in it is overwritten!."%collection_iterm_path
+                    print("Dictory (%s) already exists. The index.html in it is overwritten!."%collection_iterm_path)
             pass
         pass       
 
-    print "/.....................The configuration process ends...................../"
-    print "Your menus are configured succefully! You can run: " \
+    print("/.....................The configuration process ends...................../")
+    print("Your menus are configured succefully! You can run: " \
           "jekyll serve -w to see the effects if you have configured jekyll locally" \
-          "or you can simply push the changes to github pages to see the effects."
-    print "/.............................................................../"
+          "or you can simply push the changes to github pages to see the effects.")
+    print("/.............................................................../")
