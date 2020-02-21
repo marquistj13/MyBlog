@@ -30,7 +30,7 @@ git clone https://github.com/marquistj13/MyBlog.git
 
 由于本模板改编自 [LessOrMore](https://github.com/luoyan35714/LessOrMore) ，因此基本配置和[LessOrMore](https://github.com/luoyan35714/LessOrMore)相同，即配置根目录的文件`_config.yml`。**本模板配置不同之处在于：**用户需要配置的文件不是根目录的`_config.yml`，而是位于根目录的文件夹 `_config_with_python` 中，即`template_config.yml`文件用于设置blog的meta data，详情请参考 [LessOrMore](https://github.com/luoyan35714/LessOrMore)。在此对于本配置文件的修改注意事项进行重申：`template_config.yml`中的baseurl修改为你的github的项目名，如果项目是'***.github.io'，则设置为空''
 
-**本模板比[LessOrMore](https://github.com/luoyan35714/LessOrMore)增加的特性：**collection的配置，即使用使用 `menu_config.yml` 配置blog header的菜单项，举个例子：
+本模板比[LessOrMore](https://github.com/luoyan35714/LessOrMore)增加的特性：collection的配置，即使用使用 `menu_config.yml` 配置blog header的菜单项，举个例子：
 
 
 ```ruby
@@ -47,31 +47,51 @@ menus:
 
 很容易看懂，我就是新建两个下拉菜单项，阅读笔记以及学术积累，阅读笔记的英文名ReadingNotes用于建立文件夹的时候使用，阅读笔记下面一共有两个collection项（分别对应两个文件夹，即Book_NeuralNetworksAndDeepLearnin和test，这俩文件夹下面可以存放对应的笔记，同理，学术积累菜单项下面只有一个collection即test_scholar
 
-**小提示：**在每一个collection下面可以放入子文件夹，本模板亦可以根据子文件夹创建此collection下对于子文件夹中的文件的索引目录，这个功能是根据文章的url实现的，主要参考的是 [这篇文章](https://thinkshout.com/blog/2014/12/creating-dynamic-menus-in-jekyll/).但由于文件夹名字转换为url之后变成了ASCII码，因此从url中提取的子文件夹名字得用`Liquid`模板语言的一个filter：`url_decode`，这个filter只有新版本的Liquid的支持，如果遇到老版本的Liquid那就不行，所以，如果你对子文件夹含有中文，列出来的索引目录就是对应的ASCII码，我暂时就这么凑合着用吧，哈哈。
+**小提示:** 
+在每一个collection下面可以放入子文件夹，本模板亦可以根据子文件夹创建此collection下对于子文件夹中的文件的索引目录，这个功能是根据文章的url实现的，主要参考的是 [这篇文章](https://thinkshout.com/blog/2014/12/creating-dynamic-menus-in-jekyll/).但由于文件夹名字转换为url之后变成了ASCII码，因此从url中提取的子文件夹名字得用`Liquid`模板语言的一个filter：`url_decode`，这个filter只有新版本的Liquid的支持，如果遇到老版本的Liquid那就不行，所以，如果你对子文件夹含有中文，列出来的索引目录就是对应的ASCII码，我暂时就这么凑合着用吧，哈哈。
 
-**在每次对`template_config.yml`或者`menu_config.yml`进行修改以后必须运行一次`buildMenu.py`**。`buildMenu.py`依赖于两个Python library：`PyYAML`和`jinja2`。
+**在每次对`template_config.yml`或者`menu_config.yml`进行修改以后必须运行一次`buildMenu.py`**。
+`buildMenu.py`依赖于两个Python library：`PyYAML`和`jinja2`。
 
-**如果在本地安装了Jekyll，就不需要每次push到github去看效果：**可以使用`jekyll serve -w -b ""`方便地进行博客的实时预览，这在书写markdown的时候非常有用。
+**如果在本地安装了Jekyll，就不需要每次push到github去看效果：** 
+可以使用`jekyll serve -w -b ""`方便地进行博客的实时预览，这在书写markdown的时候非常有用。
 
 推荐的本地运行脚本
 ------------------------------------
 在Windows机器上，将以下文件保存为`*.bat`,运行即可：
 ```
 @echo on 
-cd C:\Users\Marquis\Documents\GitLocalFile\MyBlog\_config_with_python
-C:\Users\Marquis\Anaconda3\envs\py27\python.exe buildMenu.py
+cd C:\Users\marquis\GitHub\MyBlog\_config_with_python
+C:\Users\marquis\Anaconda3\python.exe buildMenu.py
 
 cd ..\
-bundle exec jekyll serve --port 3000 -b ""
+bundle exec jekyll serve --port 4000 --incremental
 ```
 
-**关于Python的安装，我最近弃掉了canopy，改用anaconda3，而anaconda3默认带的是py3.6，因此得安装一个py2.7的环境，另外顺便安装以下两个Python library：`PyYAML`和`jinja2`**
-```
-conda -n py27 python=2.7 PyYAML jinja2
-```
-这样就会在`Anaconda3\envs`目录下生成py27目录。
+注意：现在更新到 python3 了，两个依赖的package：`PyYAML`和`jinja2`。
 
-由于anaconda不推荐将Python加入环境变量，因此，我们直接用其绝对路径`C:\Users\Marquis\Anaconda3\envs\py27\python.exe`即可。
+**关于Python的安装，如果你用的是anaconda3，不想直接像上面的bat脚本那样用默认的环境，要新建一个虚拟环境的话，可以通过以下方式顺便安装两个依赖的Python library：`PyYAML`和`jinja2`**
+```
+conda -n myblog python=3.6 PyYAML jinja2
+```
+这样就会在`Anaconda3\envs`目录下生成myblog目录。
+由于anaconda不推荐将Python加入环境变量，因此，我们直接用其绝对路径`C:\Users\Marquis\Anaconda3\envs\myblog\python.exe`即可。
+
+至于jekyll的本地安装，请参考：[jekyll安装](https://marquistj13.github.io/MyBlog/2017/02/record-my-system-software-reinstall/#jekyll)。
+这里做个备份：
+根据[官方](https://jekyllrb.com/docs/windows/#installation)教程，使用[RubyInstaller](https://rubyinstaller.org/) 安装ruby环境。
+然后设置为清华的源：[Ruby Gems 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/rubygems/)。
+执行`gem install jekyll bundler`。
+最以后使用以下Gemfile：
+```
+source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
+#gem 'github-pages', group: :jekyll_plugins
+# gem 'jekyll-feed'
+gem 'jekyll-paginate'
+gem 'jekyll-sitemap'
+gem 'jemoji'
+```
+在该Gemfile的目录运行 `bundle install`即可。
 
 update:加入谷歌站内搜索 disqus 评论 以及访问计数
 ------------------------------------

@@ -131,6 +131,21 @@ update: 这种设置跃点数的方式也有不完美之处，过一个多小时
 
 ## Jekyll
 __update__：
+_2020.02.21更新:_
+根据[官方](https://jekyllrb.com/docs/windows/#installation)教程，使用[RubyInstaller](https://rubyinstaller.org/) 安装ruby环境。
+然后设置为清华的源：[Ruby Gems 镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/rubygems/)。
+执行`gem install jekyll bundler`。
+最以后使用以下Gemfile：
+```
+source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems'
+#gem 'github-pages', group: :jekyll_plugins
+# gem 'jekyll-feed'
+gem 'jekyll-paginate'
+gem 'jekyll-sitemap'
+gem 'jemoji'
+```
+在该Gemfile的目录运行 `bundle install`即可。
+
 _17.11.19更新：_ 
 现在[官方](https://jekyllrb.com/docs/windows/#installation)给出了一个更简单的本地安装方法，使用[RubyInstaller](https://rubyinstaller.org/),不需要像以前先安装Chocolatey那么麻烦了。
 
