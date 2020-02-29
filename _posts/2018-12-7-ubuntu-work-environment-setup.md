@@ -258,14 +258,14 @@ vscode自带了markdown的预览，使用快捷键：`Ctrl+K V` 即可调出预�
 
 ### 安装 perl
 如果想用图形界面安装的话，就需要按照perl啦
-`sudo apt-get install perl-tk perl-doc`
+`sudo apt-get install perl-tk`
 
 这样，以后的texlive命令后面只需要加上`-gui`就出来界面啦。
 
 ### 安装texlive
-我是直接从[TUNA](https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/)下载的光盘镜像 `texlive2018.iso`
+我是直接从[TUNA](https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/)下载的光盘镜像 `texlive2019.iso`
 
-然后挂载到一个目录：`sudo mount /home/hdd/texlive2018.iso /media/marquis/`
+然后挂载到一个目录：`sudo mount /home/hdd/texlive2019.iso /media/marquis/`
 
 进入光盘目录：`/media/marquis/`
 
@@ -274,11 +274,20 @@ vscode自带了markdown的预览，使用快捷键：`Ctrl+K V` 即可调出预�
 ### 设置texlive 的环境变量
 此时 TeX Live 虽已安装，但其路径对于 Linux 来说仍是不可识别的。所以需要更改环境变量。
 
+其实在安装结束以后，终端上也告诉你了要添加环境变量了：
+```
+Add /usr/local/texlive/2019/texmf-dist/doc/man to MANPATH.
+Add /usr/local/texlive/2019/texmf-dist/doc/info to INFOPATH.
+Most importantly, add /usr/local/texlive/2019/bin/x86_64-linux
+to your PATH for current and future sessions.
+```
+
+
 打开 ~/.bashrc，在最后添加
 ```bash
-export PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH
-export MANPATH=/usr/local/texlive/2018/texmf-dist/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2018/texmf-dist/doc/info:$INFOPATH
+export PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
+export MANPATH=/usr/local/texlive/2019/texmf-dist/doc/man:$MANPATH
+export INFOPATH=/usr/local/texlive/2019/texmf-dist/doc/info:$INFOPATH
 ```
 
 还需保证开启 sudo 模式后路径仍然可用。命令行中执行
@@ -291,12 +300,15 @@ Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/b
 ```
 将第三行更改为
 ```bash
-Defaults        secure_path="/usr/local/texlive/2018/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+Defaults        secure_path="/usr/local/texlive/2019/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 ```
 也就是加入 TeX Live 的执行路径。如果在安装时作了修改，这里的路径也都要与安装时的保持一致。
+### 如何让emacs找到texlive的bin
+实际上，在ubuntu16.04中，貌似不需要配置。但是在18.04中，不知道为啥，spacemacs找不到tex的路径，这时候就需要安装 `exec-path-from-shell`了，
+详见： [spacemacs 的配置]({% post_url 2019-02-1-spacemacs-config %})。
 
-### 更新参考文献宏包
-由于我自己的模板使用了`biblatex-gb7714-2015`的最新版，因此需要将其更新。
+### 如何更新宏包
+例如更新`biblatex-gb7714-2015`到最新版：
 
 先更新宏包管理器
 `sudo tlmgr update --self`
@@ -363,6 +375,10 @@ Ubuntu 库里的emacs版本貌似是24，太低了装不了spacemacs
 ### 安装 spacemacs
 `git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d`
 然后打开emacs，就会自动安装很多东西。
+
+实际上我们还需要更改melpa源为tuna源，要不然安装package的时候实在是太慢了。
+关于spacemacs的源的配置以及其他配置详见： [spacemacs 的配置]({% post_url 2019-02-1-spacemacs-config %})。
+
 ### 使用搜狗输入法
 我的系统默认语言是英语。
 打开emacs，此时使用我设置好的快捷键`ctrl_,`无法切换到搜狗输入法，从系统右上角的图标切换到搜狗，仍然无法输入汉字。

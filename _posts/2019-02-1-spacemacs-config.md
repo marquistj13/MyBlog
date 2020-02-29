@@ -14,6 +14,37 @@ tag: [emacs]
 1. 配置文件特指 .spacemacs
 1. 我用的emacs类型的快捷键，因此 先导`SPC` 就是 `M-m`，但是命令中间的`SPC` 还是空格的意思 。
 
+## 清华源 tuna
+很明显在[Spacemacs 用户](https://mirror.tuna.tsinghua.edu.cn/help/elpa/)就有说明。
+
+## spacemacs找不到tex的路径怎么办
+根据[auctex-cannot-find-a-working-tex-distribution](https://emacs.stackexchange.com/questions/31770/auctex-cannot-find-a-working-tex-distribution/32343) 的提示，我发现emacs没有正确获得我的系统的path，怎么办呢？
+我找到了[exec-path-from-shell](https://github.com/purcell/exec-path-from-shell)。
+根据说明，首先 `M-x package-install RET exec-path-from-shell RET`。
+然后在我的配置文件中加入初始化选项，也就是输入 `M-m f e d`打开配置文件，找到 `dotspacemacs/user-init ()` 函数加上：
+```lisp
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+  ```
+  即可。
+  
+  到这儿，我们的函数长这样：
+  ```lisp
+  (defun dotspacemacs/user-init ()
+  "Initialization function for user code.
+It is called immediately after `dotspacemacs/init', before layer configuration
+executes.
+ This function is mostly useful for variables that need to be set
+before packages are loaded. If you are unsure, you should try in setting them in
+`dotspacemacs/user-config' first."
+(setq configuration-layer--elpa-archives
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+  )
+  ```
 ## tex 中 bib 文件的指定
 [这里](https://marquistj13.github.io/MyBlog/2018/12/ubuntu-work-environment-setup/#spacemacs)介绍了texlive 和 spacemacs 的安装.
 为了能够方便地使用reftex插入参考文献，即 `C-c [`，emacs需要知道bib文件的位置。

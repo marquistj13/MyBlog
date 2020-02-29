@@ -28,7 +28,10 @@ git clone https://github.com/marquistj13/MyBlog.git
 ------------------------------------
 **本模板的所有配置文件均在位于根目录的文件夹 `_config_with_python`中。**
 
-由于本模板改编自 [LessOrMore](https://github.com/luoyan35714/LessOrMore) ，因此基本配置和[LessOrMore](https://github.com/luoyan35714/LessOrMore)相同，即配置根目录的文件`_config.yml`。**本模板配置不同之处在于：**用户需要配置的文件不是根目录的`_config.yml`，而是位于根目录的文件夹 `_config_with_python` 中，即`template_config.yml`文件用于设置blog的meta data，详情请参考 [LessOrMore](https://github.com/luoyan35714/LessOrMore)。在此对于本配置文件的修改注意事项进行重申：`template_config.yml`中的baseurl修改为你的github的项目名，如果项目是'***.github.io'，则设置为空''
+由于本模板改编自 [LessOrMore](https://github.com/luoyan35714/LessOrMore) ，因此基本配置和[LessOrMore](https://github.com/luoyan35714/LessOrMore)相同，即配置根目录的文件`_config.yml`。
+
+**本模板配置不同之处在于：**
+用户需要配置的文件不是根目录的`_config.yml`，而是位于根目录的文件夹 `_config_with_python` 中，即`template_config.yml`文件用于设置blog的meta data，详情请参考 [LessOrMore](https://github.com/luoyan35714/LessOrMore)。在此对于本配置文件的修改注意事项进行重申：`template_config.yml`中的baseurl修改为你的github的项目名，如果项目是'***.github.io'，则设置为空''
 
 本模板比[LessOrMore](https://github.com/luoyan35714/LessOrMore)增加的特性：collection的配置，即使用使用 `menu_config.yml` 配置blog header的菜单项，举个例子：
 
@@ -58,6 +61,15 @@ menus:
 
 推荐的本地运行脚本
 ------------------------------------
+在 Ubuntu上，保存以下内容为可执行文件，并放到MyBlog的同级文件即可：
+```
+cd MyBlog
+cd _config_with_python
+python3 buildMenu.py
+cd ../
+jekyll serve --port 4000 --incremental
+
+```
 在Windows机器上，将以下文件保存为`*.bat`,运行即可：
 ```
 @echo on 
