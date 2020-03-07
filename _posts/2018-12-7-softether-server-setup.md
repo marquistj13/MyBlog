@@ -188,7 +188,7 @@ dhcp-range=tap_soft,192.168.30.50,192.168.30.90,12h
 dhcp-option=tap_soft,3,192.168.30.1
 ```
 
-为了使得 Softether 启动的时候，dncp server 也启动，我们需要修改Softether的启动脚本，将 `/etc/init.d/vpnserver` 修改如下：
+为了使得 Softether 启动的时候，dncp server 也启动，我们需要修改Softether的启动脚本，将 `/etc/init.d/vpnserver` 修改，加入 `/etc/init.d/dnsmasq` 的配置：
 ```
 #!/bin/sh
 ### BEGIN INIT INFO
@@ -211,10 +211,12 @@ $DAEMON start
 touch $LOCK
 sleep 1
 /sbin/ifconfig tap_soft $TAP_ADDR
+/etc/init.d/dnsmasq start
 ;;
 stop)
 $DAEMON stop
 rm $LOCK
+/etc/init.d/dnsmasq stop
 ;;
 restart)
 $DAEMON stop
@@ -222,6 +224,7 @@ sleep 3
 $DAEMON start
 sleep 1
 /sbin/ifconfig tap_soft $TAP_ADDR
+/etc/init.d/dnsmasq restart
 ;;
 *)
 echo "Usage: $0 {start|stop|restart}"
@@ -238,13 +241,28 @@ exit 0
 
 ### 使用 `iptables` 设置VPN的 的traffic forwarding 
 将POSTROUTING规则添加到 iptables：
-`iptables -t nat -A POSTROUTING -s 192.168.30.0/24 -j SNAT --to-source [YOUR VPS IP ADDRESS]`
+`iptables -t nat -A POSTROUTING -s 192.168.30.1/24 -j SNAT --to-source [YOUR VPS IP ADDRESS]`
 
 为了保证系统重启以后这个 iptables rule 依然能够 survive，需要安装 `iptables-persistent`:
 `apt-get install iptables-persistent`
+
+注意，持久化的东西放在了：
+```
+/etc/iptables/rules.v4
+/etc/iptables/rules.v6
+```
+这俩文件里边。
+
+如果需要修改规则的话，就需要重新运行 `iptables -t nat -A POSTROUTING -s 192.168.30.1/24 -j SNAT --to-source [YOUR VPS IP ADDRESS]`，
+然后运行 `iptables-save > /etc/iptables/rules.v4`。
+
+当然，也可以删除 `/etc/iptables/rules.v4` 中的内容。
 
 ### 重启服务器
 ```
 /etc/init.d/vpnserver restart
 /etc/init.d/dnsmasq restart
 ```
+这个时候用softether client连接服务器，可以看到给我们分配了ip。
+
+由于我们已经在 `/etc/init.d/vpnserver` 里加入了 `dnsmasq` 的启动配置，因此重启系统的时候啥都不用管，vpnserver就会自启动了。
