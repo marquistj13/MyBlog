@@ -445,6 +445,37 @@ bind C-j send-prefix
 ```
 然后保存，重启电脑就行啦。
 
+### 给所有pane 发送同样的指令
+参考：[How to send a command to all panes in tmux?](https://stackoverflow.com/questions/16325449/how-to-send-a-command-to-all-panes-in-tmux)
+
+编辑 ` ~/.tmux.conf.local`，在末尾加入以下内容:
+```
+bind -n C-[ setw synchronize-panes on
+bind -n C-] setw synchronize-panes off
+```
+然后使配置文件生效： `$ tmux source-file ~/.tmux.conf.local` 。
+>注意，一开始我绑定了 `C-x` 作为快捷键，但是它和 nano的退出键冲突了，改成现在这样就好啦。
+
+这样，运行 `C-[` 就能全选所有pane，运行 `C-]` 就能取消全选。
+
+### 如何在tmux重启之后还能恢复 tmux 环境
+参考：[Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
+
+首先将代码拷贝到 `.tmux` 目录：
+`git clone https://github.com/tmux-plugins/tmux-resurrect .tmux`
+
+然后在 ` ~/.tmux.conf.local` 末尾加入以下内容：
+`run-shell /home/marquis/.tmux/tmux-resurrect/resurrect.tmux`
+>注意这里要替换成你自己的路径哈。
+
+然后使配置文件生效： `$ tmux source-file ~/.tmux.conf.local` 。
+
+用法就行：
+
+`prefix + Ctrl-s` 就是保存环境。
+`prefix + Ctrl-r` 就是恢复环境。
+
+
 ### 常用快捷键汇总
 本节主要参考：
 1. [Tmux 快捷键 & 速查表](https://gist.github.com/ryerh/14b7c24dfd623ef8edc7)
