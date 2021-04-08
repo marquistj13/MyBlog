@@ -162,6 +162,8 @@ add Control = Control_L
 ```
 然后 `xmodmap ~/.Xmodmap`。
 
+__21.4.8 update:__ 为了不每次开机或登录系统的时候都运行这个命令，我在20.04的start applications中加了一个entry：`xmodmap /home/marquis/.Xmodmap` 。
+
 
 借鉴自：[Activating the .Xmodmap at startup](https://cweiske.de/howto/xmodmap/ar01s06.html)
 ```
@@ -399,6 +401,8 @@ Ubuntu 库里的emacs版本貌似是24，太低了装不了spacemacs
 
 注：
 >如果用第二种方法，那么固定到launcher之后还是没法用。
+
+__2021.4.8update__: 在我的20.04上，第三种方法还是有bug的，我在 startup applications 中加入启动项 `export LC_CTYPE=zh_CN.UTF-8` 之后，只要打开了系统的设置，例如 startup applications，就会没法输入中文了，所以尽量别打开吧。
 
 ### 如果上面的设置还是用不了搜狗输入法的话，那么就勉强用spacemacs 自带的 chinese layer 中的`pyim`吧。
 根据[Chinese layer](http://spacemacs.org/layers/+intl/chinese/README.html)的说明，我们只需要在`dotspacemacs-configuration-layers`中加入`chinese`,然后在`dotspacemacs/user-config`中加入配置：
