@@ -90,6 +90,7 @@ https://askubuntu.com/questions/814/how-to-run-scripts-on-start-up/816#816
 1. [基本安装（使用SecureNAT）](http://blog.lincoln.hk/blog/2013/03/19/softether-on-vps/)
 2. [禁用SecureNAT，使用 local bridge](http://blog.lincoln.hk/blog/2013/05/17/softether-on-vps-using-local-bridge/) 
 3. [local bridge的命令行配置版](https://www.williamjbowman.com/blog/2015/12/22/a-transparent-ad-blocking-vpn-via-softether-privoxy/)
+4. [vpn-adblock有对应博客](https://github.com/nomadturk/vpn-adblock)
 
 主要参照前两个链接。
 
@@ -162,7 +163,7 @@ update-rc.d vpnserver defaults
 ```
 Network setup
 VPN Server IP: 192.168.30.1
-VPN Client IP Range: 192.168.30.50-192.168.30.90
+VPN Client IP Range: 192.168.30.2-192.168.30.222
 Tap Device name: tap_soft
 ```
 
@@ -181,14 +182,23 @@ Tap Device name: tap_soft
 由于我们禁用了SecureNAT 和 SecureDHCP，因此需要自己安装 DHCP server， 这里使用 `dnsmasq`:
 `apt-get install dnsmasq`。
 
-然后在 `/etc/dnsmasq.conf` 的末尾加入以下三行,使得接口 `tap_soft` 上enable dhcp server：
+然后在 `/etc/dnsmasq.conf` 的末尾加入以下内容,使得接口 `tap_soft` 上enable dhcp server，并设置dns-server：
 ```
+# Listen to interface
 interface=tap_soft
-dhcp-range=tap_soft,192.168.30.50,192.168.30.90,12h
+# Let's give the connecting clients an internal IP
+dhcp-range=tap_soft,192.168.30.2,192.168.30.222,12h
+# Default route and dns
 dhcp-option=tap_soft,3,192.168.30.1
+# Set IPv4 DNS server for client machines
+dhcp-option=option:dns-server,192.168.30.1,8.8.8.8
+# How many DNS queries should we cache? By defaults this is 150
+# Can go up to 10k.
+cache-size=10000
 ```
 
-为了使得 Softether 启动的时候，dncp server 也启动，我们需要修改Softether的启动脚本，将 `/etc/init.d/vpnserver` 修改，加入 `/etc/init.d/dnsmasq` 的配置：
+
+为了使得 Softether 启动的时候，dncp server 也启动，我们需要修改Softether的启动脚本，将 `/etc/init.d/vpnserver` 修改，加入 `/etc/init.d/dnsmasq` 的配置，（当然你不加在这里也行，只要讲dnsmasq设为开机启动也行）：
 ```
 #!/bin/sh
 ### BEGIN INIT INFO

@@ -17,34 +17,59 @@ tag: [emacs]
 ## 清华源 tuna
 很明显在[Spacemacs 用户](https://mirror.tuna.tsinghua.edu.cn/help/elpa/)就有说明。
 
+## gtags 使用的一些小技巧
+首先需要在系统中安装 global
+`sudo apt install global`
+
+然后运行 `M m p G`， 提示你是否使用 ctags 作为 backend， 确认即可。
+
+最后就可以使用这些tag啦： `M-m p g`可以查找光标所在的symbol在工程中的所有位置。
+但有时候敲这么多按键挺烦的，还有我偶然试出来的快捷键，即 `M-,` 以及 `M-.` 可以更方便地进行跳转。
+
+
+如果运行 `M m p G` 的时候提示 projectile-regenerate-tags: ctags: invalid option -- ’e’， 就需要安装 ctags：`sudo apt install ctags` 。此时就会提示你实际上安装的是：`exuberant-ctags`
+
 ## spacemacs找不到tex的路径怎么办
 根据[auctex-cannot-find-a-working-tex-distribution](https://emacs.stackexchange.com/questions/31770/auctex-cannot-find-a-working-tex-distribution/32343) 的提示，我发现emacs没有正确获得我的系统的path，怎么办呢？
 我找到了[exec-path-from-shell](https://github.com/purcell/exec-path-from-shell)。
 根据说明，首先 `M-x package-install RET exec-path-from-shell RET`。
-然后在我的配置文件中加入初始化选项，也就是输入 `M-m f e d`打开配置文件，找到 `dotspacemacs/user-init ()` 函数加上：
+然后在我的配置文件中加入初始化选项，也就是输入 `M-m f e d`打开配置文件，
+1. 找到 `dotspacemacs-additional-packages` 把这个package加进去，`dotspacemacs-additional-packages '(exec-path-from-shell )`
+2. 找到 `dotspacemacs/user-config ()` 函数加上：
 ```lisp
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-  ```
+```
   即可。
-  
-  到这儿，我们的函数长这样：
-  ```lisp
-  (defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
-(setq configuration-layer--elpa-archives
-    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-  )
-  ```
+
+## figlet comment
+首先安装figlet： `sudo apt install figlet`。
+然后在配置文件 `dotspacemacs-additional-packages` 中加上 `figlet`:
+即：
+`dotspacemacs-additional-packages '(exec-path-from-shell figlet)`
+
+这样我们就能在文件中运行 `figlet-comment` 了，它就会自动将文字以comment的形式加到正文中，例如：
+<!--   __ _      _     _                                _ -->
+<!--  / _(_)__ _| |___| |_   __ ___ _ __  _ __  ___ _ _| |_ -->
+<!-- |  _| / _` | / -_)  _| / _/ _ \ '  \| '  \/ -_) ' \  _| -->
+<!-- |_| |_\__, |_\___|\__| \__\___/_|_|_|_|_|_\___|_||_\__| -->
+<!--       |___/ -->
+
+这个默认的字体是 "small"，不好看，因此需要修改一下，`M-x help`,`f`，输入 `figlet` 就能找到 `figlet.el`了，打开该文件，将 small 修改为 big 就行了：
+```lisp
+(defvar figlet-default-font "big"
+  "Default font to use when none is supplied.")
+ ```
+此时，效果为：
+<!--   __ _       _      _                                              _ -->
+<!--  / _(_)     | |    | |                                            | | -->
+<!-- | |_ _  __ _| | ___| |_    ___ ___  _ __ ___  _ __ ___   ___ _ __ | |_ -->
+<!-- |  _| |/ _` | |/ _ \ __|  / __/ _ \| '_ ` _ \| '_ ` _ \ / _ \ '_ \| __| -->
+<!-- | | | | (_| | |  __/ |_  | (_| (_) | | | | | | | | | | |  __/ | | | |_ -->
+<!-- |_| |_|\__, |_|\___|\__|  \___\___/|_| |_| |_|_| |_| |_|\___|_| |_|\__| -->
+<!--         __/ | -->
+<!--        |___/ -->
+
 ## tex 中 bib 文件的指定
 [这里](https://marquistj13.github.io/MyBlog/2018/12/ubuntu-work-environment-setup/#spacemacs)介绍了texlive 和 spacemacs 的安装.
 为了能够方便地使用reftex插入参考文献，即 `C-c [`，emacs需要知道bib文件的位置。
@@ -177,9 +202,7 @@ you should place your code here."
 ## projectile 的一些小技巧
 `M-m p`就是projectile的各种命令了，这里我经常用`p`切换工程，`f` 查看工程的文件，`t` 显式工程目录。
 
-## gtags 使用的一些小技巧
-`M-m p g`可以查找光标所在的symbol在工程中的所有位置。
-但有时候敲这么多按键挺烦的，还有我偶然试出来的快捷键，即 `M-,` 以及 `M-.` 可以更方便地进行跳转。
+
 
 ## 当前文件快速跳转
 适用于我想找到页面单词 `fuck` 所在的位置，
