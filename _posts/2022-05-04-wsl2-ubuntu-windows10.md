@@ -81,7 +81,6 @@ tag: [配置文件]
 根据[How to set up working X11 forwarding on WSL2](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2)的方案，我们只需要将以下加入`~/.bashrc`或`~/.zshrc`末尾,然后`source ~/.bashrc`：
 ```sh
 export DISPLAY=$(ip route list default | awk '{print $3}'):0
-export LIBGL_ALWAYS_INDIRECT=1
 ```
 
 对于我的机器，现在是：
