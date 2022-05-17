@@ -63,7 +63,7 @@ tag: [配置文件]
 1. [搭建 WSL2 的沙雕版 GUI（VcXsrv+xfce4）](https://zhuanlan.zhihu.com/p/165660907)
 1. [Windows上安装Linux桌面（WSL+Ubuntu+Kali+xfce+Deskotp）](https://zhuanlan.zhihu.com/p/473445038)
 
-
+### 基本版
 步骤：
 1. 在win10上安装vcxsrv
 1. 进入 WSL2，安装 xfce4 `sudo apt install xfce4`
@@ -75,3 +75,19 @@ tag: [配置文件]
 另外：
 1. 如果我们打开vcxsrv的时候，选择默认的One large window，`Display num=-1`，那么就是一个默认的桌面，就是普通的桌面。如果我们不选择One large window，而是`Multiple Windows`，那么我们就可以弹出独立的多个窗口，怎么弹出来呢？假如我们运行`gedit`，就会弹出来了，当然也可以同时弹出来其他窗口，这个是我比较喜欢的方式，因为我使用vscode 打开wsl的文件夹开发gui程序（或者弹出opencv窗口）的时候，直接运行`Multiple Windows`的vcxsrv是很爽的，就跟在win10上弹出来的窗口一样。
 1. 我们也可以安装其他桌面，这个时候如果我们希望同时打开多个桌面环境，可参考[Windows上安装Linux桌面（WSL+Ubuntu+Kali+xfce+Deskotp）](https://zhuanlan.zhihu.com/p/473445038)，分别设置不同的display数就行了，例如在终端设置`export DISPLAY=172.22.192.1:1`，然后打开桌面`xfce4-session`，最后打开vcxsrv的时候，设置显示器为1就行了（`Display num=1`）。
+
+### 灵活版
+有时候我们的wsl的ubuntu的ip 会发生变化，其实是子网发生了变化，咋办呢？
+根据[How to set up working X11 forwarding on WSL2](https://stackoverflow.com/questions/61110603/how-to-set-up-working-x11-forwarding-on-wsl2)的方案，我们只需要将以下加入`~/.bashrc`或`~/.zshrc`末尾,然后`source ~/.bashrc`：
+```sh
+export DISPLAY=$(ip route list default | awk '{print $3}'):0
+export LIBGL_ALWAYS_INDIRECT=1
+```
+
+对于我的机器，现在是：
+```sh
+ip route list  default
+default via 172.17.224.1 dev eth0
+ip route list  default | awk '{print $3}'
+172.17.224.1
+```
