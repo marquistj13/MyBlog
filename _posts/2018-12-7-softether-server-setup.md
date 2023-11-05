@@ -197,6 +197,7 @@ dhcp-option=option:dns-server,192.168.30.1,8.8.8.8
 cache-size=10000
 ```
 
+**注：** 这里的dns-server设置很重要，要不然客户端会很慢。
 
 为了使得 Softether 启动的时候，dncp server 也启动，我们需要修改Softether的启动脚本，将 `/etc/init.d/vpnserver` 修改，加入 `/etc/init.d/dnsmasq` 的配置，（当然你不加在这里也行，只要讲dnsmasq设为开机启动也行）：
 ```
@@ -247,7 +248,7 @@ exit 0
 `vim /etc/sysctl.conf`
 找到 `#net.ipv4.ip_forward = 1`，取消这一行的注释。
 
-然后运行 `sysctl --service`。
+然后运行 `sysctl --system`。
 
 ### 使用 `iptables` 设置VPN的 的traffic forwarding 
 将POSTROUTING规则添加到 iptables：
@@ -276,3 +277,8 @@ exit 0
 这个时候用softether client连接服务器，可以看到给我们分配了ip。
 
 由于我们已经在 `/etc/init.d/vpnserver` 里加入了 `dnsmasq` 的启动配置，因此重启系统的时候啥都不用管，vpnserver就会自启动了。
+
+### 有可能出问题的地方
+#### 53端口被占用
+我设置了服务器之后，客户端老是获取不到ip，很明显dnsserver出问题了。运行 `/etc/init.d/dnsmasq restart` 提示53端口被占用。
+我按照[启动或重启 dnsmasq 提示端口 53 被占用的解决方案 ](https://www.cnblogs.com/Yogile/p/12779744.html)搞定了。
